@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using Newtonsoft.Json;
+
+using Proyecto26;
 
 public class JsonExample : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        print("wow");
+        PostToDatabase();
+
     }
 
     // Update is called once per frame
@@ -18,15 +20,11 @@ public class JsonExample : MonoBehaviour
         
     }
 
-    IEnumerator DataSave()
+    private void PostToDatabase()
     {
-        Dictionary<string, int> UserData = new Dictionary<string, int>();
-        UserData["Happy"] = 15;
-        UserData["Sopia"] = 20;
-
-        string json = JsonConvert.SerializeObject(UserData);
-
-        UnityWebRequest.Put("https://mseprojectknight-default-rtdb.firebaseio.com/.json", json).SendWebRequest();
-        yield return null;
+        User user = new User();
+        RestClient.Put("https://mseprojectknight-default-rtdb.firebaseio.com/.json", user);
     }
+
+    
 }
