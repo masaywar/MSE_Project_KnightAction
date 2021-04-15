@@ -1,66 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ScriptObject : MonoBehaviour
 {
-    public Dictionary<string, Dictionary<GameObject, ScriptObject>> m_cachedAllObjectDict;
+    public string prefabName;
     public RectTransform rectTransform;
+    public Dictionary<string, List<ScriptObject>> m_cachedAllObjectDict;
 
     private void Awake()
     {
-        m_cachedAllObjectDict = ObjectManager.Instance.allObjectDictionary;
+        m_cachedAllObjectDict = ObjectManager.Instance.allObjectDict;
         rectTransform = GetComponent<RectTransform>();
-        string tag = gameObject.tag;
 
-        if (m_cachedAllObjectDict.ContainsKey(tag))
+        if (m_cachedAllObjectDict.TryGetValue(prefabName, out var value))
         {
-            if (!m_cachedAllObjectDict[tag].ContainsKey(gameObject))
-            {
-                m_cachedAllObjectDict[tag].Add(gameObject, this);
-            }
+            value.Add(this);
         }
-
         else 
         {
-            m_cachedAllObjectDict[tag] = new Dictionary<GameObject, ScriptObject>();
-            m_cachedAllObjectDict[tag].Add(gameObject, this);
+            m_cachedAllObjectDict[prefabName] = new List<ScriptObject> { this };
         }
     }
 
-    public T FindByTag<T>(string tag, T obj) where T : ScriptObject
+    public virtual void Initialize()
     {
-        if (!m_cachedAllObjectDict.ContainsKey(tag)) 
-        {
-            return null;
-        }
-
-        if (!m_cachedAllObjectDict[tag].ContainsKey(obj.gameObject)) 
-        {
-            return null;
-        }
-
-        Dictionary<GameObject, ScriptObject> tempDict = m_cachedAllObjectDict[tag];
-        return (T)tempDict[gameObject];
+        this.transform.position = Vector3.zero;
+        this.transform.rotation = Quaternion.identity;
     }
 
-    public T FindByObject<T>(T obj) where T : ScriptObject
+    private void OnEnable() 
     {
-        GameObject findGo = obj.gameObject;
-        string tag = findGo.tag;
+        
+    }
 
-        if (!m_cachedAllObjectDict.ContainsKey(tag))
-        {
-            return null;
-        }
+    private void OnDisable()
+    {
+        Initialize();
+        ObjectManager.Instance.Despwan<ScriptObject>(this);
+    }
 
-        if (!m_cachedAllObjectDict[tag].ContainsKey(findGo))
-        {
-            return null;
-        }
-
-        Dictionary<GameObject, ScriptObject> tempDict = m_cachedAllObjectDict[tag];
-        return (T)tempDict[findGo];
+    private void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
     }
 }

@@ -6,6 +6,11 @@ public class Enemy : EnemyObject
 {
     public void Destroy()
     {
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
         
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIWindow : Object
+public class UIWindow : MonoBehaviour
 {
     private UIManager cachedUIManager;
 

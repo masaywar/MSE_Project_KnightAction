@@ -24,18 +24,17 @@ public class Player : ScriptObject
     {
         prefab = gameObject.GetComponent<SPUM_Prefabs>();
         prefab.PlayAnimation(1);
+        upDownDist = new Vector2(0, rectTransform.anchoredPosition.y);
     }
-            
     private void Move()
     {
-        Vector2 anchorePos = rectTransform.anchoredPosition;
-        rectTransform.anchoredPosition = (state) ? anchorePos + upDownDist : anchorePos - upDownDist;
+        rectTransform.anchoredPosition = (state) ? rectTransform.anchoredPosition - upDownDist * 2 : rectTransform.anchoredPosition + upDownDist * 2;
         state = !state;
 
         int num = !state ? 0 : 1;
-        prefab.PlayAnimation(num);  
+        prefab.PlayAnimation(num);
     }
-
+    // GameManager에서 입력 받는걸로 바꿔야 됨.
     private void Update()
     {
         if (hp < 0)
@@ -46,7 +45,7 @@ public class Player : ScriptObject
             StartCoroutine(OnAnimateDeath());
         }
 
-        if (!isOver) 
+        if (!isOver)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -76,7 +75,7 @@ public class Player : ScriptObject
                 Attack();
                 isAttack = false;
             }
-            hp -= declination*Time.deltaTime;
+            hp -= declination * Time.deltaTime;
         }
     }
 
@@ -100,15 +99,18 @@ public class Player : ScriptObject
         hit = Physics2D.Raycast(ray.origin, ray.direction, rayDist, LayerMask.GetMask("InPlayGame"));
 
         Debug.DrawRay(ray.origin, ray.direction, Color.red, rayDist);
-        
-        if (hit.collider!=null)
+
+        if (hit.collider != null)
         {
             if (hit.collider.tag == "Destroyable")
-                ObjectManager.Instance.FindByTag<EnemyObject> (hit.collider.tag, hit.collider.gameObject).Destroy();
+            {
+                hit.collider.gameObject.SetActive(false);
+            }
+
         }
     }
 
-    private IEnumerator OnAnimateStun() 
+    private IEnumerator OnAnimateStun()
     {
         yield return new WaitForSeconds(0.5f);
         prefab.PlayAnimation(1);
@@ -116,7 +118,7 @@ public class Player : ScriptObject
 
     private IEnumerator OnAnimateDeath()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(.5f);
         Time.timeScale = 0;
     }
 }

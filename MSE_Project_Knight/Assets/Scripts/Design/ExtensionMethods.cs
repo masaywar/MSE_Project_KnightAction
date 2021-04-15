@@ -15,5 +15,15 @@ public static class ExtensionMethod
     {
         return source.Skip(start).Take(count);
     }
+
+    public static T GetTop<T>(this T[] array)
+    {
+        return array[array.Length-1];
+    }
+
+    public static T Top<T>(this List<T> list)
+    {
+        return list[list.Count-1];
+    }
 }
 
