@@ -1,12 +1,12 @@
-ConstellationsAR/[Ll]ibrary/
-ConstellationsAR/[Tt]emp/
-ConstellationsAR/[Oo]bj/
-ConstellationsAR/[Bb]uild/
-ConstellationsAR/[Bb]uilds/
-ConstellationsAR/[Ll]ogs/
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
 
 # Never ignore Asset meta data
-!ConstellationsAR/[Aa]ssets/**/*.meta
+![Aa]ssets/**/*.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # ConstellationsAR/[Aa]ssets/AssetStoreTools*
