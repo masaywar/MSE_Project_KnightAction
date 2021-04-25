@@ -5,79 +5,159 @@ using UnityEngine.UI;
 
 public class Player : ScriptObject
 {
-    public Vector2 upDownDist;
+
+    // Will remove feverTime variable.
+    public float feverTime;
+
     public float rayDist;
     public float declination;
     public float hp;
+
     public int damage;
 
-    private bool isOver = false;
-    private bool isMove = false;
-    private bool isAttack = false;
+    public float ultGage = 0f;
+    public float feverGage = 0f;
 
-    private bool state = true; // true is Not jumping
+    public float ultRate;
+    public float feverRate;
+
+    public Transform upTransform;
+    public Transform downTransform;
+    public Transform feverTransform;
+
+
+    public enum State
+    { 
+        idle,
+        Over,
+        Fever
+    }
+    public enum AttackMode
+    { 
+        Normal,
+        Fever,
+
+    }
+
+    public State state;
+    public AttackMode attackMode;
+
+    private bool isGround = true; // true is Not jumping
+    private bool isFever = false;
+
     private SPUM_Prefabs prefab;
+    private RaycastHit2D[] hits;
 
-    private RaycastHit2D hit;
+    private float deltaTime;
 
     private void Start()
     {
+        deltaTime = GameManager.Instance.deltaTime;
+        collider = gameObject.GetComponent<BoxCollider2D>();
         prefab = gameObject.GetComponent<SPUM_Prefabs>();
         prefab.PlayAnimation(1);
-        upDownDist = new Vector2(0, rectTransform.anchoredPosition.y);
-    }
-    private void Move()
-    {
-        rectTransform.anchoredPosition = (state) ? rectTransform.anchoredPosition - upDownDist * 2 : rectTransform.anchoredPosition + upDownDist * 2;
-        state = !state;
 
-        int num = !state ? 0 : 1;
-        prefab.PlayAnimation(num);
-    }
-    // GameManager에서 입력 받는걸로 바꿔야 됨.
-    private void Update()
-    {
-        if (hp < 0)
-        {
-            hp = 0;
-            isOver = true;
-            prefab.PlayAnimation(2);
-            StartCoroutine(OnAnimateDeath());
-        }
-
-        if (!isOver)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                isAttack = true;
-                prefab.PlayAnimation(4);
-            }
-
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                isMove = true;
-            }
-        }
-    }
+        state = State.idle;
+        attackMode = AttackMode.Normal;
+    }   
 
     private void FixedUpdate()
     {
-        if (!isOver)
+        if (!CheckPlayerDead())
         {
-            if (isMove)
-            {
-                Move();
-                isMove = false;
-            }
-
-            if (isAttack)
-            {
-                Attack();
-                isAttack = false;
-            }
-            hp -= declination * Time.deltaTime;
+            OnPlayerAlive();
+            UpdateByState();
         }
     }
+    
+    private bool CheckPlayerDead()
+        {
+            if (hp < 0)
+            {
+                hp = 0;
+                state = State.Over;
+                return true;
+            }
+
+            return false;
+        }
+
+    private void OnPlayerAlive()
+        {
+            hp -= declination * deltaTime;
+        }
+
+    private void UpdateByState()
+        {
+            switch (state)
+            {
+            case State.idle:
+                break;
+
+            case State.Over:
+                StartCoroutine(OnAnimateDeath());
+                break;
+
+            case State.Fever:
+                OnFeverMode();
+                break;
+            }
+        }
+
+    private void Move()
+    {
+        if (state == State.Fever)
+            return;
+
+        rectTransform.position = isGround ? upTransform.position : downTransform.position;
+
+        isGround = !isGround;
+        int num = !isGround ? 0 : 1;
+        prefab.PlayAnimation(num);
+    }
+
+    private void Attack()
+     {
+
+        hits = attackMode == AttackMode.Normal ?
+            Physics2D.BoxCastAll(collider.bounds.center, collider.bounds.size, 0f, Vector2.right, rayDist, LayerMask.GetMask("InPlayGame")) :
+            Physics2D.BoxCastAll(collider.bounds.center, new Vector2(collider.bounds.size.x, collider.bounds.size.y*10), 0f, Vector2.right, rayDist, LayerMask.GetMask("InPlayGame"));
+
+        foreach (var hit in hits)
+        {
+            if (hit.collider != null && hit.collider.tag == "Destroyable")
+            {
+                hit.collider.gameObject.SetActive(false);
+                UpdateFeverGage();
+                UpdateUltGage();
+            }
+        }
+    }
+
+    private void Ult()
+    {
+        ObjectManager.Instance.DespawnAllByTag<EnemyObject>("Destroyable");
+        ObjectManager.Instance.DespawnAllByTag<EnemyObject>("Undestroyables");
+    }
+
+    // Will Remove OnClickMethod.
+
+    public void OnclickAttack()
+    {
+        Attack();
+        prefab.PlayAnimation(4);
+    }
+
+    public void OnClickJump()
+    {
+        Move();
+    }
+
+    public void OnClickUlt()
+    {
+
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -86,39 +166,76 @@ public class Player : ScriptObject
         if (collision.gameObject.tag == "Destroyable" || collision.gameObject.tag == "Undestroyable")
         {
             hp -= damage;
-            print("Ouch!");
-            prefab.PlayAnimation(3);
             StartCoroutine(OnAnimateStun());
             collision.gameObject.SetActive(false);
         }
     }
-
-    private void Attack()
+    
+    private void UpdateUltGage()
     {
-        Ray2D ray = new Ray2D(transform.position, transform.right);
-        hit = Physics2D.Raycast(ray.origin, ray.direction, rayDist, LayerMask.GetMask("InPlayGame"));
-
-        Debug.DrawRay(ray.origin, ray.direction, Color.red, rayDist);
-
-        if (hit.collider != null)
+        ultGage += ultRate;
+        if (ultGage >= 100)
         {
-            if (hit.collider.tag == "Destroyable")
-            {
-                hit.collider.gameObject.SetActive(false);
-            }
+            ultGage = 100;
+            //UltButton Activate.
+        }
+    }
 
+    private void UpdateFeverGage()
+    {
+        if (feverGage >= 100)
+        {
+            feverGage = 0;
+            state = State.Fever;
+        }
+        else
+        {
+            feverGage += feverRate;
+        }
+    }
+
+    private void OnFeverMode()
+    {
+        attackMode = AttackMode.Fever;
+
+        Vector2 tempPosition = rectTransform.position;
+
+        rectTransform.position = feverTransform.position;
+
+        if (!isFever)
+        {
+            isFever = true;
+            StartCoroutine(OnFeverState(tempPosition));
         }
     }
 
     private IEnumerator OnAnimateStun()
     {
+        prefab.PlayAnimation(3);
         yield return new WaitForSeconds(0.5f);
         prefab.PlayAnimation(1);
     }
 
     private IEnumerator OnAnimateDeath()
     {
+        prefab.PlayAnimation(2);
         yield return new WaitForSeconds(.5f);
         Time.timeScale = 0;
+    }
+
+    private IEnumerator OnFeverState(Vector2 tempPos)
+    {
+        float tempTime = feverTime;
+        while (feverTime > 0)
+        {
+            feverTime -= 1 * deltaTime; 
+            yield return null;
+        }
+
+        attackMode = AttackMode.Normal;
+        state = State.idle;
+        isFever = false;
+        feverTime = tempTime;
+        rectTransform.position = tempPos;
     }
 }

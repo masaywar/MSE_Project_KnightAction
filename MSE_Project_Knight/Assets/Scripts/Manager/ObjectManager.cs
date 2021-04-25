@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class ObjectManager : Singleton<ObjectManager>
 {
-    [SerializeField]
-    private string[] prefabPath;
-    [SerializeField]
-    private int poolingNum;
+    [System.Serializable]
+    public struct PoolPrefab 
+    {
+        public string path;
+        public int poolNum;
+    }
 
+    [SerializeField]
+    private PoolPrefab[] prefabPath;
 
     private Dictionary<string, List<ScriptObject>> m_allObjectDict;
     private Dictionary<string, List<ScriptObject>> m_despawnedObjDict;
@@ -53,45 +57,27 @@ public class ObjectManager : Singleton<ObjectManager>
 
     private void Awake()
     {
-        int idx = 0;
-        foreach (var path in prefabPath)
+        foreach (var prefab in prefabPath)
         {
-            string newPath = path.Replace(@"\", @"/");
+            GameObject parentGo = new GameObject();
+            ScriptObject go = Resources.Load<ScriptObject>(prefab.path);
 
-            try
+            go.name = prefab.path.Split('/').GetTop();
+            go.prefabName = go.name;
+
+            parentGo.name = go.name;
+
+            spawnedObjDict[go.name] = new List<ScriptObject>();
+            despawnedObjDict[go.name] = new List<ScriptObject>();
+
+            for (int k = 0; k < prefab.poolNum; k++)
             {
-                string[] files = Directory.GetFiles(newPath, $"*.prefab");
-
-                foreach (var file in files)
-                {
-                    string newFile = file.Replace(@"\", @"/").Replace($"Assets/Resources/", "").Replace($".prefab", "");
-                    string objName = newFile.Split('/').GetTop();
-
-                    print(newFile);
-                    print(objName);
-
-                    spawnedObjDict[objName] = new List<ScriptObject>();
-                    despawnedObjDict[objName] = new List<ScriptObject>();
-
-                    GameObject go = new GameObject(objName);
-                    go.transform.SetParent(this.transform);
-
-                    for (int k = 0; k < poolingNum; k++) 
-                    {
-                        ScriptObject obj = Instantiate(Resources.Load<ScriptObject>(newFile));
-                        obj.prefabName = objName;
-                        obj.transform.SetParent(go.transform);
-                        obj.gameObject.SetActive(false);
-                    }
-                }
+                ScriptObject obj = Instantiate(go);
+                obj.transform.SetParent(parentGo.transform);
+                obj.gameObject.SetActive(false);
             }
 
-            catch
-            {
-                Debug.Log("Wrong Directory Path!");
-            }
-
-            idx += 1;
+            parentGo.transform.SetParent(transform);
         }
     }
 
@@ -141,9 +127,9 @@ public class ObjectManager : Singleton<ObjectManager>
         value.Remove(go);
         spawnedObjDict[type].Add(go);
 
+        go.transform.SetParent(parent);
         go.transform.position = position;
         go.transform.rotation = rotation;
-        go.transform.SetParent(parent);
         go.gameObject.SetActive(true);
 
         return go;
@@ -181,5 +167,22 @@ public class ObjectManager : Singleton<ObjectManager>
             value.Remove(obj);
             despawnedObjDict[name].Add(obj);
         }
+    }
+
+    public void DespawnAllByTag<T>(string tag) where T : ScriptObject
+    {
+        foreach (var keyValuePair in spawnedObjDict)
+        {
+            foreach (var scriptObject in keyValuePair.Value)
+            {
+                if (scriptObject.tag == tag)
+                    Despwan<T>(scriptObject);
+            }
+        }
+    }
+
+    private void Pooling<T>(Transform prefab, int num) where T : ScriptObject
+    {
+        
     }
 }
