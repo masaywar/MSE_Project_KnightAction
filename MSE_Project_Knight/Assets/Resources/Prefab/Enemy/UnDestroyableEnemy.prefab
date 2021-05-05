@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1230030922549893828}
   m_Layer: 6
   m_Name: UnDestroyableEnemy
-  m_TagString: Destroyable
+  m_TagString: Undestroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,8 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272aa93685430d94bb01f8f969d1369f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabName: 
+  prefabName: UnDestroyableEnemy
   rectTransform: {fileID: 0}
+  rigidbody: {fileID: 0}
+  collider: {fileID: 0}
   speed: 1000
-  destroyable: 0
-  givenScore: 0
+  isDestroyable: 1
+  isUp: 0
+  despawnPlace: {fileID: 0}

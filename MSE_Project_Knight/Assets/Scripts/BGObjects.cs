@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class BGObjects : ScriptObject
 {
-    public int speed;
-    public bool isInvisible;
+    public float speed;
 
     public RectTransform respawnPlace;
     public RectTransform despawnPlace;
 
+
     private void Update()
     {
-        rectTransform.anchoredPosition += Vector2.left * GameManager.Instance.deltaTime * speed;
+        rectTransform.position += Vector3.left * GameManager.Instance.deltaTime * speed;
+
+        if (rectTransform.position.x < despawnPlace.position.x)
+        {
+            rectTransform.position = respawnPlace.position;
+        }
     }
 
-
-    private void OnTriggerEnter(Collider other)
-    {
-        print(other.name);
-        rectTransform.anchoredPosition = respawnPlace.anchoredPosition;
-    }
 }

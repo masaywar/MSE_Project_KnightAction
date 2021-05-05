@@ -23,6 +23,7 @@ public class ScriptObject : MonoBehaviour
         {
             value.Add(this);
         }
+
         else 
         {
             m_cachedAllObjectDict[prefabName] = new List<ScriptObject> { this };
@@ -35,18 +36,4 @@ public class ScriptObject : MonoBehaviour
         this.transform.rotation = Quaternion.identity;
     }
 
-    private void OnEnable() 
-    {
-    }
-
-    private void OnDisable()
-    {
-        Initialize();
-        ObjectManager.Instance.Despwan<ScriptObject>(this);
-    }
-
-    private void OnBecameInvisible()
-    {
-        gameObject.SetActive(false);
-    }
 }

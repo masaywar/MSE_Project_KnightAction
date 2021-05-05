@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : ScriptObject
+public class Player : ScriptObject, Observable
 {
-
     // Will remove feverTime variable.
     public float feverTime;
 
@@ -21,10 +20,9 @@ public class Player : ScriptObject
     public float ultRate;
     public float feverRate;
 
-    public Transform upTransform;
-    public Transform downTransform;
-    public Transform feverTransform;
-
+    public RectTransform upTransform;
+    public RectTransform downTransform;
+    public RectTransform feverTransform;
 
     public enum State
     { 
@@ -35,6 +33,7 @@ public class Player : ScriptObject
     public enum AttackMode
     { 
         Normal,
+        Jump,
         Fever,
 
     }
@@ -65,7 +64,6 @@ public class Player : ScriptObject
     {
         if (!CheckPlayerDead())
         {
-            OnPlayerAlive();
             UpdateByState();
         }
     }
@@ -79,12 +77,8 @@ public class Player : ScriptObject
                 return true;
             }
 
-            return false;
-        }
-
-    private void OnPlayerAlive()
-        {
             hp -= declination * deltaTime;
+            return false;
         }
 
     private void UpdateByState()
@@ -104,70 +98,122 @@ public class Player : ScriptObject
             }
         }
 
-    private void Move()
+    private void Attack()
     {
-        if (state == State.Fever)
-            return;
+        if (TrySetRaycastHitByAttackMode(attackMode, out hits))
+        {
+            foreach (var hit in hits)
+            {
+                OnRaycastHit(hit.collider);
 
-        rectTransform.position = isGround ? upTransform.position : downTransform.position;
+                if (state != State.Fever) break;
+            }
+        }
 
-        isGround = !isGround;
-        int num = !isGround ? 0 : 1;
-        prefab.PlayAnimation(num);
     }
 
-    private void Attack()
-     {
+    private bool TrySetRaycastHitByAttackMode(AttackMode attackMode, out RaycastHit2D[] hits)
+    {
 
-        hits = attackMode == AttackMode.Normal ?
-            Physics2D.BoxCastAll(collider.bounds.center, collider.bounds.size, 0f, Vector2.right, rayDist, LayerMask.GetMask("InPlayGame")) :
-            Physics2D.BoxCastAll(collider.bounds.center, new Vector2(collider.bounds.size.x, collider.bounds.size.y*10), 0f, Vector2.right, rayDist, LayerMask.GetMask("InPlayGame"));
-
-        foreach (var hit in hits)
+        switch (attackMode)
         {
-            if (hit.collider != null && hit.collider.tag == "Destroyable")
+            case AttackMode.Normal:
+                hits = Physics2D.BoxCastAll(
+                    downTransform.position,
+                    downTransform.sizeDelta.normalized,
+                    0,
+                    Vector2.right,
+                    rayDist, LayerMask.GetMask("InPlayGame"));
+
+                Debug.DrawRay(downTransform.position, Vector2.right * rayDist, Color.red);
+                break;
+
+            case AttackMode.Jump:
+                hits = Physics2D.BoxCastAll(
+                    upTransform.position,
+                    upTransform.sizeDelta.normalized,
+                    0,
+                    Vector2.right,
+                    rayDist, LayerMask.GetMask("InPlayGame"));
+
+                Debug.DrawRay(upTransform.position, Vector2.right * rayDist, Color.red);
+                break;
+
+            case AttackMode.Fever:
+                hits = Physics2D.BoxCastAll(
+                    collider.bounds.center, 
+                    new Vector2(collider.bounds.size.x, collider.bounds.size.y * 10), 
+                    0f, 
+                    Vector2.right, 
+                    rayDist, LayerMask.GetMask("InPlayGame"));
+
+                break;
+
+            default:
+                hits = null;
+                break;
+        }
+
+        return hits.Length > 0; 
+    }
+
+    private void OnRaycastHit(Collider2D collider, bool isUlt=false)
+    {
+        if (collider != null && collider)
+        {
+            collider.gameObject.SetActive(false);
+
+            if (!isUlt)
             {
-                hit.collider.gameObject.SetActive(false);
                 UpdateFeverGage();
                 UpdateUltGage();
             }
         }
     }
 
+
     private void Ult()
     {
-        ObjectManager.Instance.DespawnAllByTag<EnemyObject>("Destroyable");
-        ObjectManager.Instance.DespawnAllByTag<EnemyObject>("Undestroyables");
+        Physics2D.BoxCastAll(
+            Vector2.zero,
+            new Vector2(16,9),
+            0,
+            Vector2.zero,
+            0, LayerMask.GetMask("InPlayGame")
+            ).ForEach<RaycastHit2D>(hit=> OnRaycastHit(hit.collider));
     }
 
     // Will Remove OnClickMethod.
 
     public void OnclickAttack()
     {
+        if (attackMode != AttackMode.Fever)
+            attackMode = AttackMode.Normal;
+
         Attack();
-        prefab.PlayAnimation(4);
-    }
+    }   
 
     public void OnClickJump()
     {
-        Move();
+        if(attackMode != AttackMode.Fever)
+            attackMode = AttackMode.Jump;
+
+        Attack();
     }
 
     public void OnClickUlt()
     {
-
+        Ult();
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print(string.Format("Collision Detected with {0}", collision.gameObject.tag));
-
         if (collision.gameObject.tag == "Destroyable" || collision.gameObject.tag == "Undestroyable")
         {
             hp -= damage;
             StartCoroutine(OnAnimateStun());
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
         }
     }
     
@@ -183,14 +229,13 @@ public class Player : ScriptObject
 
     private void UpdateFeverGage()
     {
-        if (feverGage >= 100)
+        if (feverGage < 100)
+            feverGage += feverRate;
+
+        else
         {
             feverGage = 0;
             state = State.Fever;
-        }
-        else
-        {
-            feverGage += feverRate;
         }
     }
 

@@ -35,33 +35,4 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
-
-    private void Update()
-    {
-        if (!isOver) 
-        {
-            if(!isCoroutineActive)
-                StartCoroutine(SpawnEnemy("DestroyableEnemy"));
-
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-                print(touch.position);
-            }
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        
-    }
-
-    private IEnumerator SpawnEnemy(string type) 
-    {
-        isCoroutineActive = true;
-        yield return new WaitForSeconds(3f);
-        EnemyObject spawnedObj = ObjectManager.Instance.Spawn<EnemyObject>(type, spawnRect.position, spawnRect);
-        print(spawnedObj.transform.position);
-        isCoroutineActive = false;
-    }
 }
