@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InGameController : MonoBehaviour, Observer
+public class InGameController : Singleton<InGameController>
 {
     private System.Random random = new System.Random();
 
@@ -16,6 +16,12 @@ public class InGameController : MonoBehaviour, Observer
     public Transform activeContainer;
 
     public Player player;
+    public List<EnemyObject> enemyList = new List<EnemyObject>();
+
+
+    //Pattern inner class will be removed
+
+    [System.Serializable]
     private class Pattern
     {
         /// <summary>
@@ -27,26 +33,58 @@ public class InGameController : MonoBehaviour, Observer
         ///      Length of Pattern must be 16.
         /// </summary>
 
-        public string[] unparsedPattern;
+        [SerializeField]
+        public List<string> unparsedPattern = new List<string>();
+
+        private string[] symbols = new string[] { "UB", "UH", "DB", "DH" };
 
         public Pattern()
         {
-            unparsedPattern = new string[] {
-                "UBDBUBDBUBDBUBDB"
-            };
+
+            MakePattern(16).ForEach<string>(s =>
+            {
+                AddPattern(s);
+                print(s);
+            });
+
         }
 
-        public string  GetPattern(int index)
+        public string GetPattern(int index)
         {
-            if (index < unparsedPattern.Length)
+            if (index < unparsedPattern.Count)
                 return unparsedPattern[index];
 
             Debug.Log("Index Error, Set index parameter less than unparsedPattern's length");
             return null;
         }
 
+        private void AddPattern(string pattern)
+        {
+            unparsedPattern.Add(pattern);
+        }
+
+        private IEnumerable<string> MakePattern(int count)
+        {
+            int tempCount = 0;
+
+            while (tempCount < count)
+            {
+                string pattern = "";
+                for (int i = 0; i < 8; i++)
+                {
+                    System.Random rand = new System.Random(150);
+
+                    int idx = rand.Next(0, 4);
+                    pattern += symbols[idx];
+                }
+
+                tempCount += 1;
+                yield return pattern;
+            }
+        }
     }
 
+    [SerializeField]
     private Pattern pattern = new Pattern();
 
     private void Start()
@@ -71,10 +109,10 @@ public class InGameController : MonoBehaviour, Observer
 
         for (int i = 1; i < unparsedPattern.Length; i += 2)
         {
-            isGround = unparsedPattern[i-1] == 'D' ? true : false;
+            isGround = unparsedPattern[i - 1] == 'D' ? true : false;
             isDestroyable = unparsedPattern[i] == 'B' ? true : false;
 
-            stateList.Add(new bool[] {isGround, isDestroyable});
+            stateList.Add(new bool[] { isGround, isDestroyable });
         }
 
         return stateList;
@@ -92,7 +130,9 @@ public class InGameController : MonoBehaviour, Observer
 
     private IEnumerator SpawnCoroutine()
     {
-        int idx = random.Next(pattern.unparsedPattern.Length);
+        int idx = random.Next(pattern.unparsedPattern.Count);
+
+
         string unparsedPattern = pattern.GetPattern(idx);
 
         if (unparsedPattern.Length != 16)
@@ -110,13 +150,13 @@ public class InGameController : MonoBehaviour, Observer
             ///
 
             bool isGround = state[0];
-            string tag = state[1] ? "DestroyableEnemy" : "UndestroyableEnemy";
+            string tag = state[1] ? "DestroyableEnemy" : "UnDestroyableEnemy";
 
             int spawnIdx = isGround ? 0 : 1;
-
             var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, spawnPlace.GetChild(spawnIdx).position, spawnPlace.GetChild(2));
 
             spawned.OnEnemySpawn(isGround);
+            enemyList.Add(spawned);
 
             yield return wait;
         }
@@ -124,5 +164,26 @@ public class InGameController : MonoBehaviour, Observer
         yield return new WaitForSeconds(1.0f);
 
         isSpawning = false;
+    }
+
+    public void OnDestroyEnemy(GameObject enemy, bool force = false)
+    {
+        EnemyObject tempEnemy = null;
+        int findIdx = 0;
+
+        tempEnemy = enemyList[findIdx = enemyList.FindIndex(e => enemy.Equals(e.gameObject))];
+
+        if (findIdx < 0 || findIdx > enemyList.Count)
+        {
+            return;
+        }
+
+        enemyList.RemoveAt(findIdx);
+        tempEnemy.DestroyWithAnim(force);
+    }
+
+    public void Unsubscribe(EnemyObject enemy)
+    {
+        enemyList.Remove(enemy);
     }
 }

@@ -131,7 +131,7 @@ MonoBehaviour:
   rectTransform: {fileID: 0}
   rigidbody: {fileID: 0}
   collider: {fileID: 0}
-  speed: 1000
+  speed: 800
   isDestroyable: 1
   isUp: 0
   despawnPlace: {fileID: 4329159273324697811, guid: 8f11db6da3204d440bae2e0aebf72686, type: 3}
