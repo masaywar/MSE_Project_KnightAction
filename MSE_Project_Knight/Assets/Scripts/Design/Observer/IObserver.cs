@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IObserver
 {
-    public abstract void GetUpdate(string name, string diff);
+    public void Notify();
+    public void UpdateSelf();
 }
 

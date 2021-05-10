@@ -539,24 +539,6 @@ MonoBehaviour:
   activeContainer: {fileID: 0}
   player: {fileID: 0}
   enemyList: []
-  pattern:
-    unparsedPattern:
-    - UBUBUBUBUBUBUBUB
-    - UBDBUBDBUBDBUBDB
-    - UBUBUBUBUHUHUHUH
-    - UBDBUBDHUHDHUHUB
-    - UBUBUHUHUHDBDBDB
-    - UBDBUHDHDBUBDHUH
-    - UBUBUHUHDBDHDHUB
-    - UBDBUHUBDBUHUBDB
-    - UBUHUHDBDHDHUBUH
-    - UBDHUHUBDHDBUHDH
-    - UBUHDBDHDHUBUHDB
-    - UBDHDBUHUBDHDBUH
-    - UBUHDBDHUBUHDBDH
-    - UBDHDBUHUHUBDHDB
-    - UBUHDBUBUHDBDHUH
-    - UBDHDHDBUHUHUBDH
 --- !u!1001 &427798862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -999,7 +981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabPath:
   - path: Prefab/Enemy/DestroyableEnemy
-    poolNum: 50
+    poolNum: 500
   - path: Prefab/Enemy/UnDestroyableEnemy
     poolNum: 50
 --- !u!1 &661519187
@@ -3738,7 +3720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098786629297096575, guid: 3b4e99c49902d424fbcd2fdb0e7ecfc4, type: 3}
       propertyPath: feverRate
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5098786629297096575, guid: 3b4e99c49902d424fbcd2fdb0e7ecfc4, type: 3}
       propertyPath: feverTime

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : ScriptObject, Observable
+public class Player : ScriptObject
 {
     // Will remove feverTime variable.
     public float feverTime;
@@ -24,7 +24,7 @@ public class Player : ScriptObject, Observable
     public RectTransform downTransform;
     public RectTransform feverTransform;
 
-    public InGameController inGameController;
+    private InGameController inGameController;
 
     public enum State
     { 
@@ -60,6 +60,8 @@ public class Player : ScriptObject, Observable
 
         state = State.idle;
         attackMode = AttackMode.Normal;
+
+        inGameController = InGameController.Instance;
     }   
 
     private void FixedUpdate()
@@ -111,12 +113,10 @@ public class Player : ScriptObject, Observable
                 if (state != State.Fever) break;
             }
         }
-
     }
 
     private bool TrySetRaycastHitByAttackMode(AttackMode attackMode, out RaycastHit2D[] hits)
     {
-
         switch (attackMode)
         {
             case AttackMode.Normal:
@@ -165,7 +165,7 @@ public class Player : ScriptObject, Observable
         {
             print(isUlt || isFever);
             inGameController.OnDestroyEnemy(collider.gameObject, isUlt || isFever);
-
+            
             if (!isUlt)
             {
                 UpdateFeverGage();
@@ -174,6 +174,24 @@ public class Player : ScriptObject, Observable
         }
     }
 
+    public void Notify(string msg)
+    { 
+        
+    }
+
+    public void NotifyUlt()
+    { 
+    
+    }
+
+    public void NotifyDestroy()
+    { 
+    
+    }
+
+    public void NotifyDead()
+    { 
+    }
 
     private void Ult()
     {

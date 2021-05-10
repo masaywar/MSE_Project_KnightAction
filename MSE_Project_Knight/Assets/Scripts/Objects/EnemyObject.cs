@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyObject : ScriptObject, Observable
+public class EnemyObject : ScriptObject
 {
     public int speed;
 
@@ -43,6 +43,11 @@ public class EnemyObject : ScriptObject, Observable
     public void OnEnemySpawn(bool onGround)
     {
         isUp = onGround ? false : true;
+    }
+
+    public void Notify()
+    {
+        Destroy();
     }
 
     public void Destroy()
