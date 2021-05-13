@@ -26,11 +26,11 @@ public class ObjectManager : Singleton<ObjectManager>
             if (m_allObjectDict == null)
             {
                 m_allObjectDict = new Dictionary<string, List<ScriptObject>>();
-
             }
             return m_allObjectDict;
         }
     }
+
     public Dictionary<string, List<ScriptObject>> spawnedObjDict
     {
         get
@@ -43,6 +43,7 @@ public class ObjectManager : Singleton<ObjectManager>
             return m_spawnedObjDict;
         }
     }
+
     public Dictionary<string, List<ScriptObject>> despawnedObjDict
     {
         get

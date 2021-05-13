@@ -29,6 +29,7 @@ public class ClientUserAccess : MonoBehaviour
     public static ClientUserAccess CUAinstance = null;  
 
     //Awake is always called before any Start functions
+
     void Awake()
     {
         //Check if instance already exists
@@ -45,20 +46,6 @@ public class ClientUserAccess : MonoBehaviour
         }   
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //print("wow");
-        //PostToDatabase();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //Debug.Log(user.userName);
     }
 
     public void SignUpUserButton()
@@ -79,10 +66,10 @@ public class ClientUserAccess : MonoBehaviour
     }
     public void GetAllRankButton()
     {
-        getAllRank();
+        GetAllRank();
     }
 
-    public void getPlayerRankButton()
+    public void GetPlayerRankButton()
     {
         getPlayerRank(usernameText.text);
     }
@@ -95,7 +82,7 @@ public class ClientUserAccess : MonoBehaviour
 
         UserClient returnValue = new UserClient();
 
-        RestClient.Post<UserClient>(localURL + "signupuser", userData).Then(
+        RestClient.Post<UserClient>(realURL + "signupuser", userData).Then(
             response =>
             {
                 if (response.email.Equals("error")){
@@ -125,15 +112,19 @@ public class ClientUserAccess : MonoBehaviour
         return returnValue;
     }
 
-
-
     public UserClient SignInUser(string email, string password)
     {
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
 
+#if UNITY_EDITOR
+        SceneManager.LoadScene("Menu");
+        return null;
+#endif
+
+
         UserClient returnValue = new UserClient();
 
-        RestClient.Post<UserClient>(localURL + "signinuser", userData).Then(
+        RestClient.Post<UserClient>(realURL + "signinuser", userData).Then(
             response =>
             {
                 if (response == null){
@@ -157,7 +148,7 @@ public class ClientUserAccess : MonoBehaviour
                     user.password = response.password;
                     user.userVersion = response.userVersion;
 
-                    PlayerClient p = getPlayer(user.userName);
+                    PlayerClient p = GetPlayer(user.userName);
                     player.companion = p.companion;
                     player.coin = p.coin;
 
@@ -181,7 +172,7 @@ public class ClientUserAccess : MonoBehaviour
 
         UserClient returnValue = new UserClient();
 
-        RestClient.Post<UserClient>(localURL + "updateuser", userData).Then(
+        RestClient.Post<UserClient>(realURL + "updateuser", userData).Then(
             response =>
             {
                 if (!response.userVersion.Equals("")){
@@ -212,7 +203,7 @@ public class ClientUserAccess : MonoBehaviour
 
         UserClient returnValue = new UserClient();
 
-        RestClient.Post<UserClient>(localURL + "deleteuser", userData).Then(
+        RestClient.Post<UserClient>(realURL + "deleteuser", userData).Then(
             response =>
             {
                 if (!response.userVersion.Equals("")){
@@ -230,13 +221,13 @@ public class ClientUserAccess : MonoBehaviour
         return returnValue;
     }
 
-    public PlayerClient getPlayer (string name){
+    public PlayerClient GetPlayer (string name){
 
         string userData = "{\"userName\":\"" + name + "\",\"rank\":" + 123 + ",\"score\":" + 123 + "}";
 
         PlayerClient returnValue = new PlayerClient();
 
-        RestClient.Post<PlayerClient>(localURL + "getplayer", userData).Then(
+        RestClient.Post<PlayerClient>(realURL + "getplayer", userData).Then(
             response =>
             {
                 returnValue = response;
@@ -252,11 +243,11 @@ public class ClientUserAccess : MonoBehaviour
 
 
     // Json array를 받아오지 못하는 문제점이 있음
-    public List<Rank> getAllRank()
+    public List<Rank> GetAllRank()
     {
         List<Rank> returnValue = new List<Rank>();
 
-        RestClient.Get<List<Rank>>(localURL + "sorted").Then(
+        RestClient.Get<List<Rank>>(realURL + "sorted").Then(
             response =>
             {
                 Debug.Log("Checking");
@@ -299,7 +290,7 @@ public class ClientUserAccess : MonoBehaviour
 
         Rank returnValue = new Rank();
 
-        RestClient.Post<Rank>(localURL + "getrankscore", userData).Then(
+        RestClient.Post<Rank>(realURL + "getrankscore", userData).Then(
             response =>
             {
                 returnValue = response;
@@ -313,7 +304,6 @@ public class ClientUserAccess : MonoBehaviour
         return returnValue;
 
     }
-
 
 
 }
