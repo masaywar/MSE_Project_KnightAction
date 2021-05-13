@@ -2,30 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class GamePlayUI : UIWindow
+public class GamePlayUI : UIWindow, IWindowObserver
 {
     private InGameController inGameController;
 
-    public List<Button> buttonList = new List<Button>();
+    [SerializeField]
+    private List<Button> buttons = new List<Button>();
+
+    public Button attack;
+    public Button jump;
+    public Button ult;
+
 
     private void Start()
     {
         inGameController = InGameController.Instance;
+        inGameController.Subscribe(this);
     }
 
     public void OnClickJump() 
     {
-        //Notify to ingameController that player got jump attck message
+        Notify(this, inGameController.PlayerJump);
     }
     public void OnClickAttack() 
     {
-        //Notify to ingameController that player got attack message
+        Notify(this, inGameController.PlayerAttack);
     }
     public void OnClickUlt() 
     {
-        //Notify to ingameController that player got ult message
+        Notify(this, inGameController.PlayerUlt);
+        DeactivateUlt();
+    }
 
-        //Notify()
+    public void Notify(IObserver o, Action action) 
+    {
+        action();
+    }
+
+    public void ActivateUlt()
+    {
+        ult.interactable = true;
+    }
+
+    public void DeactivateUlt()
+    {
+        ult.interactable = false;
+    }
+
+
+    private void OnDisable()
+    {
+        inGameController.Unsubscribe(this);
     }
 }

@@ -4,7 +4,5 @@ using UnityEngine;
 
 public interface IObservable
 {
-    public void Subscribe(IObserver o);
-    public void Unsubscribe(IObserver o);
-
+   
 }

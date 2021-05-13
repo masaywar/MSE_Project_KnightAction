@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : ScriptObject
+using System;
+
+public class Player : ScriptObject, IPlayerObserver
 {
     // Will remove feverTime variable.
     public float feverTime;
@@ -19,6 +21,11 @@ public class Player : ScriptObject
 
     public float ultRate;
     public float feverRate;
+    
+    public int totalScore = 0;
+    public int score = 30;
+
+    private int combo = 0;
 
     public RectTransform upTransform;
     public RectTransform downTransform;
@@ -62,6 +69,7 @@ public class Player : ScriptObject
         attackMode = AttackMode.Normal;
 
         inGameController = InGameController.Instance;
+        inGameController.Subscribe(this);
     }   
 
     private void FixedUpdate()
@@ -81,6 +89,8 @@ public class Player : ScriptObject
                 return true;
             }
 
+            declination *= 1.001f;
+
             hp -= declination * deltaTime;
             return false;
         }
@@ -94,6 +104,7 @@ public class Player : ScriptObject
 
             case State.Over:
                 StartCoroutine(OnAnimateDeath());
+                Notify(this, inGameController.OnPlayerDead);
                 break;
 
             case State.Fever:
@@ -163,34 +174,14 @@ public class Player : ScriptObject
     {
         if (collider != null && collider)
         {
-            print(isUlt || isFever);
-            inGameController.OnDestroyEnemy(collider.gameObject, isUlt || isFever);
-            
+            Notify(this, ()=> inGameController.OnDestroyEnemy(collider.gameObject, isUlt || isFever));
+
             if (!isUlt)
             {
                 UpdateFeverGage();
                 UpdateUltGage();
             }
         }
-    }
-
-    public void Notify(string msg)
-    { 
-        
-    }
-
-    public void NotifyUlt()
-    { 
-    
-    }
-
-    public void NotifyDestroy()
-    { 
-    
-    }
-
-    public void NotifyDead()
-    { 
     }
 
     private void Ult()
@@ -225,8 +216,14 @@ public class Player : ScriptObject
     public void OnClickUlt()
     {
         Ult();
+        ultGage = 0;
     }
 
+
+    public void Notify(IObserver o, Action action)
+    {
+        action();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -244,13 +241,13 @@ public class Player : ScriptObject
         if (ultGage >= 100)
         {
             ultGage = 100;
-            //UltButton Activate.
+            Notify(this, inGameController.OnUlt);
         }
     }
 
     private void UpdateFeverGage()
     {
-        if (feverGage < 100)
+        if (state != State.Fever && feverGage < 100)
             feverGage += feverRate;
 
         else
@@ -265,7 +262,7 @@ public class Player : ScriptObject
         if (!isFever)
         {
             attackMode = AttackMode.Fever;
-
+            Time.timeScale = 2;
             Vector2 tempPosition = rectTransform.position;
 
             rectTransform.position = feverTransform.position;
@@ -285,7 +282,6 @@ public class Player : ScriptObject
     {
         prefab.PlayAnimation(2);
         yield return new WaitForSeconds(.5f);
-        Time.timeScale = 0;
     }
 
     private IEnumerator OnFeverState(Vector2 tempPos)
@@ -302,5 +298,6 @@ public class Player : ScriptObject
         isFever = false;
         feverTime = tempTime;
         rectTransform.position = tempPos;
+        Time.timeScale = 1;
     }
 }

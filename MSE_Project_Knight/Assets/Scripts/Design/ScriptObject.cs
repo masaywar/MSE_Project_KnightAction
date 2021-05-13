@@ -5,12 +5,14 @@ using UnityEngine;
 public class ScriptObject : MonoBehaviour
 {
     public string prefabName;
+    public float speed;
     
     public RectTransform rectTransform;
     public Rigidbody2D rigidbody;
     public Collider2D collider;
 
     public Dictionary<string, List<ScriptObject>> m_cachedAllObjectDict;
+
 
     private void Awake()
     {
@@ -34,6 +36,11 @@ public class ScriptObject : MonoBehaviour
     {
         this.transform.position = Vector3.zero;
         this.transform.rotation = Quaternion.identity;
+    }
+
+    public void Stop()
+    {
+        speed = 0;
     }
 
 }

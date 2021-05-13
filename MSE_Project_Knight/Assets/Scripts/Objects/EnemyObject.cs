@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyObject : ScriptObject
+public class EnemyObject : ScriptObject, IEnemyObserver
 {
-    public int speed;
-
     public bool isDestroyable = true;
     public bool isUp = false;
 
     public Rigidbody2D despawnPlace;
     public Transform despawnContainer;
 
-    private InGameController inGameController;
 
+    private InGameController inGameController;
     private bool isDead = false;
 
     private void Start()
@@ -40,11 +38,6 @@ public class EnemyObject : ScriptObject
         return despawnPlace.position.x < rectTransform.position.x * rectTransform.localScale.x;
     }
 
-    public void OnEnemySpawn(bool onGround)
-    {
-        isUp = onGround ? false : true;
-    }
-
     public void Notify()
     {
         Destroy();
@@ -67,9 +60,6 @@ public class EnemyObject : ScriptObject
 
     private void Destroy(bool isAnim, bool force)
     {
-
-        inGameController.Unsubscribe(this);
-
         if (isDestroyable || force)
         {
             isDead = true;
@@ -103,5 +93,5 @@ public class EnemyObject : ScriptObject
         isDead = false;
         ObjectManager.Instance.Despawn<ScriptObject>(this);
     }
-
+    
 }

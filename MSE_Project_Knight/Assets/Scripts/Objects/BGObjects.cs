@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BGObjects : ScriptObject
 {
-    public float speed;
-
     public RectTransform respawnPlace;
     public RectTransform despawnPlace;
 
@@ -19,5 +17,4 @@ public class BGObjects : ScriptObject
             rectTransform.position = respawnPlace.position;
         }
     }
-
 }
