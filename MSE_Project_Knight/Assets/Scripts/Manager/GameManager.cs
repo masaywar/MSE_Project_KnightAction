@@ -8,6 +8,10 @@ public class GameManager : Singleton<GameManager>
     public float deltaTime;
     public RectTransform spawnRect;
 
+    //For Debug
+
+    string path = "Patterns/pattern_1";
+
     public enum GameState
     { 
         start, load, main
@@ -15,12 +19,12 @@ public class GameManager : Singleton<GameManager>
 
     public GameState gameState = GameState.start;
 
-    private bool isCoroutineActive = false;
-
-
+    //For test
+    public Pattern pattern;
     private void Awake()
     {
         deltaTime = Time.deltaTime;
+        pattern = new Pattern(path);
         switch (gameState)
         {
             case GameState.start:
@@ -36,32 +40,5 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Update()
-    {
-        if (!isOver) 
-        {
-            if(!isCoroutineActive)
-                StartCoroutine(SpawnEnemy("DestroyableEnemy"));
 
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-                print(touch.position);
-            }
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        
-    }
-
-    private IEnumerator SpawnEnemy(string type) 
-    {
-        isCoroutineActive = true;
-        yield return new WaitForSeconds(3f);
-        EnemyObject spawnedObj = ObjectManager.Instance.Spawn<EnemyObject>(type, spawnRect.position, spawnRect);
-        print(spawnedObj.transform.position);
-        isCoroutineActive = false;
-    }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ObjectManager : Singleton<ObjectManager>
 {
     [System.Serializable]
-    public struct PoolPrefab 
+    public struct PoolPrefab
     {
         public string path;
         public int poolNum;
@@ -45,7 +45,7 @@ public class ObjectManager : Singleton<ObjectManager>
     }
     public Dictionary<string, List<ScriptObject>> despawnedObjDict
     {
-        get 
+        get
         {
             if (m_despawnedObjDict == null)
             {
@@ -73,12 +73,17 @@ public class ObjectManager : Singleton<ObjectManager>
             for (int k = 0; k < prefab.poolNum; k++)
             {
                 ScriptObject obj = Instantiate(go);
-                obj.transform.SetParent(parentGo.transform);
-                obj.gameObject.SetActive(false);
+                InitSpawnedObject(obj, parentGo.transform);
             }
 
             parentGo.transform.SetParent(transform);
         }
+    }
+
+    private void InitSpawnedObject(ScriptObject spawned, Transform parentGo) 
+    {
+        spawned.transform.SetParent(parentGo);
+        spawned.gameObject.SetActive(false);
     }
 
     public T Find<T>(ScriptObject obj) where T : ScriptObject
@@ -99,7 +104,7 @@ public class ObjectManager : Singleton<ObjectManager>
         return default(T);
     }
 
-    public T FindByName<T>(string name, GameObject go) where T:ScriptObject
+    public T FindByName<T>(string name, GameObject go) where T : ScriptObject
     {
         if (!m_allObjectDict.TryGetValue(name, out var value))
         {
@@ -114,25 +119,32 @@ public class ObjectManager : Singleton<ObjectManager>
         return default(T);
     }
 
-    public T Spawn<T>(string type, Vector3 position, Quaternion rotation, Transform parent) where T:ScriptObject
+    private void SetTransform(Transform spawnedTransform, Vector3 position, Quaternion rotation, Transform parent)
     {
-        if (despawnedObjDict.TryGetValue(type, out var value))
+        if (spawnedTransform == null)
+            return;
+
+        spawnedTransform.position = position;
+        spawnedTransform.rotation = rotation;
+        spawnedTransform.SetParent(parent);
+    }
+
+    public T Spawn<T>(string type, Vector3 position, Quaternion rotation, Transform parent) where T : ScriptObject
+    {
+        if (!despawnedObjDict.TryGetValue(type, out var value))
         {
-            if (value.Count == 0)
-                return default(T);
+            return default(T);
         }
 
-        T go = (T)value.Top();
+        T spawnedObject = (T)value.Top();
 
-        value.Remove(go);
-        spawnedObjDict[type].Add(go);
+        value.Remove(spawnedObject);
+        spawnedObjDict[type].Add(spawnedObject);
 
-        go.transform.SetParent(parent);
-        go.transform.position = position;
-        go.transform.rotation = rotation;
-        go.gameObject.SetActive(true);
+        SetTransform(spawnedObject.transform, position, rotation, parent);
+        spawnedObject.gameObject.SetActive(true);
 
-        return go;
+        return spawnedObject;
     }
 
     public T Spawn<T>(string type) where T : ScriptObject
@@ -159,30 +171,32 @@ public class ObjectManager : Singleton<ObjectManager>
         return Spawn<T>(type, position, rotation, null);
     }
 
-    public void Despwan<T>(ScriptObject obj) where T : ScriptObject
+    public void Despawn<T>(ScriptObject obj) where T : ScriptObject
     {
-        string name = obj.prefabName;
-        if (spawnedObjDict.TryGetValue(name, out var value))
+        string prefabName = obj.prefabName;
+        if (spawnedObjDict.TryGetValue(prefabName, out var value))
         {
             value.Remove(obj);
-            despawnedObjDict[name].Add(obj);
+            despawnedObjDict[prefabName].Add(obj);
         }
+     
+        obj.gameObject.SetActive(false);
     }
 
-    public void DespawnAllByTag<T>(string tag) where T : ScriptObject
+    public void DespawnAllWithTag<T>(string key, string tag) where T : ScriptObject
     {
-        foreach (var keyValuePair in spawnedObjDict)
+        if (spawnedObjDict.TryGetValue(key, out var value))
         {
-            foreach (var scriptObject in keyValuePair.Value)
-            {
-                if (scriptObject.tag == tag)
-                    Despwan<T>(scriptObject);
-            }
-        }
-    }
+            List<ScriptObject> despawnList = new List<ScriptObject>();
 
-    private void Pooling<T>(Transform prefab, int num) where T : ScriptObject
-    {
-        
+            value.ForEach(obj =>
+            {
+                if (obj.tag == tag)
+                    despawnList.Add(obj);
+            });
+
+            despawnList.ForEach(obj => Despawn<ScriptObject>(obj));
+        }
+
     }
 }

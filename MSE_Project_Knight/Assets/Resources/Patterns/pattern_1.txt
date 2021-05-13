@@ -1,0 +1,16 @@
+Pos	Type	Wait
+U	B	0.1f
+D	B	0.2f
+D	B	0.2f
+U	B	0.2f
+U	B	0.2f
+U	B	0.1f
+U	B	0.1f
+U	B	0.1f
+D	B	0.2f
+D	B	0.2f
+U	B	0.2f
+U	B	0.2f
+U	B	0.2f
+U	B	0.1f
+D	B	0.2f
