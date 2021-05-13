@@ -7,6 +7,7 @@ public class EnemyObject : ScriptObject
     public int speed;
     public bool destroyable = true;
     public int givenScore;
+
     public virtual void Move()
     {
         rectTransform.anchoredPosition += Vector2.left*speed*GameManager.Instance.deltaTime;
@@ -24,5 +25,4 @@ public class EnemyObject : ScriptObject
             gameObject.SetActive(false);
         }
     }
-
 }

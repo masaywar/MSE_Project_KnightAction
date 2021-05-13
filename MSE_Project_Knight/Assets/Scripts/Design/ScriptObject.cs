@@ -5,13 +5,19 @@ using UnityEngine;
 public class ScriptObject : MonoBehaviour
 {
     public string prefabName;
+    
     public RectTransform rectTransform;
+    public Rigidbody2D rigidbody;
+    public Collider2D collider;
+
     public Dictionary<string, List<ScriptObject>> m_cachedAllObjectDict;
 
     private void Awake()
     {
         m_cachedAllObjectDict = ObjectManager.Instance.allObjectDict;
         rectTransform = GetComponent<RectTransform>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<Collider2D>();
 
         if (m_cachedAllObjectDict.TryGetValue(prefabName, out var value))
         {
@@ -31,7 +37,6 @@ public class ScriptObject : MonoBehaviour
 
     private void OnEnable() 
     {
-        
     }
 
     private void OnDisable()
