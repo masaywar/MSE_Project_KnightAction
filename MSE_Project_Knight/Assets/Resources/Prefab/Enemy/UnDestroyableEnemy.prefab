@@ -128,10 +128,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabName: UnDestroyableEnemy
+  speed: 800
   rectTransform: {fileID: 0}
   rigidbody: {fileID: 0}
   collider: {fileID: 0}
-  speed: 800
   isDestroyable: 0
   isUp: 0
   despawnPlace: {fileID: 4329159273324697811, guid: 8f11db6da3204d440bae2e0aebf72686, type: 3}

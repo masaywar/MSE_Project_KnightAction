@@ -14,7 +14,9 @@ public class GamePlayUI : UIWindow, IWindowObserver
     public Button attack;
     public Button jump;
     public Button ult;
+    public Button setting;
 
+    public RectTransform settingPanel;
 
     private void Start()
     {
@@ -34,6 +36,13 @@ public class GamePlayUI : UIWindow, IWindowObserver
     {
         Notify(this, inGameController.PlayerUlt);
         DeactivateUlt();
+    }
+
+    public void OnClickSetting()
+    {
+        Time.timeScale = 0;
+        settingPanel.gameObject.SetActive(true);
+
     }
 
     public void Notify(IObserver o, Action action) 

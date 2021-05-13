@@ -8,13 +8,13 @@ public class BGObjects : ScriptObject
     public RectTransform despawnPlace;
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         rectTransform.position += Vector3.left * GameManager.Instance.deltaTime * speed;
 
         if (rectTransform.position.x < despawnPlace.position.x)
         {
-            rectTransform.position = respawnPlace.position;
+            rectTransform.position = new Vector2(respawnPlace.position.x, rectTransform.position.y);
         }
     }
 }

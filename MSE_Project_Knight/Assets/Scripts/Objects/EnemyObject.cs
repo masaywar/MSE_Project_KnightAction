@@ -35,7 +35,7 @@ public class EnemyObject : ScriptObject, IEnemyObserver
 
     private bool CheckValidPos()
     {
-        return despawnPlace.position.x < rectTransform.position.x * rectTransform.localScale.x;
+        return despawnPlace.position.x < rectTransform.position.x;
     }
 
     public void Notify()

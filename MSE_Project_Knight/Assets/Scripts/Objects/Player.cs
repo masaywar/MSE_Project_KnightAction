@@ -22,14 +22,11 @@ public class Player : ScriptObject, IPlayerObserver
     public float ultRate;
     public float feverRate;
     
-    public int totalScore = 0;
-    public int score = 30;
-
-    private int combo = 0;
-
     public RectTransform upTransform;
     public RectTransform downTransform;
     public RectTransform feverTransform;
+
+    public AudioSource audioSource;
 
     private InGameController inGameController;
 
@@ -70,6 +67,8 @@ public class Player : ScriptObject, IPlayerObserver
 
         inGameController = InGameController.Instance;
         inGameController.Subscribe(this);
+
+        audioSource = GetComponent<AudioSource>();
     }   
 
     private void FixedUpdate()
@@ -81,48 +80,59 @@ public class Player : ScriptObject, IPlayerObserver
     }
     
     private bool CheckPlayerDead()
+    {
+        if (state == State.Over) return true;
+
+        if (hp <= 0)
         {
-            if (hp < 0)
-            {
-                hp = 0;
-                state = State.Over;
-                return true;
-            }
-
-            declination *= 1.001f;
-
-            hp -= declination * deltaTime;
-            return false;
+            hp = 0;
+            state = State.Over;
         }
+
+        declination *= 1.001f;
+
+        hp -= declination * deltaTime;
+        return false;
+    }
 
     private void UpdateByState()
+    {
+        switch (state)
         {
-            switch (state)
-            {
-            case State.idle:
-                break;
+        case State.idle:
+            break;
 
-            case State.Over:
-                StartCoroutine(OnAnimateDeath());
-                Notify(this, inGameController.OnPlayerDead);
-                break;
+        case State.Over:
+            StartCoroutine(OnAnimateDeath());
+            break;
 
-            case State.Fever:
-                OnFeverMode();
-                break;
-            }
+        case State.Fever:
+            OnFeverMode();
+            break;
         }
+    }
 
     private void Attack()
     {
         if (TrySetRaycastHitByAttackMode(attackMode, out hits))
         {
+            SoundManager.Instance.PlayOneShot("Jab", audioSource);
+
             foreach (var hit in hits)
             {
                 OnRaycastHit(hit.collider);
 
                 if (state != State.Fever) break;
             }
+        }
+
+        else 
+        {
+            SoundManager.Instance.PlayOneShot("Swing", audioSource);
+            Notify(this, () => {
+                inGameController.combo = 0;
+                inGameController.score = 30;
+            });
         }
     }
 
@@ -172,7 +182,7 @@ public class Player : ScriptObject, IPlayerObserver
 
     private void OnRaycastHit(Collider2D collider, bool isUlt=false)
     {
-        if (collider != null && collider)
+        if (collider != null && collider.tag == "Destroyable")
         {
             Notify(this, ()=> inGameController.OnDestroyEnemy(collider.gameObject, isUlt || isFever));
 
@@ -199,6 +209,8 @@ public class Player : ScriptObject, IPlayerObserver
 
     public void OnclickAttack()
     {
+        if (state == State.Over) return;
+
         if (attackMode != AttackMode.Fever)
             attackMode = AttackMode.Normal;
 
@@ -207,7 +219,9 @@ public class Player : ScriptObject, IPlayerObserver
 
     public void OnClickJump()
     {
-        if(attackMode != AttackMode.Fever)
+        if (state == State.Over) return;
+
+        if (attackMode != AttackMode.Fever)
             attackMode = AttackMode.Jump;
 
         Attack();
@@ -215,6 +229,8 @@ public class Player : ScriptObject, IPlayerObserver
 
     public void OnClickUlt()
     {
+        if (state == State.Over) return;
+
         Ult();
         ultGage = 0;
     }
@@ -227,11 +243,17 @@ public class Player : ScriptObject, IPlayerObserver
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (state == State.Over) return;
+
         if (collision.gameObject.tag == "Destroyable" || collision.gameObject.tag == "Undestroyable")
         {
             hp -= damage;
+
             StartCoroutine(OnAnimateStun());
-            //collision.gameObject.SetActive(false);
+            Notify(this, () => { 
+                inGameController.combo = 0;
+                inGameController.score = 30;
+            });
         }
     }
     
@@ -282,6 +304,8 @@ public class Player : ScriptObject, IPlayerObserver
     {
         prefab.PlayAnimation(2);
         yield return new WaitForSeconds(.5f);
+
+        Time.timeScale = 0;
     }
 
     private IEnumerator OnFeverState(Vector2 tempPos)

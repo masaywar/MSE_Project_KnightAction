@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 
 public class InGameController : Singleton<InGameController>
@@ -21,6 +22,11 @@ public class InGameController : Singleton<InGameController>
     public Player player;
     public Pattern pattern;
 
+    public TextMeshProUGUI comboText;
+    public int combo = 0;
+    public int score;
+    public int totalScore;
+
     private List<IObserver> observers = new List<IObserver>(); 
 
     private void Start()
@@ -35,6 +41,13 @@ public class InGameController : Singleton<InGameController>
     {
         SpawnEnemy(0);
         time += GameManager.Instance.deltaTime;
+
+        comboText.text = String.Format("combo : {0}", combo);
+
+        if (combo != 0 && combo % 50 == 0)
+        {
+            score += 15;
+        }
     }
 
     public void SpawnEnemy(int index)
@@ -54,7 +67,7 @@ public class InGameController : Singleton<InGameController>
             bool isGround = e.position == "D" ? true : false;
             string tag = e.type == "B" ? "DestroyableEnemy" : "UnDestroyableEnemy";
 
-            int spawnIdx = isGround ? 0 : 1;
+            int spawnIdx = !isGround ? 0 : 1;
             var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, spawnPlace.GetChild(spawnIdx).position, spawnPlace.GetChild(2));
 
             Subscribe(spawned);
@@ -69,6 +82,9 @@ public class InGameController : Singleton<InGameController>
     {
         int index = observers.FindIndex(o => (o as ScriptObject).gameObject.Equals(enemy));
 
+        combo++;
+        totalScore += score;
+
         var tempEnemy = observers[index];
 
         Unsubscribe(tempEnemy);
@@ -78,11 +94,6 @@ public class InGameController : Singleton<InGameController>
             var temp = (EnemyObject)tempEnemy;
             temp.DestroyWithAnim(force);
         });
-    }
-
-    public void OnPlayerDead()
-    {
-        cachedObjectManager.allObjectDict.ForEach(pair => pair.Value.ForEach(e => e.Stop()));
     }
 
     public void Subscribe(IObserver o)

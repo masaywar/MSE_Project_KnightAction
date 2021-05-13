@@ -19,4 +19,15 @@ public class UIWindow : ScriptObject
     }
 
     // If touch event is existed, implement event method on class which inherit this class. 
+
+
+    public void Open()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
+    }
 }
