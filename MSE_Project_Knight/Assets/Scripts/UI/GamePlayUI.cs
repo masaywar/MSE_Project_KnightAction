@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class GamePlayUI : UIWindow, IWindowObserver
+public class GamePlayUI : UIWindow
 {
     private InGameController inGameController;
 
@@ -20,22 +20,6 @@ public class GamePlayUI : UIWindow, IWindowObserver
 
     private void Start()
     {
-        inGameController = InGameController.Instance;
-        inGameController.Subscribe(this);
-    }
-
-    public void OnClickJump() 
-    {
-        Notify(this, inGameController.PlayerJump);
-    }
-    public void OnClickAttack() 
-    {
-        Notify(this, inGameController.PlayerAttack);
-    }
-    public void OnClickUlt() 
-    {
-        Notify(this, inGameController.PlayerUlt);
-        DeactivateUlt();
     }
 
     public void OnClickSetting()
@@ -44,25 +28,13 @@ public class GamePlayUI : UIWindow, IWindowObserver
         settingPanel.gameObject.SetActive(true);
 
     }
-
-    public void Notify(IObserver o, Action action) 
-    {
-        action();
-    }
-
     public void ActivateUlt()
     {
         ult.interactable = true;
     }
-
+        
     public void DeactivateUlt()
     {
         ult.interactable = false;
-    }
-
-
-    private void OnDisable()
-    {
-        inGameController.Unsubscribe(this);
     }
 }

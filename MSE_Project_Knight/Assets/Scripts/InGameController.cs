@@ -10,7 +10,6 @@ public class InGameController : Singleton<InGameController>
     private System.Random random = new System.Random();
     private float time = 0;
 
-
     private ObjectManager cachedObjectManager;
     private bool isSpawning = false;
 
@@ -27,7 +26,7 @@ public class InGameController : Singleton<InGameController>
     public int score;
     public int totalScore;
 
-    private List<IObserver> observers = new List<IObserver>(); 
+    private List<IObserver> observers = new List<IObserver>();
 
     private void Start()
     {
@@ -72,7 +71,7 @@ public class InGameController : Singleton<InGameController>
 
             Subscribe(spawned);
 
-            yield return new WaitForSeconds(e.wait); 
+            yield return new WaitForSeconds(e.wait);
         }
 
         isSpawning = false;
@@ -89,7 +88,7 @@ public class InGameController : Singleton<InGameController>
 
         Unsubscribe(tempEnemy);
 
-        Notify(tempEnemy, ()=>
+        Notify(tempEnemy, () =>
         {
             var temp = (EnemyObject)tempEnemy;
             temp.DestroyWithAnim(force);
@@ -98,7 +97,7 @@ public class InGameController : Singleton<InGameController>
 
     public void Subscribe(IObserver o)
     {
-        observers.Add(o);   
+        observers.Add(o);
     }
 
     public void Unsubscribe(IObserver o)
@@ -108,7 +107,7 @@ public class InGameController : Singleton<InGameController>
 
     public void PlayerAttack()
     {
-        player.OnclickAttack();  
+        player.OnclickAttack();
     }
 
     public void PlayerJump()

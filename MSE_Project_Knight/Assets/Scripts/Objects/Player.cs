@@ -235,7 +235,6 @@ public class Player : ScriptObject, IPlayerObserver
         ultGage = 0;
     }
 
-
     public void Notify(IObserver o, Action action)
     {
         action();

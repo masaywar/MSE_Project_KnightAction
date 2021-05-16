@@ -33,20 +33,16 @@ public class SoundManager : Singleton<SoundManager>
     {
         var clips = Resources.LoadAll<AudioClip>("Sound/Effect");
 
-        clips.ForEach(clip =>
-        {
-            string name = clip.name;
-            audioDict.Add(name, clip);
-        });
+        clips.ForEach(clip =>audioDict.Add(clip.name, clip));
 
     }
 
-    public void PlayOneShot(string name, AudioSource audio)
+    public void PlayOneShot(string name, AudioSource source)
     {
         if (audioDict.TryGetValue(name, out var clip))
         {
-            audio.Stop();
-            audio.PlayOneShot(clip);
+            source.Stop();
+            source.PlayOneShot(clip);
         }
     }
 }
