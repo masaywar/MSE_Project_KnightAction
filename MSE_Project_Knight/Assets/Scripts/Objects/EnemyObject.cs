@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyObject : ScriptObject, IEnemyObserver
+public class EnemyObject : ScriptObject
 {
     public bool isDestroyable = true;
     public bool isUp = false;
 
     public Rigidbody2D despawnPlace;
-    public Transform despawnContainer;
 
 
-    private InGameController inGameController;
+    private IngameController inGameController;
     private bool isDead = false;
 
     private void Start()
     {
-        inGameController = InGameController.Instance;
+
+        inGameController = IngameController.Instance;
+        inGameController.OnHitEnemy += Destroy;
     }
 
     private void FixedUpdate()
@@ -29,7 +30,7 @@ public class EnemyObject : ScriptObject, IEnemyObserver
 
     public virtual void Move()
     {
-        if(!isDead)
+        if (!isDead)
             rectTransform.anchoredPosition += Vector2.left * speed * GameManager.Instance.deltaTime;
     }
 
@@ -38,28 +39,25 @@ public class EnemyObject : ScriptObject, IEnemyObserver
         return despawnPlace.position.x < rectTransform.position.x;
     }
 
-    public void Notify()
+    public void Destroy(GameObject obj)
     {
-        Destroy();
-    }
-
-    public void Destroy()
-    {
-        Destroy(false, false);
+        Destroy(obj, false, false);
     }
 
     public void DestroyForced()
     {
-        Destroy(false, true);
+        Destroy(this.gameObject, false, true);
     }
 
-    public void DestroyWithAnim(bool force)
+    public void DestroyWithAnim(GameObject obj, bool force)
     {
-        Destroy(true, force);
+        Destroy(obj, true, force);
     }
 
-    private void Destroy(bool isAnim, bool force)
+    private void Destroy(GameObject obj, bool isAnim, bool force)
     {
+        if (obj != this.gameObject) return;
+
         if (isDestroyable || force)
         {
             isDead = true;
@@ -79,8 +77,8 @@ public class EnemyObject : ScriptObject, IEnemyObserver
         {
             anim += GameManager.Instance.deltaTime;
 
-            rectTransform.anchoredPosition += randomVector * GameManager.Instance.deltaTime * speed;
-            transform.Rotate(new Vector3(0, 0, 1) * GameManager.Instance.deltaTime * speed);
+            rectTransform.anchoredPosition += randomVector * GameManager.Instance.deltaTime * 10;
+            transform.Rotate(new Vector3(0, 0, 1) * GameManager.Instance.deltaTime * 800);
             yield return null;
         }
 
@@ -93,5 +91,5 @@ public class EnemyObject : ScriptObject, IEnemyObserver
         isDead = false;
         ObjectManager.Instance.Despawn<ScriptObject>(this);
     }
-    
+
 }

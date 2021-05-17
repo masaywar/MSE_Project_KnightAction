@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1230030922549893848}
   - component: {fileID: 1230030922549893849}
   - component: {fileID: 1230030922549893851}
-  - component: {fileID: 1230030922549893828}
+  - component: {fileID: -8370719598698473212}
   m_Layer: 6
   m_Name: UnDestroyableEnemy
   m_TagString: Undestroyable
@@ -115,7 +115,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1230030922549893828
+--- !u!114 &-8370719598698473212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,15 +124,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1230030922549893855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 272aa93685430d94bb01f8f969d1369f, type: 3}
+  m_Script: {fileID: 11500000, guid: f8c7be7c62fe66547b4412a2b47978ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabName: UnDestroyableEnemy
-  speed: 800
+  prefabName: 
+  speed: 10
   rectTransform: {fileID: 0}
   rigidbody: {fileID: 0}
   collider: {fileID: 0}
   isDestroyable: 0
   isUp: 0
-  despawnPlace: {fileID: 4329159273324697811, guid: 8f11db6da3204d440bae2e0aebf72686, type: 3}
-  despawnContainer: {fileID: 1887112977998874180, guid: 4f061447ec6b2584b84ba5d32372f455, type: 3}
+  despawnPlace: {fileID: 1767767586344940305, guid: 8f6e4b5e1fbd73140852786f18a890cc, type: 3}

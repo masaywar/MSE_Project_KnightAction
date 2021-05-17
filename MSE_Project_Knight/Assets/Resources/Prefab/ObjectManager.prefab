@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9001304239143295878}
   - component: {fileID: 9001304239143295881}
+  - component: {fileID: -5352967644028676986}
   m_Layer: 0
   m_Name: ObjectManager
   m_TagString: Untagged
@@ -48,3 +49,15 @@ MonoBehaviour:
     poolNum: 500
   - path: Prefab/Enemy/UnDestroyableEnemy
     poolNum: 50
+--- !u!114 &-5352967644028676986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9001304239143295879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82ae450b804d3d4eac1d7354e897d57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

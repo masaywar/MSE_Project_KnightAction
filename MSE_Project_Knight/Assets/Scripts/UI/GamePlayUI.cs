@@ -6,7 +6,7 @@ using System;
 
 public class GamePlayUI : UIWindow
 {
-    private InGameController inGameController;
+    private IngameController inGameController;
 
     [SerializeField]
     private List<Button> buttons = new List<Button>();

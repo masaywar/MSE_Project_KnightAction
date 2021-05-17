@@ -1,146 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-using System;
-
-public class Player : ScriptObject, IPlayerObserver
+public class Player : ScriptObject
 {
-    // Will remove feverTime variable.
-    public float feverTime;
+    public SPUM_Prefabs prefab;
 
-    public float rayDist;
-    public float declination;
-    public float hp;
-
-    public int damage;
-
-    public float ultGage = 0f;
-    public float feverGage = 0f;
-
-    public float ultRate;
-    public float feverRate;
+    private IngameController playerController;
     
+    private RaycastHit2D[] hits;
+    public float rayDist;
+
+    [SerializeField]
+    private bool isFever;
+
     public RectTransform upTransform;
     public RectTransform downTransform;
     public RectTransform feverTransform;
 
-    public AudioSource audioSource;
+    private AudioSource audioSource;
 
-    private InGameController inGameController;
-
-    public enum State
-    { 
-        idle,
-        Over,
-        Fever
-    }
-    public enum AttackMode
-    { 
-        Normal,
-        Jump,
-        Fever,
-
-    }
-
-    public State state;
-    public AttackMode attackMode;
-
-    private bool isGround = true; // true is Not jumping
-    private bool isFever = false;
-
-    private SPUM_Prefabs prefab;
-    private RaycastHit2D[] hits;
-
-    private float deltaTime;
-
+    //Observer
     private void Start()
     {
-        deltaTime = GameManager.Instance.deltaTime;
-        collider = gameObject.GetComponent<BoxCollider2D>();
-        prefab = gameObject.GetComponent<SPUM_Prefabs>();
-        prefab.PlayAnimation(1);
+        playerController = IngameController.Instance;
 
-        state = State.idle;
-        attackMode = AttackMode.Normal;
-
-        inGameController = InGameController.Instance;
-        inGameController.Subscribe(this);
-
+        prefab = GetComponent<SPUM_Prefabs>();
         audioSource = GetComponent<AudioSource>();
-    }   
 
-    private void FixedUpdate()
-    {
-        if (!CheckPlayerDead())
-        {
-            UpdateByState();
-        }
-    }
-    
-    private bool CheckPlayerDead()
-    {
-        if (state == State.Over) return true;
-
-        if (hp <= 0)
-        {
-            hp = 0;
-            state = State.Over;
-        }
-
-        declination *= 1.001f;
-
-        hp -= declination * deltaTime;
-        return false;
+        Subscribe();
+        prefab.PlayAnimation(1);
     }
 
-    private void UpdateByState()
+    private RaycastHit2D[] OnPlayerAttack(int attackMode)
     {
-        switch (state)
-        {
-        case State.idle:
-            break;
+        if (isFever)
+            attackMode = 2;
 
-        case State.Over:
-            StartCoroutine(OnAnimateDeath());
-            break;
+        SetPosition(attackMode);
+        prefab.PlayAnimation(4);
 
-        case State.Fever:
-            OnFeverMode();
-            break;
-        }
+        return Attack(attackMode);
     }
 
-    private void Attack()
-    {
-        if (TrySetRaycastHitByAttackMode(attackMode, out hits))
-        {
-            SoundManager.Instance.PlayOneShot("Jab", audioSource);
-
-            foreach (var hit in hits)
-            {
-                OnRaycastHit(hit.collider);
-
-                if (state != State.Fever) break;
-            }
-        }
-
-        else 
-        {
-            SoundManager.Instance.PlayOneShot("Swing", audioSource);
-            Notify(this, () => {
-                inGameController.combo = 0;
-                inGameController.score = 30;
-            });
-        }
-    }
-
-    private bool TrySetRaycastHitByAttackMode(AttackMode attackMode, out RaycastHit2D[] hits)
+    private void SetPosition(int attackMode)
     {
         switch (attackMode)
         {
-            case AttackMode.Normal:
+            case 0: // ground
+                rectTransform.position = downTransform.position;
+                break;
+
+            case 1: //up
+                rectTransform.position = upTransform.position;
+                break;
+
+            case 2: //fever
+                rectTransform.position = feverTransform.position;
+                break;
+        }
+    }
+
+    private RaycastHit2D[] Attack(int attackMode)
+    {
+        if (TryRaycastHit(attackMode, out hits))
+        {
+            SoundManager.Instance.PlayOneShot("Jab", audioSource);
+            return hits;
+        }
+
+        SoundManager.Instance.PlayOneShot("Swing", audioSource);
+        return null;
+    }
+
+    private bool TryRaycastHit(int attackMode, out RaycastHit2D[] hits)
+    {
+        switch (attackMode)
+        {
+            case 0: //ground
                 hits = Physics2D.BoxCastAll(
                     downTransform.position,
                     downTransform.sizeDelta.normalized,
@@ -151,7 +88,7 @@ public class Player : ScriptObject, IPlayerObserver
                 Debug.DrawRay(downTransform.position, Vector2.right * rayDist, Color.red);
                 break;
 
-            case AttackMode.Jump:
+            case 1: //up
                 hits = Physics2D.BoxCastAll(
                     upTransform.position,
                     upTransform.sizeDelta.normalized,
@@ -162,14 +99,26 @@ public class Player : ScriptObject, IPlayerObserver
                 Debug.DrawRay(upTransform.position, Vector2.right * rayDist, Color.red);
                 break;
 
-            case AttackMode.Fever:
-                hits = Physics2D.BoxCastAll(
-                    collider.bounds.center, 
-                    new Vector2(collider.bounds.size.x, collider.bounds.size.y * 10), 
-                    0f, 
-                    Vector2.right, 
-                    rayDist, LayerMask.GetMask("InPlayGame"));
+            case 2: //fever
+                var tempList = new List<RaycastHit2D>();
 
+                tempList.AddRange(
+                    Physics2D.BoxCastAll(
+                    downTransform.position,
+                    downTransform.sizeDelta.normalized,
+                    0,
+                    Vector2.right,
+                    rayDist, LayerMask.GetMask("InPlayGame")));
+
+                tempList.AddRange(
+                    Physics2D.BoxCastAll(
+                    upTransform.position,
+                    upTransform.sizeDelta.normalized,
+                    0,
+                    Vector2.right,
+                    rayDist, LayerMask.GetMask("InPlayGame")));
+
+                hits = tempList.ToArray();
                 break;
 
             default:
@@ -177,150 +126,65 @@ public class Player : ScriptObject, IPlayerObserver
                 break;
         }
 
-        return hits.Length > 0; 
+        return hits.Length > 0;
     }
 
-    private void OnRaycastHit(Collider2D collider, bool isUlt=false)
+    private void OnPlayerFever(bool isFever)
     {
-        if (collider != null && collider.tag == "Destroyable")
-        {
-            Notify(this, ()=> inGameController.OnDestroyEnemy(collider.gameObject, isUlt || isFever));
+        this.isFever = isFever;
 
-            if (!isUlt)
-            {
-                UpdateFeverGage();
-                UpdateUltGage();
-            }
-        }
-    }
-
-    private void Ult()
-    {
-        Physics2D.BoxCastAll(
-            Vector2.zero,
-            new Vector2(16,9),
-            0,
-            Vector2.zero,
-            0, LayerMask.GetMask("InPlayGame")
-            ).ForEach<RaycastHit2D>(hit=> OnRaycastHit(hit.collider, true));
-    }
-
-    // Will Remove OnClickMethod.
-
-    public void OnclickAttack()
-    {
-        if (state == State.Over) return;
-
-        if (attackMode != AttackMode.Fever)
-            attackMode = AttackMode.Normal;
-
-        Attack();
-    }   
-
-    public void OnClickJump()
-    {
-        if (state == State.Over) return;
-
-        if (attackMode != AttackMode.Fever)
-            attackMode = AttackMode.Jump;
-
-        Attack();
-    }
-
-    public void OnClickUlt()
-    {
-        if (state == State.Over) return;
-
-        Ult();
-        ultGage = 0;
-    }
-
-    public void Notify(IObserver o, Action action)
-    {
-        action();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (state == State.Over) return;
-
-        if (collision.gameObject.tag == "Destroyable" || collision.gameObject.tag == "Undestroyable")
-        {
-            hp -= damage;
-
-            StartCoroutine(OnAnimateStun());
-            Notify(this, () => { 
-                inGameController.combo = 0;
-                inGameController.score = 30;
-            });
-        }
-    }
-    
-    private void UpdateUltGage()
-    {
-        ultGage += ultRate;
-        if (ultGage >= 100)
-        {
-            ultGage = 100;
-            Notify(this, inGameController.OnUlt);
-        }
-    }
-
-    private void UpdateFeverGage()
-    {
-        if (state != State.Fever && feverGage < 100)
-            feverGage += feverRate;
-
+        if (isFever)
+            SetPosition(2);
         else
-        {
-            feverGage = 0;
-            state = State.Fever;
-        }
+            SetPosition(0);
     }
 
-    private void OnFeverMode()
+    private void OnPlayerDead()
     {
-        if (!isFever)
-        {
-            attackMode = AttackMode.Fever;
-            Time.timeScale = 2;
-            Vector2 tempPosition = rectTransform.position;
-
-            rectTransform.position = feverTransform.position;
-            isFever = true;
-            StartCoroutine(OnFeverState(tempPosition));
-        }
+        StartCoroutine(DieAnimation());
+        Unsubscribe();
     }
 
-    private IEnumerator OnAnimateStun()
+    private void OnPlayerMiss()
+    {
+        StartCoroutine(StunAnimation());
+    }
+
+    private RaycastHit2D[] OnPlayerUlt()
+    {
+        return null;
+    }
+
+    private void Subscribe()
+    {
+        playerController.OnPlayerDead += OnPlayerDead;
+        playerController.OnPlayerAttack += OnPlayerAttack;
+        playerController.OnPlayerJumpAttack += OnPlayerAttack;
+        playerController.OnPlayerFever += OnPlayerFever;
+        playerController.OnPlayerMiss += OnPlayerMiss;
+        playerController.OnPlayerUlt += OnPlayerUlt;
+    }
+
+    private void Unsubscribe()
+    {
+        playerController.OnPlayerDead += OnPlayerDead;
+        playerController.OnPlayerAttack += OnPlayerAttack;
+        playerController.OnPlayerJumpAttack += OnPlayerAttack;
+        playerController.OnPlayerFever += OnPlayerFever;
+        playerController.OnPlayerMiss += OnPlayerMiss;
+        playerController.OnPlayerUlt += OnPlayerUlt;
+    }
+
+    private IEnumerator DieAnimation()
+    {
+        prefab.PlayAnimation(2);
+        yield return new WaitForSeconds(.5f);
+    }
+
+    private IEnumerator StunAnimation()
     {
         prefab.PlayAnimation(3);
         yield return new WaitForSeconds(0.5f);
         prefab.PlayAnimation(1);
-    }
-
-    private IEnumerator OnAnimateDeath()
-    {
-        prefab.PlayAnimation(2);
-        yield return new WaitForSeconds(.5f);
-
-        Time.timeScale = 0;
-    }
-
-    private IEnumerator OnFeverState(Vector2 tempPos)
-    {
-        float tempTime = feverTime;
-        while (feverTime > 0)
-        {
-            feverTime -= 1 * deltaTime; 
-            yield return null;
-        }
-
-        attackMode = AttackMode.Normal;
-        state = State.idle;
-        isFever = false;
-        feverTime = tempTime;
-        rectTransform.position = tempPos;
-        Time.timeScale = 1;
     }
 }
