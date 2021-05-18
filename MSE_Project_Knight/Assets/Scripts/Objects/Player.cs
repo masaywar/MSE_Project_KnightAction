@@ -82,7 +82,7 @@ public class Player : ScriptObject
                     downTransform.position,
                     downTransform.sizeDelta.normalized,
                     0,
-                    Vector2.right,
+                    Vector2.right * rayDist,
                     rayDist, LayerMask.GetMask("InPlayGame"));
 
                 Debug.DrawRay(downTransform.position, Vector2.right * rayDist, Color.red);
@@ -93,10 +93,10 @@ public class Player : ScriptObject
                     upTransform.position,
                     upTransform.sizeDelta.normalized,
                     0,
-                    Vector2.right,
+                    Vector2.right * rayDist,
                     rayDist, LayerMask.GetMask("InPlayGame"));
 
-                Debug.DrawRay(upTransform.position, Vector2.right * rayDist, Color.red);
+                Debug.DrawRay(upTransform.position, Vector2.right * rayDist, Color.red, 100f);
                 break;
 
             case 2: //fever
@@ -107,7 +107,7 @@ public class Player : ScriptObject
                     downTransform.position,
                     downTransform.sizeDelta.normalized,
                     0,
-                    Vector2.right,
+                    Vector2.right * rayDist ,
                     rayDist, LayerMask.GetMask("InPlayGame")));
 
                 tempList.AddRange(
@@ -115,7 +115,7 @@ public class Player : ScriptObject
                     upTransform.position,
                     upTransform.sizeDelta.normalized,
                     0,
-                    Vector2.right,
+                    Vector2.right * rayDist,
                     rayDist, LayerMask.GetMask("InPlayGame")));
 
                 hits = tempList.ToArray();
@@ -152,7 +152,25 @@ public class Player : ScriptObject
 
     private RaycastHit2D[] OnPlayerUlt()
     {
-        return null;
+        var tempList = new List<RaycastHit2D>();
+
+        tempList.AddRange(
+            Physics2D.BoxCastAll(
+            downTransform.position,
+            downTransform.sizeDelta,
+            0,
+            Vector2.right,
+            rayDist, LayerMask.GetMask("InPlayGame")));
+
+        tempList.AddRange(
+            Physics2D.BoxCastAll(
+            upTransform.position,
+            upTransform.sizeDelta,
+            0,
+            Vector2.right * 10,
+            rayDist, LayerMask.GetMask("InPlayGame")));
+
+        return tempList.ToArray();
     }
 
     private void Subscribe()

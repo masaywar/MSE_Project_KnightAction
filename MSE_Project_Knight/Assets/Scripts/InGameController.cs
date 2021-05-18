@@ -23,7 +23,8 @@ public class IngameController : Singleton<IngameController>
 
     public float ultRate;
     public float feverRate;
-
+    
+    [SerializeField]
     private int combo = 0;
     private int score;
     private int totalScore;
@@ -34,6 +35,7 @@ public class IngameController : Singleton<IngameController>
 
     public PatternGenerator patternGenerator;
 
+    // Player Event
     public delegate void dOnPlayerDead();
     public event dOnPlayerDead OnPlayerDead;
 
@@ -52,48 +54,81 @@ public class IngameController : Singleton<IngameController>
     public delegate void dOnPlayerFever(bool isFever);
     public event dOnPlayerFever OnPlayerFever;
 
+
+    //EnemyEvent
     public delegate void dOnHitEnemy(GameObject obj, bool anim, bool force = false);
     public event dOnHitEnemy OnHitEnemy;
 
+
+    //UIEvent
+    public delegate void dOnFullUltGage(string name, bool activate);
+    public event dOnFullUltGage OnFullUltGage;
+
     private bool isFever = false;
+    private bool canUlt = false;
+    private List<List<Tuple<Vector2, string, float>>> transedPatterns = new List<List<Tuple<Vector2, string, float>>>();
 
     private void Start()
     {
         cachedObjectManager = ObjectManager.Instance;
+        TransPattern();
     }
 
     private void Update()
     {
         hp -= declination * GameManager.Instance.deltaTime;
 
-        if (feverGage >= 100)
+        if (feverGage >= 100 && !isFever)
         {
             feverGage = 0;
             OnFeverMode();
         }
 
-        if (ultGage >= 100)
-        { 
-            
+        if (ultGage >= 100 && !canUlt)
+        {
+            canUlt = true;
+            OnFullUltGage("Ult", true);
         }
         SpawnEnemy();
+    }
+
+    private void Attack(RaycastHit2D[] hits, bool force = false)
+    {
+        if (hits == null)
+        {
+            combo = 0;
+            return;
+        }
+        foreach (var hit in hits)
+        {
+            DestroyEnemy(hit, isFever || force);
+            if (!isFever) break;
+        }
     }
 
     public void OnClickAttack()
     {
         var hits = OnPlayerAttack(0);
-        DestroyEnemy(hits);
+        Attack(hits);
     }
 
     public void OnClickJumpAttack()
     {
         var hits = OnPlayerJumpAttack(1);
-        DestroyEnemy(hits);
+        Attack(hits);
     }
 
     public void OnClickUlt()
     {
-        OnPlayerUlt();
+        ultGage = 0;
+
+        var hits = OnPlayerUlt();
+        foreach (var hit in hits)
+        {
+            DestroyEnemy(hit, true);
+        }
+        canUlt = false;
+        OnFullUltGage("Ult", false);
     }
 
     private void SpawnEnemy()
@@ -101,7 +136,7 @@ public class IngameController : Singleton<IngameController>
         if (isSpawning) return;
 
         isSpawning = true;
-        var objectAttributes = TransPattern(0);
+        var objectAttributes = transedPatterns[0];
 
         StartCoroutine(SpawnRoutine(objectAttributes));
     }
@@ -116,8 +151,6 @@ public class IngameController : Singleton<IngameController>
 
             var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position, enemiesContainer);
 
-            print(spawned.tag + wait);
-
             if (tag != "UnDestroyableEnemy")
                 yield return new WaitForSeconds(wait);
             else
@@ -127,30 +160,33 @@ public class IngameController : Singleton<IngameController>
         isSpawning = false;
     }
 
-    private List<Tuple<Vector2, string, float>>  TransPattern(int index)
+    private void TransPattern()
     {
-        Pattern pattern = patternGenerator.GetPattern(index);
+        Pattern[] patternArray = patternGenerator.GetAllPatterns();
 
-        if (pattern == null)
-            return null;
-
-        List<Tuple<Vector2, string, float>> objectAttributes = new List<Tuple<Vector2, string, float>>();
-
-        var patternAttributes = pattern.GetAttributes();
-        patternAttributes.ForEach(attr =>
+        foreach (var pattern in patternArray)
         {
-            var position = attr.position;
-            var type = attr.type;
-            var wait = attr.wait;
+            if (pattern == null)
+                continue;
 
-            bool isGround = position == "D";
-            bool isDestroyable = type == "B";
+            List<Tuple<Vector2, string, float>> objectAttributes = new List<Tuple<Vector2, string, float>>();
 
-            var items = TransPatternAttr(isGround, isDestroyable, wait);
-            objectAttributes.Add(items);
-        });
+            var patternAttributes = pattern.GetAttributes();
+            patternAttributes.ForEach(attr =>
+            {
+                var position = attr.position;
+                var type = attr.type;
+                var wait = attr.wait;
 
-        return objectAttributes;
+                bool isGround = position == "D";
+                bool isDestroyable = type == "B";
+
+                var items = TransPatternAttr(isGround, isDestroyable, wait);
+                objectAttributes.Add(items);
+            });
+
+            transedPatterns.Add(objectAttributes);
+        }
     }
 
     private Tuple<Vector2, string, float> TransPatternAttr(bool isGround, bool isDestroyable, float wait)
@@ -164,20 +200,15 @@ public class IngameController : Singleton<IngameController>
         return new Tuple<Vector2, string, float>(position, tag, wait);
     }   
 
-    private void DestroyEnemy(RaycastHit2D[] hits, bool force=false)
+    private void DestroyEnemy(RaycastHit2D hit, bool force=false)
     {
-        if (hits == null)
-            return;
-
-        foreach (var hit in hits)
-        {
-            if (hit.transform.tag == "UnDestroyableEnemy") 
-                continue;
-
-            OnHitEnemy(hit.collider.gameObject, true, force);
+        OnHitEnemy(hit.collider.gameObject, true, force);
+        combo += 1;
+        if (!canUlt)
             ultGage += ultRate;
+        if (!isFever)
+        {
             feverGage += feverRate;
-            if (!isFever) return;
         }
     }
 
@@ -188,6 +219,7 @@ public class IngameController : Singleton<IngameController>
             isFever = true;
             OnPlayerFever(isFever);
             float tempFeverTime = feverTime;
+            Time.timeScale = 2.5f;
 
             StartCoroutine(UpdateOnFever(tempFeverTime));
         }
@@ -204,6 +236,9 @@ public class IngameController : Singleton<IngameController>
         isFever = false;
         OnPlayerFever(isFever);
         feverTime = time;
+        feverGage = 0;
+
+        Time.timeScale = 1f;
     }
 
 }

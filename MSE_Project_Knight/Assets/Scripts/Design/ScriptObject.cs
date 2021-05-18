@@ -34,6 +34,9 @@ public class ScriptObject : MonoBehaviour
 
     public virtual void Initialize()
     {
+        if (collider != null)
+            collider.enabled = true;
+
         this.transform.position = Vector3.zero;
         this.transform.rotation = Quaternion.identity;
     }

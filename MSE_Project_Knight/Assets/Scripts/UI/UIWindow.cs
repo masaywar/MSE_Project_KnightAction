@@ -5,6 +5,8 @@ using UnityEngine;
 public class UIWindow : ScriptObject
 {
     private UIManager cachedUIManager;
+    private float width;
+    private float height;
 
     private void Awake()
     {
@@ -16,6 +18,7 @@ public class UIWindow : ScriptObject
         {
             cachedUIManager.uiWindowDict.Add(this.name, this);
         }
+
     }
 
     // If touch event is existed, implement event method on class which inherit this class. 

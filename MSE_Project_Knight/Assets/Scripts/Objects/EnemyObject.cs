@@ -61,6 +61,8 @@ public class EnemyObject : ScriptObject
         if (isDestroyable || force)
         {
             isDead = true;
+
+            collider.enabled = false;
             var randomVector = new Vector2(1, Random.Range(.2f, 1f));
 
             if (isAnim)

@@ -7,10 +7,24 @@ public class SettingUI : UIWindow
 {
     public Button exit;
 
-    public void OnClickExit()
-    {
-        Time.timeScale = 1;
+    public Transform Buttons;
+    public Transform Sliders;
 
+    [SerializeField]
+    private Slider effectSlider;
+    [SerializeField]
+    private Slider bgmSlider;
+
+    public void OnClickBack()
+    {
+        GameManager.Instance.Play();
         Close();
     }
+
+    public void OnClickQuit()
+    { 
+    
+    }
+
+    public void OnClickToMain() { }
 }

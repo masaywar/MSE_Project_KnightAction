@@ -3,38 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 public class GamePlayUI : UIWindow
 {
     private IngameController inGameController;
 
     [SerializeField]
-    private List<Button> buttons = new List<Button>();
+    private float cachedTimeScale;
 
-    public Button attack;
-    public Button jump;
-    public Button ult;
-    public Button setting;
+    public CanvasGroup Buttons;
+    public CanvasGroup UpBar;
 
+    public SettingUI settingUI;
+
+    public IngameController ingameController;
     public RectTransform settingPanel;
 
+    private Dictionary<string, Button> interactableDict = new Dictionary<string, Button>();
     private void Start()
     {
+        ingameController = IngameController.Instance;
+        ingameController.OnFullUltGage += ActivateButton;
+
+        for (int k = 0; k < Buttons.transform.childCount; k++)
+        {
+            var button = Buttons.transform.GetChild(k);
+            interactableDict.Add(button.name, button.GetComponent<Button>());
+        }
     }
 
     public void OnClickSetting()
     {
-        Time.timeScale = 0;
-        settingPanel.gameObject.SetActive(true);
+        GameManager.Instance.Pause();
 
+        settingUI.Open();
+        settingUI.transform.DOScale(1, 0.2f).SetUpdate(true);
+
+        Buttons.blocksRaycasts = false;
+        UpBar.blocksRaycasts = false;
     }
-    public void ActivateUlt()
+
+    public void OnCloseSetting()
     {
-        ult.interactable = true;
+        settingUI.transform.DOScale(0.2f, 0.2f).
+            SetUpdate(true).
+            OnComplete(() => {
+                settingUI.OnClickBack();
+                Buttons.blocksRaycasts = true;
+                UpBar.blocksRaycasts = true;
+            });
     }
-        
-    public void DeactivateUlt()
+
+    private void ActivateButton(string name, bool activate)
     {
-        ult.interactable = false;
+        var button = interactableDict[name];
+        button.interactable = activate;
     }
 }

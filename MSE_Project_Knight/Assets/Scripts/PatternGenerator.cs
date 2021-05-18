@@ -30,4 +30,9 @@ public class PatternGenerator : ScriptableObject
 
         return null;
     }
+
+    public Pattern[] GetAllPatterns()
+    {
+        return patternContainer.ToArray();
+    }
 }
