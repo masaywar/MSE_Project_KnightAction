@@ -37,15 +37,26 @@ public class GameManager : Singleton<GameManager>
         start, loadMain, main, loadIngame, ingame, idle
     };
 
-    public GameState gameState = GameState.start;
+    public enum LoadState
+    { 
+        init, onLoad, done
+    };
 
-    //For test
+    private LoadState loadState = LoadState.init;
+    public GameState gameState = GameState.start;
+    public string progressMessage = "";
+
+    [SerializeField]
+    private bool isPaused = false;
+
     private void Awake()
     {
         cachedTimeScale = Time.timeScale;
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
 
-        LoadManager();
+        gameState = GameState.loadMain;
+        StartCoroutine(UpdateState());
+
     }
 
     private AsyncOperation operation = null;
@@ -53,40 +64,43 @@ public class GameManager : Singleton<GameManager>
     private void LoadManager()
     {
         ObjectManager.Instance.Initialize();
+        SoundManager.Instance.Initialize();
+        progressMessage = "Loading...";
     }
 
-    private void Update()
+    private IEnumerator UpdateState()
     {
-        switch (gameState)
+        while (loadState != LoadState.done)
         {
-            case GameState.start:
-                if (!ObjectManager.Instance.IsLoaded())
-                    print("로딩 중...");
-
-                else 
-                {
-                    print("로딩 끝...");
+            yield return null;
+            switch (loadState)
+            {
+                case LoadState.init:
+                    LoadManager();
+                    loadState = LoadState.onLoad;
                     gameState = GameState.loadMain;
-                }
-                break;
+                    break;
 
-            case GameState.loadMain:
-                if (operation == null)
-                {
-                    operation = SceneManager.LoadSceneAsync("Menu");
-                    operation.allowSceneActivation = false;
-                }
-                else
-                {
-                    if (operation.progress >= 0.9f)
+                case LoadState.onLoad:
+                    if (operation == null)
                     {
-#if UNITY_EDITOR
-                        if (Input.GetMouseButtonDown(0))
+                        operation = SceneManager.LoadSceneAsync("Menu");
+                        operation.allowSceneActivation = false;
+                    }
+                    else
+                    {
+                        if (operation.progress >= 0.9f)
                         {
-                            operation.allowSceneActivation = true;
-                            gameState = GameState.main;
-                            operation = null;
-                        }
+#if UNITY_EDITOR        
+                            progressMessage = "Touch To Start!!";
+                            print(progressMessage);
+                            if (Input.GetMouseButtonDown(0))
+                            {
+                                operation.allowSceneActivation = true;
+                                gameState = GameState.main;
+                                loadState = LoadState.done;
+                                operation = null;
+                            }
 #else
                         if (Input.touchCount > 0)
                         {
@@ -95,31 +109,53 @@ public class GameManager : Singleton<GameManager>
                             operation = null;
                         }
 #endif
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case GameState.main:
-                break;
+                default:
+                    break;
+            }
+        }
+    }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            var window = UIManager.Instance.GetWindow<QuitUI>("QuitUI");
+
+            if (window == null)
+            {
+                return;
+            }
+
+
+            if (!window.IsOpen()) 
+            {
+                Pause();
+                window.Open();
+            }
+        }
+
+        switch (gameState)
+        {
             case GameState.loadIngame:
-                break;
-
-            case GameState.ingame:
-                break;
-
-            default:
+                SceneManager.LoadScene("Ingame");
+                gameState = GameState.ingame;
                 break;
         }
     }
-    
+
     public void Pause()
     {
+        isPaused = true;
         cachedTimeScale = Time.timeScale;
         Time.timeScale = 0;
     }
     public void Play()
     {
+        isPaused = false;
         Time.timeScale = cachedTimeScale;
     }
 }

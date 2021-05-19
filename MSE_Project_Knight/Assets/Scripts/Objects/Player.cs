@@ -8,12 +8,15 @@ public class Player : ScriptObject
 
     private IngameController playerController;
     
+    //Variables for raycasting
     private RaycastHit2D[] hits;
     public float rayDist;
 
+    // Check player is on fever. It will be norified by ingame controller that player is on fever or not.
     [SerializeField]
     private bool isFever;
 
+    // Cached Transform for raycasting and moving player object.
     public RectTransform upTransform;
     public RectTransform downTransform;
     public RectTransform feverTransform;
@@ -32,6 +35,13 @@ public class Player : ScriptObject
         prefab.PlayAnimation(1);
     }
 
+    // Reference of IngameController's Attack event. 
+    // Ingame Controller have reference of this method to make it loose coupled between 
+    // enemies and player.
+
+    // In attackMode 0 : Attack on ground 
+    //               1 : Attack on sky
+    //               2 : Attack in player fever mode
     private RaycastHit2D[] OnPlayerAttack(int attackMode)
     {
         if (isFever)
@@ -43,6 +53,11 @@ public class Player : ScriptObject
         return Attack(attackMode);
     }
 
+    // Set player position to Uptransform or downTransform.
+    // if attackMode == 0, then player is placed to downTransform.
+    // if attackMode == 1, then player is placed to upTransform.
+    // the last one means when player is in fever mode, then placed in feverTransform
+    // which placed in between upTransform and downTransform.
     private void SetPosition(int attackMode)
     {
         switch (attackMode)
@@ -61,6 +76,9 @@ public class Player : ScriptObject
         }
     }
 
+    // Player attack with raycasting.
+    // if hits are found, return hits and then raise event to ingameController
+    // if not, return null and also raise same event to ingameController
     private RaycastHit2D[] Attack(int attackMode)
     {
         if (TryRaycastHit(attackMode, out hits))
@@ -73,6 +91,7 @@ public class Player : ScriptObject
         return null;
     }
 
+    // Checking raycasthits
     private bool TryRaycastHit(int attackMode, out RaycastHit2D[] hits)
     {
         switch (attackMode)
@@ -129,6 +148,7 @@ public class Player : ScriptObject
         return hits.Length > 0;
     }
 
+    // Player action in fever mode.
     private void OnPlayerFever(bool isFever)
     {
         this.isFever = isFever;
@@ -150,6 +170,9 @@ public class Player : ScriptObject
         StartCoroutine(StunAnimation());
     }
 
+    // Destroy All enemies.
+    // It also using raycast.
+    // ray from upTransform and downTransform like feverMode/
     private RaycastHit2D[] OnPlayerUlt()
     {
         var tempList = new List<RaycastHit2D>();
@@ -173,6 +196,8 @@ public class Player : ScriptObject
         return tempList.ToArray();
     }
 
+
+    // Add event to ingame controller
     private void Subscribe()
     {
         playerController.OnPlayerDead += OnPlayerDead;
@@ -183,6 +208,7 @@ public class Player : ScriptObject
         playerController.OnPlayerUlt += OnPlayerUlt;
     }
 
+    // Delete event from ingame controller
     private void Unsubscribe()
     {
         playerController.OnPlayerDead += OnPlayerDead;
@@ -192,6 +218,8 @@ public class Player : ScriptObject
         playerController.OnPlayerMiss += OnPlayerMiss;
         playerController.OnPlayerUlt += OnPlayerUlt;
     }
+
+    // Animations
 
     private IEnumerator DieAnimation()
     {

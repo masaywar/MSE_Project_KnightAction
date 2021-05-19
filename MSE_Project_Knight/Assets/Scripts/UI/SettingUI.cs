@@ -15,6 +15,11 @@ public class SettingUI : UIWindow
     [SerializeField]
     private Slider bgmSlider;
 
+    private void Start()
+    {
+        Close();
+    }
+
     public void OnClickBack()
     {
         GameManager.Instance.Play();
@@ -22,8 +27,8 @@ public class SettingUI : UIWindow
     }
 
     public void OnClickQuit()
-    { 
-    
+    {
+        
     }
 
     public void OnClickToMain() { }

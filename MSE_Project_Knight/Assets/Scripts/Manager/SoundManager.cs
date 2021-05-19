@@ -29,12 +29,13 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    private void Awake()
+    public void Initialize()
     {
-        var clips = Resources.LoadAll<AudioClip>("Sound/Effect");
+        var effectClips = Resources.LoadAll<AudioClip>("Sound/Effect");
+        effectClips.ForEach(clip =>audioDict.Add(clip.name, clip));
 
-        clips.ForEach(clip =>audioDict.Add(clip.name, clip));
-
+        var musicClips = Resources.LoadAll<AudioClip>("Sound/Music");
+        musicClips.ForEach(clip => audioDict.Add(clip.name, clip));
     }
 
     public void PlayOneShot(string name, AudioSource source)

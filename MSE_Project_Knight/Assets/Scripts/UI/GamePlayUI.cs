@@ -38,7 +38,7 @@ public class GamePlayUI : UIWindow
         GameManager.Instance.Pause();
 
         settingUI.Open();
-        settingUI.transform.DOScale(1, 0.2f).SetUpdate(true);
+        settingUI.transform.GetChild(0).DOScale(1, 0.2f).SetUpdate(true);
 
         Buttons.blocksRaycasts = false;
         UpBar.blocksRaycasts = false;
@@ -46,7 +46,7 @@ public class GamePlayUI : UIWindow
 
     public void OnCloseSetting()
     {
-        settingUI.transform.DOScale(0.2f, 0.2f).
+        settingUI.transform.GetChild(0).DOScale(0.2f, 0.2f).
             SetUpdate(true).
             OnComplete(() => {
                 settingUI.OnClickBack();
