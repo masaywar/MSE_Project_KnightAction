@@ -45,7 +45,6 @@ public class UIWindow : ScriptObject
     public void Close()
     {
         gameObject.SetActive(false);
-        cachedUIManager.GetActiveWindow(this).EnableBlockRaycast();
         cachedUIManager.openedWindowList.Remove(this);
         cachedUIManager.GetTop().EnableBlockRaycast();
     }
