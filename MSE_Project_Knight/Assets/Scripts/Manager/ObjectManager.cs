@@ -6,14 +6,21 @@ using UnityEngine;
 public class ObjectManager : Singleton<ObjectManager>
 {
     [System.Serializable]
-    public struct PoolPrefab
+    private class PoolPrefab
     {
         public string path;
         public int poolNum;
+
+        public PoolPrefab(string path, int poolNum) 
+        {
+            this.path = path;
+            this.poolNum = poolNum;
+        }
     }
+    private bool isLoaded = false;
 
     [SerializeField]
-    private PoolPrefab[] prefabPath;
+    private List<PoolPrefab> prefabPath;
 
     private Dictionary<string, List<ScriptObject>> m_allObjectDict;
     private Dictionary<string, List<ScriptObject>> m_despawnedObjDict;
@@ -26,11 +33,11 @@ public class ObjectManager : Singleton<ObjectManager>
             if (m_allObjectDict == null)
             {
                 m_allObjectDict = new Dictionary<string, List<ScriptObject>>();
-
             }
             return m_allObjectDict;
         }
     }
+
     public Dictionary<string, List<ScriptObject>> spawnedObjDict
     {
         get
@@ -43,6 +50,7 @@ public class ObjectManager : Singleton<ObjectManager>
             return m_spawnedObjDict;
         }
     }
+
     public Dictionary<string, List<ScriptObject>> despawnedObjDict
     {
         get
@@ -54,8 +62,17 @@ public class ObjectManager : Singleton<ObjectManager>
             return m_despawnedObjDict;
         }
     }
+    
+    public void Initialize()
+    {
+        prefabPath = new List<PoolPrefab> {
+            new PoolPrefab("Prefab/Enemy/DestroyableEnemy", 500), 
+            new PoolPrefab("Prefab/Enemy/UnDestroyableEnemy", 50)};
 
-    private void Awake()
+        StartCoroutine(LoadPrefabs());
+    }
+
+    public IEnumerator LoadPrefabs()
     {
         foreach (var prefab in prefabPath)
         {
@@ -77,7 +94,17 @@ public class ObjectManager : Singleton<ObjectManager>
             }
 
             parentGo.transform.SetParent(transform);
+
+            yield return null;
         }
+
+        isLoaded = true;
+        yield return null;
+    }
+
+    public bool IsLoaded() 
+    {
+        return isLoaded;
     }
 
     private void InitSpawnedObject(ScriptObject spawned, Transform parentGo) 

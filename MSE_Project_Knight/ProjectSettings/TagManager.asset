@@ -43,6 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: sdfgsdg
+  - name: InPlayGame
+    uniqueID: 1504747615
+    locked: 0
+  - name: Player
     uniqueID: 2937070077
+    locked: 0
+  - name: UI
+    uniqueID: 772818555
     locked: 0

@@ -33,6 +33,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             }
         }
     }
+
     private void OnApplicationQuit()
     {
         _ShuttingDown = true;

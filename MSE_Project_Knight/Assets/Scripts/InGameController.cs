@@ -1,81 +1,244 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using TMPro;
 
-public class InGameController : Singleton<InGameController>
+//EnemyController, PlayerController¿« subject
+
+public class IngameController : Singleton<IngameController>
 {
-    private System.Random random = new System.Random();
-
     private ObjectManager cachedObjectManager;
+
+    [SerializeField]
     private bool isSpawning = false;
 
-    private float waitTime = 0.2f;
-    private WaitForSeconds wait;
-
     public Transform spawnPlace;
-    public Transform activeContainer;
+    public Transform enemiesContainer;
 
-    public Player player;
+    public TextMeshProUGUI comboText;
 
-    public List<EnemyObject> enemyList = new List<EnemyObject>();
+    public float ultGage = 0f;
+    public float feverGage = 0f;
 
-    public Pattern pattern;
+    public float ultRate;
+    public float feverRate;
+    
+    [SerializeField]
+    private int combo = 0;
+    private int score;
+    private int totalScore;
+
+    public float feverTime;
+    public float declination;
+    public float hp;
+
+    public PatternGenerator patternGenerator;
+
+    // Player Event
+    public delegate void dOnPlayerDead();
+    public event dOnPlayerDead OnPlayerDead;
+
+    public delegate RaycastHit2D[] dOnPlayerAttack(int attackMode);
+    public event dOnPlayerAttack OnPlayerAttack;
+
+    public delegate RaycastHit2D[] dOnPlayerJumpAttack(int attackMode);
+    public event dOnPlayerJumpAttack OnPlayerJumpAttack;
+
+    public delegate RaycastHit2D[] dOnPlayerUlt();
+    public event dOnPlayerUlt OnPlayerUlt;
+
+    public delegate void dOnPlayerMiss();
+    public event dOnPlayerMiss OnPlayerMiss;
+
+    public delegate void dOnPlayerFever(bool isFever);
+    public event dOnPlayerFever OnPlayerFever;
+
+
+    //EnemyEvent
+    public delegate void dOnHitEnemy(GameObject obj, bool anim, bool force = false);
+    public event dOnHitEnemy OnHitEnemy;
+
+
+    //UIEvent
+    public delegate void dOnFullUltGage(string name, bool activate);
+    public event dOnFullUltGage OnFullUltGage;
+
+    private bool isFever = false;
+    private bool canUlt = false;
+    private List<List<Tuple<Vector2, string, float>>> transedPatterns = new List<List<Tuple<Vector2, string, float>>>();
 
     private void Start()
     {
         cachedObjectManager = ObjectManager.Instance;
-
-        activeContainer = spawnPlace.GetChild(2);
-        wait = new WaitForSeconds(waitTime);
-
-        pattern = GameManager.Instance.pattern;
+        TransPattern();
     }
 
     private void Update()
     {
-        SpawnEnemy(0);
+        hp -= declination * GameManager.Instance.deltaTime;
+
+        if (feverGage >= 100 && !isFever)
+        {
+            feverGage = 0;
+            OnFeverMode();
+        }
+
+        if (ultGage >= 100 && !canUlt)
+        {
+            canUlt = true;
+            OnFullUltGage("Ult", true);
+        }
+        SpawnEnemy();
     }
 
-    public void SpawnEnemy(int index)
+    private void Attack(RaycastHit2D[] hits, bool force = false)
     {
-        if (isSpawning)
+        if (hits == null)
+        {
+            combo = 0;
             return;
+        }
+        foreach (var hit in hits)
+        {
+            DestroyEnemy(hit, isFever || force);
+            if (!isFever) break;
+        }
+    }
+
+    public void OnClickAttack()
+    {
+        var hits = OnPlayerAttack(0);
+        Attack(hits);
+    }
+
+    public void OnClickJumpAttack()
+    {
+        var hits = OnPlayerJumpAttack(1);
+        Attack(hits);
+    }
+
+    public void OnClickUlt()
+    {
+        ultGage = 0;
+
+        var hits = OnPlayerUlt();
+        foreach (var hit in hits)
+        {
+            DestroyEnemy(hit, true);
+        }
+        canUlt = false;
+        OnFullUltGage("Ult", false);
+    }
+
+    private void SpawnEnemy()
+    {
+        if (isSpawning) return;
 
         isSpawning = true;
+        var objectAttributes = transedPatterns[0];
 
-        StartCoroutine(SpawnCoroutine());
+        StartCoroutine(SpawnRoutine(objectAttributes));
     }
 
-    private IEnumerator SpawnCoroutine()
+    private IEnumerator SpawnRoutine(List<Tuple<Vector2, string, float>> objectAttributes)
     {
-        foreach (var e in pattern.itemList)
+        foreach (var obj in objectAttributes)
         {
-            bool isGround = e.position == "D" ? true : false;
-            string tag = e.type == "B" ? "DestroyableEnemy" : "UnDestroyableEnemy";
+            var position = obj.Item1;
+            var tag = obj.Item2;
+            var wait = obj.Item3;
 
-            int spawnIdx = isGround ? 0 : 1;
-            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, spawnPlace.GetChild(spawnIdx).position, spawnPlace.GetChild(2));
-            enemyList.Add(spawned);
+            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position, enemiesContainer);
 
-            yield return new WaitForSeconds(e.wait); 
+            if (tag != "UnDestroyableEnemy")
+                yield return new WaitForSeconds(wait);
+            else
+                yield return null;
         }
 
         isSpawning = false;
     }
 
-    public void OnDestroyEnemy(GameObject enemy, bool force = false)
+    private void TransPattern()
     {
-        EnemyObject tempEnemy = null;
-        int findIdx = 0;
+        Pattern[] patternArray = patternGenerator.GetAllPatterns();
 
-        tempEnemy = enemyList[findIdx = enemyList.FindIndex(e => enemy.Equals(e.gameObject))];
+        foreach (var pattern in patternArray)
+        {
+            if (pattern == null)
+                continue;
 
-        enemyList.RemoveAt(findIdx);
-        tempEnemy.DestroyWithAnim(force);
+            List<Tuple<Vector2, string, float>> objectAttributes = new List<Tuple<Vector2, string, float>>();
+
+            var patternAttributes = pattern.GetAttributes();
+            patternAttributes.ForEach(attr =>
+            {
+                var position = attr.position;
+                var type = attr.type;
+                var wait = attr.wait;
+
+                bool isGround = position == "D";
+                bool isDestroyable = type == "B";
+
+                var items = TransPatternAttr(isGround, isDestroyable, wait);
+                objectAttributes.Add(items);
+            });
+
+            transedPatterns.Add(objectAttributes);
+        }
     }
 
-    public void Unsubscribe(EnemyObject enemy)
+    private Tuple<Vector2, string, float> TransPatternAttr(bool isGround, bool isDestroyable, float wait)
     {
-        enemyList.Remove(enemy);
+        var up = spawnPlace.GetChild(0).position;
+        var down = spawnPlace.GetChild(1).position;
+
+        Vector2 position = isGround ? up : down;
+        string tag = isDestroyable ? "DestroyableEnemy" : "UnDestroyableEnemy";
+
+        return new Tuple<Vector2, string, float>(position, tag, wait);
+    }   
+
+    private void DestroyEnemy(RaycastHit2D hit, bool force=false)
+    {
+        OnHitEnemy(hit.collider.gameObject, true, force);
+        combo += 1;
+        if (!canUlt)
+            ultGage += ultRate;
+        if (!isFever)
+        {
+            feverGage += feverRate;
+        }
     }
+
+    public void OnFeverMode()
+    {
+        if (!isFever)
+        {
+            isFever = true;
+            OnPlayerFever(isFever);
+            float tempFeverTime = feverTime;
+            Time.timeScale = 2.5f;
+
+            StartCoroutine(UpdateOnFever(tempFeverTime));
+        }
+    }
+
+    private IEnumerator UpdateOnFever(float time)
+    {
+        while (feverTime > 0)
+        {
+            feverTime -= GameManager.Instance.deltaTime;
+            yield return null;
+        }
+
+        isFever = false;
+        OnPlayerFever(isFever);
+        feverTime = time;
+        feverGage = 0;
+
+        Time.timeScale = 1f;
+    }
+
 }

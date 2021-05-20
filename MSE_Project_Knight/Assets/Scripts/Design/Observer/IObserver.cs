@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IObserver
 {
-    public void Notify();
-    public void UpdateSelf();
+    
 }
 

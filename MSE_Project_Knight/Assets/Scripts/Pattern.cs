@@ -4,31 +4,28 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-
+[Serializable]
 public class Pattern
 {
-    public string path;
+    [SerializeField]
+    private List<Attribute> attributes = new List<Attribute>();
 
-    public List<Item> itemList = new List<Item>();
-
-    public class Item
+    [Serializable]
+    public class Attribute
     {
         public string position;
         public string type;
         public float wait;
     }
 
-    public Pattern(string path)
+    public Pattern(string unparsedText)
     {
-        this.path = path;
-        Parse();
+        Parse(unparsedText);
     }
 
-    public void Parse()
+    public void Parse(string unparsedText)
     {
-        TextAsset textAsset = Resources.Load<TextAsset>(path);
-
-        var tempStringArray = textAsset.
+        var tempStringArray = unparsedText.
             ToString().
             Split('\n').
             Skip(1);
@@ -36,12 +33,17 @@ public class Pattern
         tempStringArray.ForEach(s => {
             var temp = s.Split('\t');
 
-            Item item = new Item();
-            item.position = temp[0];
-            item.type = temp[1];
-            item.wait = ParseUtiltiy.SafeFloatParse(temp[2].Replace($"f", ""));
+            Attribute attribute = new Attribute();
+            attribute.position = temp[0];
+            attribute.type = temp[1];
+            attribute.wait = ParseUtiltiy.SafeFloatParse(temp[2].Replace($"f", ""));
 
-            itemList.Add(item);
+            attributes.Add(attribute);
         }) ;
+    }
+
+    public Attribute[] GetAttributes()
+    {
+        return attributes.ToArray();
     }
 }
