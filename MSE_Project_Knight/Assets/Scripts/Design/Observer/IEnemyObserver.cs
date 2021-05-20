@@ -1,4 +1,0 @@
-public interface IEnemyObserver : IObserver
-{
-    
-}
