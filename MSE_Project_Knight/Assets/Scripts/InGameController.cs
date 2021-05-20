@@ -14,7 +14,7 @@ public class IngameController : Singleton<IngameController>
     private bool isSpawning = false;
 
     public Transform spawnPlace;
-    public Transform enemiesContainer;
+    public Transform enemyContainer;
 
     public TextMeshProUGUI comboText;
 
@@ -149,7 +149,7 @@ public class IngameController : Singleton<IngameController>
             var tag = obj.Item2;
             var wait = obj.Item3;
 
-            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position, enemiesContainer);
+            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position, enemyContainer);
 
             if (tag != "UnDestroyableEnemy")
                 yield return new WaitForSeconds(wait);
