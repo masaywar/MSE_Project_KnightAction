@@ -26,7 +26,6 @@ public class QuitUI : UIWindow
 
     public void OnCLickBack()
     {
-        GameManager.Instance.Play();
         Close();
     }
 }

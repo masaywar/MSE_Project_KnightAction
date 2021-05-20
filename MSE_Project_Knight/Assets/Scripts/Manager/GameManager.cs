@@ -56,7 +56,6 @@ public class GameManager : Singleton<GameManager>
 
         gameState = GameState.loadMain;
         StartCoroutine(UpdateState());
-
     }
 
     private AsyncOperation operation = null;
@@ -104,8 +103,10 @@ public class GameManager : Singleton<GameManager>
 #else
                         if (Input.touchCount > 0)
                         {
+                            progressMessage = "Touch To Start!!";
                             operation.allowSceneActivation = true;
                             gameState = GameState.main;
+                            loadState = LoadState.done;
                             operation = null;
                         }
 #endif
@@ -121,23 +122,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            var window = UIManager.Instance.GetWindow<QuitUI>("QuitUI");
-
-            if (window == null)
-            {
-                return;
-            }
-
-
-            if (!window.IsOpen()) 
-            {
-                Pause();
-                window.Open();
-            }
-        }
-
         switch (gameState)
         {
             case GameState.loadIngame:
@@ -149,12 +133,17 @@ public class GameManager : Singleton<GameManager>
 
     public void Pause()
     {
+        if (isPaused) return;
+
         isPaused = true;
         cachedTimeScale = Time.timeScale;
         Time.timeScale = 0;
     }
+
     public void Play()
     {
+        if (!isPaused) return;
+
         isPaused = false;
         Time.timeScale = cachedTimeScale;
     }

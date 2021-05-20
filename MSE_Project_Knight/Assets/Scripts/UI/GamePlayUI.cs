@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class GamePlayUI : UIWindow
 {
-    private IngameController inGameController;
+    private IngameController ingameController;
 
     [SerializeField]
     private float cachedTimeScale;
@@ -15,16 +15,14 @@ public class GamePlayUI : UIWindow
     public CanvasGroup Buttons;
     public CanvasGroup UpBar;
 
-    public SettingUI settingUI;
-
-    public IngameController ingameController;
-    public RectTransform settingPanel;
+    public Button setting;
 
     private Dictionary<string, Button> interactableDict = new Dictionary<string, Button>();
     private void Start()
     {
         ingameController = IngameController.Instance;
         ingameController.OnFullUltGage += ActivateButton;
+        setting.onClick.AddListener(OnClickSetting);
 
         for (int k = 0; k < Buttons.transform.childCount; k++)
         {
@@ -33,31 +31,15 @@ public class GamePlayUI : UIWindow
         }
     }
 
-    public void OnClickSetting()
-    {
-        GameManager.Instance.Pause();
-
-        settingUI.Open();
-        settingUI.transform.GetChild(0).DOScale(1, 0.2f).SetUpdate(true);
-
-        Buttons.blocksRaycasts = false;
-        UpBar.blocksRaycasts = false;
-    }
-
-    public void OnCloseSetting()
-    {
-        settingUI.transform.GetChild(0).DOScale(0.2f, 0.2f).
-            SetUpdate(true).
-            OnComplete(() => {
-                settingUI.OnClickBack();
-                Buttons.blocksRaycasts = true;
-                UpBar.blocksRaycasts = true;
-            });
-    }
-
     private void ActivateButton(string name, bool activate)
     {
         var button = interactableDict[name];
         button.interactable = activate;
+    }
+
+    private void OnClickSetting()
+    {
+        var window = UIManager.Instance.GetWindow<SettingUI>("SettingUI");
+        window.Open();
     }
 }
