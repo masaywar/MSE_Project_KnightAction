@@ -20,7 +20,11 @@ public class ClientUserAccess : MonoBehaviour
     public InputField passwordText;
     public InputField newVersion;
 
-    public string realURL = "122.35.41.80:9090/sak/";
+    public InputField newScore;
+    public InputField newCoin;
+    public InputField newCompanion;
+
+    public string realURL = "http://08c8ad6e7aae.ngrok.io/sak";
     public string localURL = "http://localhost:9090/sak/";
 
     public UserClient user = new UserClient();
@@ -242,7 +246,7 @@ public class ClientUserAccess : MonoBehaviour
     }
 
 
-    // Json array를 받아오지 못하는 문제점이 있음
+    // Json array�� �޾ƿ��� ���ϴ� �������� ����
     public List<Rank> GetAllRank()
     {
         List<Rank> returnValue = new List<Rank>();
@@ -266,9 +270,12 @@ public class ClientUserAccess : MonoBehaviour
         string userData = "{\"userName\":\"" + p.userName + "\",\"score\":" + p.score + ",\"coin\":" + p.coin +
          ",\"companion\":\"" + p.companion + "\"}";
 
-        Rank returnValue = new Rank();
+    public Rank[] GetAllRank()
+    {
+        //List<PlayerClient> returnValue = new List<PlayerClient>();
+        // Rank[] returnValue;
 
-        RestClient.Post<Rank>("http://localhost:9090/sak/getrankscore", userData).Then(
+        RestClient.GetArray<Rank>(realURL + "sorted").Then(
             response =>
             {
                 returnValue = response;
