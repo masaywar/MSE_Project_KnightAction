@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class Rank
+public class NameRank
 {
     public string userName;
     public int rank;

@@ -2,7 +2,7 @@ using System;
 
 
 [Serializable]
-public class UserClient
+public class LoginData
 {
     public long id;
 	public String userName;

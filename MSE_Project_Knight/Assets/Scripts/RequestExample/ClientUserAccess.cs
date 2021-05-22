@@ -1,16 +1,11 @@
 // class PlayerScores
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 using UnityEngine.SceneManagement;
 
 using Proyecto26;
-
-using System;
-using System.Reflection;
 /*
     <Summary>
     + SignUpUser(email: string, username: string, password: string) : UserClient
@@ -28,7 +23,6 @@ using System.Reflection;
     + GetAllRank() : Rank[]
 
     + getPlayerRank(name: String): Rank
-
 */
 
 public class ClientUserAccess : MonoBehaviour
@@ -47,15 +41,14 @@ public class ClientUserAccess : MonoBehaviour
     public InputField newCompanion;
 
     public string realURL = "122.35.41.80:9090/sak/";
-    //public string localURL = "http://localhost:9090/sak/";
-    public string localURL = "http://a4e6b6a50da0.ngrok.io/sak/";
-    public UserClient user = new UserClient();
-    public PlayerClient player = new PlayerClient();
+    public string localURL = "http://localhost:9090/sak/";
+    //public string localURL = "http://a4e6b6a50da0.ngrok.io/sak/";
+    public LoginData user = new LoginData();
+    public UserData player = new UserData();
 
     public static ClientUserAccess CUAinstance = null;  
 
     //Awake is always called before any Start functions
-
     void Awake()
     {
         //Check if instance already exists
@@ -116,14 +109,14 @@ public class ClientUserAccess : MonoBehaviour
         }
     }
 
-    public UserClient SignUpUser(string email, string username, string password)
+    public LoginData SignUpUser(string email, string username, string password)
     {
         string userData = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "1.0" + "\"}";
 
-        UserClient returnValue = new UserClient();
+        LoginData returnValue = new LoginData();
 
-        RestClient.Post<UserClient>(localURL + "signupuser", userData).Then(
+        RestClient.Post<LoginData>(localURL + "signupuser", userData).Then(
             response =>
             {
                 if (response.email.Equals("error")){
@@ -143,6 +136,7 @@ public class ClientUserAccess : MonoBehaviour
                     Debug.Log("Hi " + response.userName + ". Sign up completed!");
                     example.text = "Hi " + response.userName + ". Sign up completed!";
                     returnValue = null;
+                    Debug.Log(returnValue.userName);
                 }
             }).Catch(error =>
         {
@@ -153,7 +147,7 @@ public class ClientUserAccess : MonoBehaviour
         return returnValue;
     }
 
-    public UserClient SignInUser(string email, string password)
+    public LoginData SignInUser(string email, string password)
     {
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
     /*
@@ -163,9 +157,9 @@ public class ClientUserAccess : MonoBehaviour
 #endif
     */
 
-        UserClient returnValue = new UserClient();
+        LoginData returnValue = new LoginData();
 
-        RestClient.Post<UserClient>(localURL + "signinuser", userData).Then(
+        RestClient.Post<LoginData>(localURL + "signinuser", userData).Then(
             response =>
             {
                 if (response == null){
@@ -189,8 +183,8 @@ public class ClientUserAccess : MonoBehaviour
                     user.password = response.password;
                     user.userVersion = response.userVersion;
 
-                    PlayerClient p = GetPlayer(user.userName);
-                    player.companion = p.companion;
+                    UserData p = GetPlayer(user.userName);
+                    player.knight = p.knight;
                     player.coin = p.coin;
 
                     SceneManager.LoadScene("Menu");
@@ -213,7 +207,7 @@ public class ClientUserAccess : MonoBehaviour
 
         int returnValue = 0;
 
-        RestClient.Post<Flag>(localURL + "updateuser", userData).Then(
+        RestClient.Post<Flag>(localURL + "/update/logindata", userData).Then(
             response =>
             {
                 if (response.flag == 1){
@@ -244,7 +238,7 @@ public class ClientUserAccess : MonoBehaviour
 
         int returnValue = 0;
 
-        RestClient.Post<Flag>(localURL + "deleteuser", userData).Then(
+        RestClient.Post<Flag>(localURL + "delete", userData).Then(
             response =>
             {
                 if (response.flag == 1){
@@ -262,13 +256,13 @@ public class ClientUserAccess : MonoBehaviour
         return returnValue;
     }
 
-    public PlayerClient GetPlayer (string name){
+    public UserData GetPlayer (string name){
 
         string userData = "{\"userName\":\"" + name + "\",\"rank\":" + 123 + ",\"score\":" + 123 + "}";
 
-        PlayerClient returnValue = new PlayerClient();
+        UserData returnValue = new UserData();
 
-        RestClient.Post<PlayerClient>(localURL + "getplayer", userData).Then(
+        RestClient.Post<UserData>(localURL + "get/user", userData).Then(
             response =>
             {
                 returnValue = response;
@@ -282,13 +276,13 @@ public class ClientUserAccess : MonoBehaviour
 
     }
 
-    public int updatePlayer(string name, int score, int coin, string companion){
+    public int updatePlayer(string name, int score, int coin, string knight){
         string playerdata = "{\"userName\":\"" + name + "\",\"score\":" + score + ",\"coin\":" + coin +
-         ",\"companion\":\"" + companion + "\"}";
+         ",\"knight\":\"" + knight + "\"}";
 
         int returnValue = 0;
 
-        RestClient.Post<Flag>(localURL + "updateplayer", playerdata).Then(
+        RestClient.Post<Flag>(localURL + "update/user", playerdata).Then(
             response =>
             {
                 if (response.flag == 1){
@@ -310,14 +304,14 @@ public class ClientUserAccess : MonoBehaviour
     }
 
 
-    public Rank[] GetAllRank()
+    public NameRank[] GetAllRank()
     {
         //List<PlayerClient> returnValue = new List<PlayerClient>();
         // Rank[] returnValue;
-        RestClient.GetArray<Rank>(localURL + "sorted").Then(
+        RestClient.GetArray<NameRank>(localURL + "sorted").Then(
             response =>
             {
-                foreach (Rank r in response) {
+                foreach (NameRank r in response) {
                     example.text = example.text + r.userName + ": Ranking->" + r.rank + ", Score->"+ r.score + '\n';
                 }
                 Debug.Log(response[0].userName);
@@ -330,14 +324,14 @@ public class ClientUserAccess : MonoBehaviour
         return null;
     }
 
-    public Rank GetPlayerRank(string name){
+    public NameRank GetPlayerRank(string name){
 
         string playerdata = "{\"userName\":\"" + name + "\",\"score\":" + 123 + ",\"coin\":" + 123 +
-         ",\"companion\":\"" + "Dummy" + "\"}";
+         ",\"knight\":\"" + "Dummy" + "\"}";
 
-        Rank returnValue = new Rank();
+        NameRank returnValue = new NameRank();
 
-        RestClient.Post<Rank>(localURL + "getrankscore", playerdata).Then(
+        RestClient.Post<NameRank>(localURL + "getrankscore", playerdata).Then(
             response =>
             {
                 returnValue = response;
@@ -352,6 +346,4 @@ public class ClientUserAccess : MonoBehaviour
         return returnValue;
 
     }
-
-
 }
