@@ -134,6 +134,8 @@ public class LoginDataManager : MonoBehaviour
     /************************************************************
     UpdateLoginData Method
 
+    email 값으로 DB에서 데이터를 찾음 / LoginData에서 email에 해당하는 password와 userVersion을 update할 때 사용
+
     Failure case:
     Update failed -> return 0
     

@@ -64,6 +64,8 @@ public class UserDataManager : MonoBehaviour
     /************************************************************
     UpdataUserData Method
 
+    name으로 DB에서 해당하는 데이터를 찾은 뒤 새로 주어진 score, coin, knight로 update
+
     Failure case:
     return 0
     
