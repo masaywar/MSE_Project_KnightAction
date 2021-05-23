@@ -35,14 +35,14 @@ public class UIWindow : ScriptObject
         canvasGroup.blocksRaycasts = true;
     }
 
-    public void Open()
+    public virtual void Open()
     {
         gameObject.SetActive(true);
         cachedUIManager.BlockRaycastWithout(this);
         cachedUIManager.openedWindowList.Add(this);
     }
 
-    public void Close()
+    public virtual void Close()
     {
         gameObject.SetActive(false);
         cachedUIManager.GetActiveWindow(this).EnableBlockRaycast();

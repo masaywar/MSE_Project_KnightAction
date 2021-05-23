@@ -26,5 +26,11 @@ public static class ExtensionMethod
         return list[list.Count-1];
     }
 
+    public static IEnumerator DoWaitForSeconds(float time, System.Action action) 
+    {
+        yield return new WaitForSeconds(time);
+        action();
+    }
+
 }
 

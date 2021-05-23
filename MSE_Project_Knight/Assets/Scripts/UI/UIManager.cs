@@ -31,6 +31,11 @@ public class UIManager : Singleton<UIManager>
     }
     public UIWindow cachedWindow;
 
+    public void Initialize()
+    {
+        DontDestroyOnLoad(this);
+    }
+
 
     public T GetActiveWindow<T>(T window) where T : UIWindow
     {
@@ -91,6 +96,11 @@ public class UIManager : Singleton<UIManager>
                 }
             });
         }
+    }
+
+    public void BlockAllOpenWindow()
+    {
+        openedWindowList.ForEach(window => window.UnableBlockRaycast());
     }
 
     public T FindByWindowName<T>(string name) where T : UIWindow

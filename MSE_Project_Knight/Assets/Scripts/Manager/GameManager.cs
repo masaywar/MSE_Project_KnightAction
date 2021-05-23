@@ -33,12 +33,12 @@ public class GameManager : Singleton<GameManager>
     }
 
     public enum GameState
-    { 
+    {
         start, loadMain, main, loadIngame, ingame, idle
     };
 
     public enum LoadState
-    { 
+    {
         init, onLoad, done
     };
 
@@ -49,13 +49,14 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private bool isPaused = false;
 
-    private void Awake()
+    public void Initialize()
     {
-        cachedTimeScale = Time.timeScale;
+        cachedTimeScale = 1;
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
 
         gameState = GameState.loadMain;
         StartCoroutine(UpdateState());
+        DontDestroyOnLoad(this);
     }
 
     private AsyncOperation operation = null;
@@ -64,6 +65,8 @@ public class GameManager : Singleton<GameManager>
     {
         ObjectManager.Instance.Initialize();
         SoundManager.Instance.Initialize();
+        UIManager.Instance.Initialize();
+
         progressMessage = "Loading...";
     }
 
@@ -92,7 +95,6 @@ public class GameManager : Singleton<GameManager>
                         {
 #if UNITY_EDITOR        
                             progressMessage = "Touch To Start!!";
-                            print(progressMessage);
                             if (Input.GetMouseButtonDown(0))
                             {
                                 operation.allowSceneActivation = true;
@@ -101,14 +103,14 @@ public class GameManager : Singleton<GameManager>
                                 operation = null;
                             }
 #else
-                        if (Input.touchCount > 0)
-                        {
                             progressMessage = "Touch To Start!!";
-                            operation.allowSceneActivation = true;
-                            gameState = GameState.main;
-                            loadState = LoadState.done;
-                            operation = null;
-                        }
+                            if (Input.touchCount > 0)
+                            {
+                                operation.allowSceneActivation = true;
+                                gameState = GameState.main;
+                                loadState = LoadState.done;
+                                operation = null;
+                            }
 #endif
                         }
                     }
@@ -145,6 +147,10 @@ public class GameManager : Singleton<GameManager>
         if (!isPaused) return;
 
         isPaused = false;
+
+        if (cachedTimeScale == 0)
+            cachedTimeScale = 1;
+
         Time.timeScale = cachedTimeScale;
     }
 }

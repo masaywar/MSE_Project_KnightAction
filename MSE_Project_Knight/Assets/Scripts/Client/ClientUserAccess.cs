@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 using Proyecto26;
 
-public class ClientUserAccess : MonoBehaviour
+public class ClientUserAccess : Singleton<ClientUserAccess>
 {
     public Text example;
     public Text userCompanion;
@@ -29,28 +29,6 @@ public class ClientUserAccess : MonoBehaviour
 
     public UserClient user = new UserClient();
     public PlayerClient player = new PlayerClient();
-
-    public static ClientUserAccess CUAinstance = null;  
-
-    //Awake is always called before any Start functions
-
-    void Awake()
-    {
-        //Check if instance already exists
-        if (CUAinstance == null)
-        {        
-            //if not, set instance to this
-            CUAinstance = this;
-        }
-        //If instance already exists and it's not this:
-        else if (CUAinstance != this)
-        {        
-            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-            Destroy(gameObject);    
-        }   
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
-    }
 
     public void SignUpUserButton()
     {
@@ -77,7 +55,6 @@ public class ClientUserAccess : MonoBehaviour
     {
         getPlayerRank(usernameText.text);
     }
-
 
     public UserClient SignUpUser(string email, string username, string password)
     {
@@ -123,9 +100,7 @@ public class ClientUserAccess : MonoBehaviour
 #if UNITY_EDITOR
         SceneManager.LoadScene("Menu");
         return null;
-#endif
-
-
+#else
         UserClient returnValue = new UserClient();
 
         RestClient.Post<UserClient>(realURL + "signinuser", userData).Then(
@@ -167,6 +142,7 @@ public class ClientUserAccess : MonoBehaviour
         });
         // If signin fails, then return null. If signin succeed, then return userclient object.
         return returnValue;
+#endif
     }
 
     //change password
@@ -199,6 +175,7 @@ public class ClientUserAccess : MonoBehaviour
     /*
     * Important Task : Password check needed.
     */
+
     public UserClient DeleteUser(string email, string username, string password)
     {
         // JSON body only needs email & username. The rest of the data don't matter.
