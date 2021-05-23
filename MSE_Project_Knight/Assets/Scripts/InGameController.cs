@@ -34,6 +34,7 @@ public class IngameController : Singleton<IngameController>
     public float declination;
     public float hp;
     public bool isOver;
+    public int damage;
 
     public PatternGenerator patternGenerator;
 
@@ -75,6 +76,8 @@ public class IngameController : Singleton<IngameController>
     {
         cachedObjectManager = ObjectManager.Instance;
         TransPattern();
+
+        SoundManager.Instance.PlayMusic("Fable", true);
     }
 
     private void Update()
@@ -127,13 +130,14 @@ public class IngameController : Singleton<IngameController>
         if (hits == null)
         {
             combo = 0;
-            SoundManager.Instance.PlayOneShot("Swing", audioSource);
+            SoundManager.Instance.PlayOneShot("Swing");
+            hp -= damage;
             return;
         }
         foreach (var hit in hits)
         {
             DestroyEnemy(hit, isFever || force);
-            SoundManager.Instance.PlayOneShot("Jab", audioSource);
+            SoundManager.Instance.PlayOneShot("Jab");
             if (!isFever) break;
         }
     }
@@ -277,4 +281,10 @@ public class IngameController : Singleton<IngameController>
         Time.timeScale = 1f;
     }
 
+    public void Miss()
+    {
+        OnPlayerMiss();
+        hp -= damage;
+    }
 }
+

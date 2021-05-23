@@ -8,6 +8,7 @@ public class QuitUI : UIWindow
     public Button quit;
     public Button back;
 
+
     private void Start()
     {
         Close();
@@ -26,7 +27,6 @@ public class QuitUI : UIWindow
 
     public void OnCLickBack()
     {
-        GameManager.Instance.Play();
         Close();
     }
 }

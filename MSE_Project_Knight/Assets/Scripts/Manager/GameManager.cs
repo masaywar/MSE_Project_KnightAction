@@ -49,12 +49,13 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private bool isPaused = false;
 
-    public void Initialize()
+    public void Awake()
     {
         cachedTimeScale = 1;
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
 
         gameState = GameState.loadMain;
+        LoadManager();
         StartCoroutine(UpdateState());
         DontDestroyOnLoad(this);
     }
@@ -78,7 +79,7 @@ public class GameManager : Singleton<GameManager>
             switch (loadState)
             {
                 case LoadState.init:
-                    LoadManager();
+                    
                     loadState = LoadState.onLoad;
                     gameState = GameState.loadMain;
                     break;

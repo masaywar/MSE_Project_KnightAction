@@ -13,6 +13,8 @@ public class EnemyObject : ScriptObject
     private IngameController inGameController;
     private bool isDead = false;
 
+    #region
+
     private void Start()
     {
 
@@ -92,6 +94,17 @@ public class EnemyObject : ScriptObject
         Initialize();
         isDead = false;
         ObjectManager.Instance.Despawn<ScriptObject>(this);
+    }
+    #endregion
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.name == "DespawnPlace")
+        {
+            if(isDestroyable)
+                inGameController.Miss();
+            DestroyForced();
+        }
     }
 
 }

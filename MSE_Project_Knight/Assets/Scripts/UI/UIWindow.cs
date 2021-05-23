@@ -40,6 +40,7 @@ public class UIWindow : ScriptObject
         gameObject.SetActive(true);
         cachedUIManager.BlockRaycastWithout(this);
         cachedUIManager.openedWindowList.Add(this);
+        canvasGroup.blocksRaycasts = true;
     }
 
     public virtual void Close()

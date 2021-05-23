@@ -3314,7 +3314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c7be7c62fe66547b4412a2b47978ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabName: 
+  prefabName: DestroyableEnemy
   speed: 10
   rectTransform: {fileID: 0}
   rigidbody: {fileID: 0}

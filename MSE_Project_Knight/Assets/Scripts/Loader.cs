@@ -9,6 +9,5 @@ public class Loader : MonoBehaviour
     private void Awake()
     {
         gameManager = GameManager.Instance;
-        gameManager.Initialize();
     }
 }
