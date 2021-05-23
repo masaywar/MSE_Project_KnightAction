@@ -36,6 +36,8 @@ public class SoundManager : Singleton<SoundManager>
 
         var musicClips = Resources.LoadAll<AudioClip>("Sound/Music");
         musicClips.ForEach(clip => audioDict.Add(clip.name, clip));
+
+        DontDestroyOnLoad(this);
     }
 
     public void PlayOneShot(string name, AudioSource source)
@@ -46,4 +48,5 @@ public class SoundManager : Singleton<SoundManager>
             source.PlayOneShot(clip);
         }
     }
+
 }

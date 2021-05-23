@@ -83,11 +83,9 @@ public class Player : ScriptObject
     {
         if (TryRaycastHit(attackMode, out hits))
         {
-            SoundManager.Instance.PlayOneShot("Jab", audioSource);
             return hits;
         }
 
-        SoundManager.Instance.PlayOneShot("Swing", audioSource);
         return null;
     }
 

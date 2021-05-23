@@ -15,6 +15,7 @@ public class IngameController : Singleton<IngameController>
 
     public Transform spawnPlace;
     public Transform enemiesContainer;
+    public AudioSource audioSource;
 
     public TextMeshProUGUI comboText;
 
@@ -32,6 +33,7 @@ public class IngameController : Singleton<IngameController>
     public float feverTime;
     public float declination;
     public float hp;
+    public bool isOver;
 
     public PatternGenerator patternGenerator;
 
@@ -54,15 +56,16 @@ public class IngameController : Singleton<IngameController>
     public delegate void dOnPlayerFever(bool isFever);
     public event dOnPlayerFever OnPlayerFever;
 
-
     //EnemyEvent
     public delegate void dOnHitEnemy(GameObject obj, bool anim, bool force = false);
     public event dOnHitEnemy OnHitEnemy;
 
-
     //UIEvent
     public delegate void dOnFullUltGage(string name, bool activate);
     public event dOnFullUltGage OnFullUltGage;
+    public delegate void dUIUpdatePlayerInfo(int combo, int score, float hp);
+    public event dUIUpdatePlayerInfo UIUpdatePlayerInfo;
+
 
     private bool isFever = false;
     private bool canUlt = false;
@@ -76,8 +79,8 @@ public class IngameController : Singleton<IngameController>
 
     private void Update()
     {
-        hp -= declination * GameManager.Instance.deltaTime;
-
+        if (isOver) return;
+        HpUpdate();
         if (feverGage >= 100 && !isFever)
         {
             feverGage = 0;
@@ -90,6 +93,33 @@ public class IngameController : Singleton<IngameController>
             OnFullUltGage("Ult", true);
         }
         SpawnEnemy();
+
+        UIUpdatePlayerInfo(combo, totalScore, hp);
+    }
+
+    private void HpUpdate()
+    {
+        if (!CheckPlayerDead())
+        {
+            hp -= declination * GameManager.Instance.deltaTime;
+            declination += GameManager.Instance.deltaTime;
+        }
+        else 
+        {
+            OnPlayerDead();
+            StartCoroutine(ExtensionMethod.DoWaitForSeconds(1f, ()=> {
+                GameManager.Instance.Pause();
+                UIManager.Instance.BlockAllOpenWindow();
+            }));
+        }
+    }
+
+    private bool CheckPlayerDead()
+    {
+        if (hp <= 0)
+            isOver = true;
+
+        return isOver;
     }
 
     private void Attack(RaycastHit2D[] hits, bool force = false)
@@ -97,23 +127,29 @@ public class IngameController : Singleton<IngameController>
         if (hits == null)
         {
             combo = 0;
+            SoundManager.Instance.PlayOneShot("Swing", audioSource);
             return;
         }
         foreach (var hit in hits)
         {
             DestroyEnemy(hit, isFever || force);
+            SoundManager.Instance.PlayOneShot("Jab", audioSource);
             if (!isFever) break;
         }
     }
 
     public void OnClickAttack()
     {
+        if (isOver) return;
+
         var hits = OnPlayerAttack(0);
         Attack(hits);
     }
 
     public void OnClickJumpAttack()
     {
+        if (isOver) return;
+
         var hits = OnPlayerJumpAttack(1);
         Attack(hits);
     }
