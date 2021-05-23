@@ -1,15 +1,31 @@
 // class PlayerScores
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 using UnityEngine.SceneManagement;
 
 using Proyecto26;
+/*
+    <Summary>
+    + SignUpUser(email: string, username: string, password: string) : UserClient
 
-public class ClientUserAccess : Singleton<ClientUserAccess>
+    + SignInUser(email: string, password: string) : UserClient
+
+    + UpdateUser(email: string, password: string, userVersion: string) : int
+
+    + DeleteUser(string email, string username, string password) : int
+
+    + GetPlayer(name: string): PlayerClient
+
+    + UpdatePlayer(name: string, score: int, coin: int, companion: string): int
+
+    + GetAllRank() : Rank[]
+
+    + getPlayerRank(name: String): Rank
+*/
+
+public class ClientUserAccess : MonoBehaviour
 {
     public Text example;
     public Text userCompanion;
@@ -24,46 +40,83 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
     public InputField newCoin;
     public InputField newCompanion;
 
-    public string realURL = "http://08c8ad6e7aae.ngrok.io/sak";
+    public string realURL = "122.35.41.80:9090/sak/";
     public string localURL = "http://localhost:9090/sak/";
+    //public string localURL = "http://a4e6b6a50da0.ngrok.io/sak/";
+    public LoginData user = new LoginData();
+    public UserData player = new UserData();
 
-    public UserClient user = new UserClient();
-    public PlayerClient player = new PlayerClient();
+    public static ClientUserAccess CUAinstance = null;  
+
+    //Awake is always called before any Start functions
+    void Awake()
+    {
+        //Check if instance already exists
+        if (CUAinstance == null)
+        {        
+            //if not, set instance to this
+            CUAinstance = this;
+        }
+        //If instance already exists and it's not this:
+        else if (CUAinstance != this)
+        {        
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);    
+        }   
+        //Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void SignUpUserButton()
-    {
+    {   
+        example.text = "";
         SignUpUser(emailText.text, usernameText.text, passwordText.text);
     }
     public void SignInUserButton()
     {
+        example.text = "";
         SignInUser(emailText.text, passwordText.text);
     }
     public void UpdateUserButton()
     {
+        example.text = "";
         UpdateUser(emailText.text, passwordText.text, newVersion.text);
     }
     public void DeleteUserButton()
     {
+        example.text = "";
         DeleteUser(emailText.text, usernameText.text, passwordText.text);
     }
     public void GetAllRankButton()
     {
+        example.text = "";
         GetAllRank();
     }
 
     public void GetPlayerRankButton()
     {
-        getPlayerRank(usernameText.text);
+        example.text = "";
+        GetPlayerRank(usernameText.text);
+    }
+    public void UpdatePlayerButton()
+    {
+        example.text = "";
+        try{
+            updatePlayer(usernameText.text, int.Parse(newScore.text), int.Parse(newCoin.text), newCompanion.text);
+        }
+        catch{
+            Debug.Log("can't convert string to integer.");
+        }
     }
 
-    public UserClient SignUpUser(string email, string username, string password)
+    public LoginData SignUpUser(string email, string username, string password)
     {
         string userData = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "1.0" + "\"}";
 
-        UserClient returnValue = new UserClient();
+        LoginData returnValue = new LoginData();
 
-        RestClient.Post<UserClient>(realURL + "signupuser", userData).Then(
+        RestClient.Post<LoginData>(localURL + "signupuser", userData).Then(
             response =>
             {
                 if (response.email.Equals("error")){
@@ -83,6 +136,7 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
                     Debug.Log("Hi " + response.userName + ". Sign up completed!");
                     example.text = "Hi " + response.userName + ". Sign up completed!";
                     returnValue = null;
+                    Debug.Log(returnValue.userName);
                 }
             }).Catch(error =>
         {
@@ -93,17 +147,19 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
         return returnValue;
     }
 
-    public UserClient SignInUser(string email, string password)
+    public LoginData SignInUser(string email, string password)
     {
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
-
+    /*
 #if UNITY_EDITOR
         SceneManager.LoadScene("Menu");
         return null;
-#else
-        UserClient returnValue = new UserClient();
+#endif
+    */
 
-        RestClient.Post<UserClient>(realURL + "signinuser", userData).Then(
+        LoginData returnValue = new LoginData();
+
+        RestClient.Post<LoginData>(localURL + "signinuser", userData).Then(
             response =>
             {
                 if (response == null){
@@ -127,8 +183,8 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
                     user.password = response.password;
                     user.userVersion = response.userVersion;
 
-                    PlayerClient p = GetPlayer(user.userName);
-                    player.companion = p.companion;
+                    UserData p = GetPlayer(user.userName);
+                    player.knight = p.knight;
                     player.coin = p.coin;
 
                     SceneManager.LoadScene("Menu");
@@ -142,22 +198,21 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
         });
         // If signin fails, then return null. If signin succeed, then return userclient object.
         return returnValue;
-#endif
     }
 
     //change password
-    public UserClient UpdateUser(string email, string password, string userVersion)
+    public int UpdateUser(string email, string password, string userVersion)
     {
         string userData = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\",\"userVersion\":\"" + userVersion + "\"}";
 
-        UserClient returnValue = new UserClient();
+        int returnValue = 0;
 
-        RestClient.Post<UserClient>(realURL + "updateuser", userData).Then(
+        RestClient.Post<Flag>(localURL + "/update/logindata", userData).Then(
             response =>
             {
-                if (!response.userVersion.Equals("")){
-                    returnValue = response;
-                    Debug.Log("Update user"+ response.userName +"'s data succeed");
+                if (response.flag == 1){
+                    returnValue = 1;
+                    Debug.Log("Update user's data succeed!");
                 }
                 else {
                     Debug.Log("Update fails");
@@ -167,7 +222,7 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
                 // If the request fails
                 Debug.Log(error);
             });
-        // If succeed, return updated user, If failed, return null user
+        // If succeed, return 1, else return 0
         return returnValue;
     }
 
@@ -175,21 +230,20 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
     /*
     * Important Task : Password check needed.
     */
-
-    public UserClient DeleteUser(string email, string username, string password)
+    public int DeleteUser(string email, string username, string password)
     {
         // JSON body only needs email & username. The rest of the data don't matter.
         string userData = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "1.0" + "\"}";
 
-        UserClient returnValue = new UserClient();
+        int returnValue = 0;
 
-        RestClient.Post<UserClient>(realURL + "deleteuser", userData).Then(
+        RestClient.Post<Flag>(localURL + "delete", userData).Then(
             response =>
             {
-                if (!response.userVersion.Equals("")){
-                    Debug.Log("Account " + response.email + "successfully deleted..Good Bye!");
-                    returnValue = response;
+                if (response.flag == 1){
+                    Debug.Log("Account successfully deleted..Good Bye!");
+                    returnValue = 1;
                 }
                 else{
                     Debug.Log("Deletion failed");
@@ -202,13 +256,13 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
         return returnValue;
     }
 
-    public PlayerClient GetPlayer (string name){
+    public UserData GetPlayer (string name){
 
         string userData = "{\"userName\":\"" + name + "\",\"rank\":" + 123 + ",\"score\":" + 123 + "}";
 
-        PlayerClient returnValue = new PlayerClient();
+        UserData returnValue = new UserData();
 
-        RestClient.Post<PlayerClient>(realURL + "getplayer", userData).Then(
+        RestClient.Post<UserData>(localURL + "get/user", userData).Then(
             response =>
             {
                 returnValue = response;
@@ -222,16 +276,23 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
 
     }
 
+    public int updatePlayer(string name, int score, int coin, string knight){
+        string playerdata = "{\"userName\":\"" + name + "\",\"score\":" + score + ",\"coin\":" + coin +
+         ",\"knight\":\"" + knight + "\"}";
 
-    // Json array�� �޾ƿ��� ���ϴ� �������� ����
-    public List<Rank> GetAllRank()
-    {
-        List<Rank> returnValue = new List<Rank>();
+        int returnValue = 0;
 
-        RestClient.Get<List<Rank>>(realURL + "sorted").Then(
+        RestClient.Post<Flag>(localURL + "update/user", playerdata).Then(
             response =>
             {
-                Debug.Log("Checking");
+                if (response.flag == 1){
+                    // update succeed
+                    example.text = "Updated player data succeed";
+                    returnValue = 1;
+                }
+                else{
+                    example.text = "flag not working";
+                }
             }).Catch(error =>
             {
                 // If the request fails
@@ -239,45 +300,42 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
             });
 
         return returnValue;
+        
     }
 
-    /*
-    private Rank getPlayerRank(PlayerClient p){
 
-        string userData = "{\"userName\":\"" + p.userName + "\",\"score\":" + p.score + ",\"coin\":" + p.coin +
-         ",\"companion\":\"" + p.companion + "\"}";
-
-    public Rank[] GetAllRank()
+    public NameRank[] GetAllRank()
     {
         //List<PlayerClient> returnValue = new List<PlayerClient>();
         // Rank[] returnValue;
-
-        RestClient.GetArray<Rank>(realURL + "sorted").Then(
+        RestClient.GetArray<NameRank>(localURL + "sorted").Then(
             response =>
             {
-                returnValue = response;
-                Debug.Log(response);
+                foreach (NameRank r in response) {
+                    example.text = example.text + r.userName + ": Ranking->" + r.rank + ", Score->"+ r.score + '\n';
+                }
+                Debug.Log(response[0].userName);
             }).Catch(error =>
             {
                 // If the request fails
                 Debug.Log(error);
             });
 
-        return returnValue;
-
+        return null;
     }
-    */
-    public Rank getPlayerRank(string name){
 
-        string userData = "{\"userName\":\"" + name + "\",\"score\":" + 123 + ",\"coin\":" + 123 +
-         ",\"companion\":\"" + "Dummy" + "\"}";
+    public NameRank GetPlayerRank(string name){
 
-        Rank returnValue = new Rank();
+        string playerdata = "{\"userName\":\"" + name + "\",\"score\":" + 123 + ",\"coin\":" + 123 +
+         ",\"knight\":\"" + "Dummy" + "\"}";
 
-        RestClient.Post<Rank>(realURL + "getrankscore", userData).Then(
+        NameRank returnValue = new NameRank();
+
+        RestClient.Post<NameRank>(localURL + "getrankscore", playerdata).Then(
             response =>
             {
                 returnValue = response;
+                example.text = response.userName + "'s rank: " + response.rank;
                 Debug.Log(response.rank);
             }).Catch(error =>
             {
@@ -288,6 +346,4 @@ public class ClientUserAccess : Singleton<ClientUserAccess>
         return returnValue;
 
     }
-
-
 }

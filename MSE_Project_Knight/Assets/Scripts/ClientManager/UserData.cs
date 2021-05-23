@@ -1,11 +1,10 @@
 using System;
 
 [Serializable]
-public class PlayerClient
+public class UserData
 {
     public String userName;
     public int score;
     public int coin;
-    public String companion;
-
+    public String knight;
 }
