@@ -5,7 +5,6 @@ using UnityEngine;
 public class SoundManager : Singleton<SoundManager>
 {
     private Dictionary<string, AudioClip> _audioDict;
-    private Dictionary<string, AudioSource> _sourceDict;
 
     public Dictionary<string, AudioClip> audioDict 
     {
@@ -15,17 +14,6 @@ public class SoundManager : Singleton<SoundManager>
                 _audioDict = new Dictionary<string, AudioClip>();
 
             return _audioDict;
-        }
-    }
-
-    public Dictionary<string, AudioSource> sourceDict
-    {
-        get
-        {
-            if (_sourceDict == null)
-                _sourceDict = new Dictionary<string, AudioSource>();
-
-            return _sourceDict;
         }
     }
 
@@ -59,7 +47,10 @@ public class SoundManager : Singleton<SoundManager>
         DontDestroyOnLoad(this);
     }
 
-
+    public void StopAll()
+    {
+        audioSources.ForEach(source => source.Stop());
+    }
     public void PlayOneShot(string name)
     {
         AudioSource source = GetEffectSource();

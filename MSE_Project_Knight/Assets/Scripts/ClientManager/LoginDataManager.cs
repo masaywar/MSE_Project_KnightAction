@@ -6,15 +6,15 @@ using System.Linq;
 
 using Proyecto26;
 
-
-
-public class LoginDataManager : MonoBehaviour
+public static class LoginDataManager
 {
+#if TEST
+    public static string serverURL = "http://localhost:9090/sak/";
+#else
+     public static string serverURL = "http://localhost:9090/sak/";
+#endif
 
-    public string localURL = "http://localhost:9090/sak/";
-    public string alterURL = "Comming soon";
 
-    
     /************************************************************
     Sign up Process Method
 
@@ -29,14 +29,14 @@ public class LoginDataManager : MonoBehaviour
     * Default userVersion = 1.0
     * Sign up을 하면 username을 참조하여 default userData도 DB에 생성됨
     *************************************************************/
-    public LoginData SignUpUser(string email, string username, string password)
+    public static LoginData SignUpUser(string email, string username, string password)
     {
         string jsonForm = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "1.0" + "\"}";
 
         LoginData returnValue = new LoginData();
 
-        RestClient.Post<LoginData>(localURL + "signupuser", jsonForm).Then(
+        RestClient.Post<LoginData>(serverURL + "signupuser", jsonForm).Then(
             response =>
             {
                 Debug.Log("From LoginDataManager: Received sign up request");
@@ -59,13 +59,13 @@ public class LoginDataManager : MonoBehaviour
     Succeed case:
     return signed in user's LoginData
     *************************************************************/
-    public LoginData SignInUser(string email, string password)
+    public static LoginData SignInUser(string email, string password)
     {
         string jsonForm = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
 
         LoginData returnValue = new LoginData();
 
-        RestClient.Post<LoginData>(localURL + "signinuser", jsonForm).Then(
+        RestClient.Post<LoginData>(serverURL + "signinuser", jsonForm).Then(
             response =>
             {
                 Debug.Log("From LoginDataManager: Received sign in request");
@@ -82,11 +82,11 @@ public class LoginDataManager : MonoBehaviour
     /************************************************************
     GetAllLoginData Method
     *************************************************************/
-    public List<LoginData> GetAllLoginData()
+    public static List<LoginData> GetAllLoginData()
     {   
         List<LoginData> returnValue = new List<LoginData>();
 
-        RestClient.GetArray<LoginData>(localURL + "getall/logindata").Then(
+        RestClient.GetArray<LoginData>(serverURL + "getall/logindata").Then(
             response =>
             {
                 Debug.Log("From LoginDataManager: Received GetAllLoginData request");
@@ -110,13 +110,13 @@ public class LoginDataManager : MonoBehaviour
     Succeed case:
     return user's LoginData
     *************************************************************/
-    public LoginData GetLoginDataByEmail(string email)
+    public static LoginData GetLoginDataByEmail(string email)
     {
         string jsonForm = "{\"email\":\"" + email + "\",\"password\":\"" + "dummyPassword" + "\"}";
 
         LoginData returnValue = new LoginData();
 
-        RestClient.Post<LoginData>(localURL + "get/logindata", jsonForm).Then(
+        RestClient.Post<LoginData>(serverURL + "get/logindata", jsonForm).Then(
             response =>
             {
                 Debug.Log("From LoginDataManager: Received GetLoginDataByEmail request");
@@ -142,14 +142,14 @@ public class LoginDataManager : MonoBehaviour
     Succeed case:
     return 1
     *************************************************************/
-    public int UpdateLoginData(string email, string password, string userVersion)
+    public static int UpdateLoginData(string email, string password, string userVersion)
     {
         string jsonForm = "{\"userName\":\"" + "dummy" + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + userVersion + "\"}";
 
         int returnValue = 0;
 
-        RestClient.Post<Flag>(localURL + "update/logindata", jsonForm).Then(
+        RestClient.Post<Flag>(serverURL + "update/logindata", jsonForm).Then(
             response =>
             {
                 Debug.Log("From LoginDataManager: Received updateLoginData request");
@@ -173,14 +173,14 @@ public class LoginDataManager : MonoBehaviour
     Succeed case:
     return 1
     *************************************************************/
-    public int DeleteUser(string email, string username, string password)
+    public static int DeleteUser(string email, string username, string password)
     {
         string jsonForm = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "dummy" + "\"}";
 
         int returnValue = 0;
 
-        RestClient.Post<Flag>(localURL + "delete", jsonForm).Then(
+        RestClient.Post<Flag>(serverURL + "delete", jsonForm).Then(
             response =>
             {
                 Debug.Log("From LoginDataManager: Received user deletion request");

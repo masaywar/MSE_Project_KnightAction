@@ -47,7 +47,17 @@ public class SettingUI : UIWindow
         Close();
     }
 
-    public void OnClickToMain() { }
+    public void OnClickToMain() 
+    {
+        GameManager.Instance.gameState = GameManager.GameState.main;
+
+        ObjectManager.Instance.DespawnAllWithName<EnemyObject>("DestroyableEnemy");
+        ObjectManager.Instance.DespawnAllWithName<EnemyObject>("UnDestroyableEnemy");
+        SoundManager.Instance.StopAll();
+
+        Close();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+    }
 
     public override void Open()
     {

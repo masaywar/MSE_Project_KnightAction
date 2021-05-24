@@ -111,7 +111,7 @@ public class ObjectManager : Singleton<ObjectManager>
     private void InitSpawnedObject(ScriptObject spawned, Transform parentGo) 
     {
         spawned.transform.SetParent(parentGo);
-        spawned.gameObject.SetActive(false);
+        Despawn<ScriptObject>(spawned);
     }
 
     public T Find<T>(ScriptObject obj) where T : ScriptObject
@@ -154,7 +154,9 @@ public class ObjectManager : Singleton<ObjectManager>
 
         spawnedTransform.position = position;
         spawnedTransform.rotation = rotation;
-        spawnedTransform.SetParent(parent);
+
+        if (parent != null)
+            spawnedTransform.SetParent(parent);
     }
 
     public T Spawn<T>(string type, Vector3 position, Quaternion rotation, Transform parent) where T : ScriptObject
@@ -211,7 +213,7 @@ public class ObjectManager : Singleton<ObjectManager>
         obj.gameObject.SetActive(false);
     }
 
-    public void DespawnAllWithTag<T>(string key, string tag) where T : ScriptObject
+    public void DespawnAllWithName<T>(string key) where T : ScriptObject
     {
         if (spawnedObjDict.TryGetValue(key, out var value))
         {
@@ -219,8 +221,7 @@ public class ObjectManager : Singleton<ObjectManager>
 
             value.ForEach(obj =>
             {
-                if (obj.tag == tag)
-                    despawnList.Add(obj);
+                despawnList.Add(obj);
             });
 
             despawnList.ForEach(obj => Despawn<ScriptObject>(obj));

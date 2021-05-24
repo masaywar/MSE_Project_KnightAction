@@ -6,7 +6,7 @@ using TMPro;
 
 //EnemyController, PlayerController¿« subject
 
-public class IngameController : Singleton<IngameController>
+public class IngameController : MonoBehaviour
 {
     private ObjectManager cachedObjectManager;
 
@@ -27,8 +27,17 @@ public class IngameController : Singleton<IngameController>
     
     [SerializeField]
     private int combo = 0;
+    [SerializeField]
+    private int staticScore;
+    [SerializeField]
     private int score;
-    private int totalScore;
+    [SerializeField]
+    private int _totalScore;
+    public int totalScore 
+    {
+        get => _totalScore;
+        set => _totalScore = value;
+    }
 
     public float feverTime;
     public float declination;
@@ -95,9 +104,18 @@ public class IngameController : Singleton<IngameController>
             canUlt = true;
             OnFullUltGage("Ult", true);
         }
+
+
         SpawnEnemy();
 
         UIUpdatePlayerInfo(combo, totalScore, hp);
+    }
+
+    private void ScoreUpdate()
+    {
+        totalScore += score;
+        if (combo != 0 && combo % 50 == 0)
+            score += 15;
     }
 
     private void HpUpdate()
@@ -112,7 +130,8 @@ public class IngameController : Singleton<IngameController>
             OnPlayerDead();
             StartCoroutine(ExtensionMethod.DoWaitForSeconds(1f, ()=> {
                 GameManager.Instance.Pause();
-                UIManager.Instance.BlockAllOpenWindow();
+                //UIManager.Instance.BlockAllOpenWindow();
+                UIManager.Instance.GetWindow<ScoreUI>("ScoreUI").Open();
             }));
         }
     }
@@ -189,7 +208,7 @@ public class IngameController : Singleton<IngameController>
             var tag = obj.Item2;
             var wait = obj.Item3;
 
-            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position, enemiesContainer);
+            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position);
 
             if (tag != "UnDestroyableEnemy")
                 yield return new WaitForSeconds(wait);
@@ -244,6 +263,8 @@ public class IngameController : Singleton<IngameController>
     {
         OnHitEnemy(hit.collider.gameObject, true, force);
         combo += 1;
+        ScoreUpdate();
+
         if (!canUlt)
             ultGage += ultRate;
         if (!isFever)
@@ -285,6 +306,8 @@ public class IngameController : Singleton<IngameController>
     {
         OnPlayerMiss();
         hp -= damage;
+        combo = 0;
+        score = staticScore;
     }
 }
 

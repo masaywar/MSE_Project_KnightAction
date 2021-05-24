@@ -9,21 +9,22 @@ public class EnemyObject : ScriptObject
 
     public Rigidbody2D despawnPlace;
 
-
+    [SerializeField]
     private IngameController inGameController;
     private bool isDead = false;
 
     #region
-
-    private void Start()
+    private void Initialze()
     {
-
-        inGameController = IngameController.Instance;
+        inGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>();
         inGameController.OnHitEnemy += Destroy;
     }
 
     private void FixedUpdate()
     {
+        if (inGameController == null)
+            Initialze();
+
         if (CheckValidPos())
             Move();
         else
@@ -70,7 +71,7 @@ public class EnemyObject : ScriptObject
             if (isAnim)
                 StartCoroutine(OnDestroyAnimate(randomVector));
             else
-                gameObject.SetActive(false);
+                ObjectManager.Instance.Despawn<ScriptObject>(this);
         }
     }
 
@@ -86,14 +87,13 @@ public class EnemyObject : ScriptObject
             yield return null;
         }
 
-        gameObject.SetActive(false);
+        ObjectManager.Instance.Despawn<ScriptObject>(this);
     }
 
     private void OnDisable()
     {
         Initialize();
         isDead = false;
-        ObjectManager.Instance.Despawn<ScriptObject>(this);
     }
     #endregion
 
@@ -102,7 +102,9 @@ public class EnemyObject : ScriptObject
         if (collider.name == "DespawnPlace")
         {
             if(isDestroyable)
+            {
                 inGameController.Miss();
+            }
             DestroyForced();
         }
     }

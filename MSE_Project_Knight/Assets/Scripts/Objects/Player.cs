@@ -26,7 +26,7 @@ public class Player : ScriptObject
     //Observer
     private void Start()
     {
-        playerController = IngameController.Instance;
+        playerController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>();
 
         prefab = GetComponent<SPUM_Prefabs>();
         audioSource = GetComponent<AudioSource>();
@@ -209,12 +209,12 @@ public class Player : ScriptObject
     // Delete event from ingame controller
     private void Unsubscribe()
     {
-        playerController.OnPlayerDead += OnPlayerDead;
-        playerController.OnPlayerAttack += OnPlayerAttack;
-        playerController.OnPlayerJumpAttack += OnPlayerAttack;
-        playerController.OnPlayerFever += OnPlayerFever;
-        playerController.OnPlayerMiss += OnPlayerMiss;
-        playerController.OnPlayerUlt += OnPlayerUlt;
+        playerController.OnPlayerDead -= OnPlayerDead;
+        playerController.OnPlayerAttack -= OnPlayerAttack;
+        playerController.OnPlayerJumpAttack -= OnPlayerAttack;
+        playerController.OnPlayerFever -= OnPlayerFever;
+        playerController.OnPlayerMiss -= OnPlayerMiss;
+        playerController.OnPlayerUlt -= OnPlayerUlt;
     }
 
     // Animations
@@ -231,4 +231,15 @@ public class Player : ScriptObject
         yield return new WaitForSeconds(0.5f);
         prefab.PlayAnimation(1);
     }
+
+    private void OnDisable()
+    {
+        Unsubscribe();
+    }
+
+    private void OnEnable()
+    {
+        Subscribe();
+    }
 }
+

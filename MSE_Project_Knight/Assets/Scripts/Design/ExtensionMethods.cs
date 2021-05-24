@@ -31,6 +31,5 @@ public static class ExtensionMethod
         yield return new WaitForSeconds(time);
         action();
     }
-
 }
 

@@ -25,11 +25,9 @@ public class GamePlayUI : UIWindow
 
     private void Start()
     {
-        ingameController = IngameController.Instance;
+        ingameController = ingameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>(); ;
         ingameController.OnFullUltGage += ActivateButton;
         ingameController.UIUpdatePlayerInfo += InfoUpdate;
-
-        setting.onClick.AddListener(OnClickSetting);
 
         for (int k = 0; k < Buttons.transform.childCount; k++)
         {
@@ -44,7 +42,7 @@ public class GamePlayUI : UIWindow
         button.interactable = activate;
     }
 
-    private void OnClickSetting()
+    public void OnClickSetting()
     {
         var window = UIManager.Instance.GetWindow<SettingUI>("SettingUI");
         window.Open();

@@ -272,7 +272,7 @@ MonoBehaviour:
     userName: 
     score: 0
     coin: 0
-    companion: 
+    knight: 
 --- !u!1 &196176766
 GameObject:
   m_ObjectHideFlags: 0

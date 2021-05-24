@@ -5,10 +5,13 @@ using System.Linq;
 
 using Proyecto26;
 
-public class UserDataManager : MonoBehaviour
+public static class UserDataManager
 {
-    public string localURL = "http://localhost:9090/sak/";
-    public string alterURL = "Comming soon";
+#if TEST
+    public static string serverURL = "http://localhost:9090/sak/";
+#else
+     public static string serverURL = "http://localhost:9090/sak/";
+#endif
 
 
     /************************************************************
@@ -20,13 +23,13 @@ public class UserDataManager : MonoBehaviour
     Succeed case:
     return user's UserData
     *************************************************************/
-    public UserData GetUserDataByName(string name)
+    public static UserData GetUserDataByName(string name)
     {
         string jsonForm = "{\"userName\":\"" + name + "\",\"rank\":" + 0 + ",\"score\":" + 0 + "}";
 
         UserData returnValue = new UserData();
 
-        RestClient.Post<UserData>(localURL + "get/user", jsonForm).Then(
+        RestClient.Post<UserData>(serverURL + "get/user", jsonForm).Then(
             response =>
             {
                 returnValue = response;
@@ -43,11 +46,11 @@ public class UserDataManager : MonoBehaviour
     /************************************************************
     GetAllUserData Method
     *************************************************************/
-    public List<UserData> GetAllUserData()
+    public static List<UserData> GetAllUserData()
     {
         List<UserData> returnValue = new List<UserData>();
 
-        RestClient.GetArray<UserData>(localURL + "getall/user").Then(
+        RestClient.GetArray<UserData>(serverURL + "getall/user").Then(
             response =>
             {
                 returnValue = response.ToList();
@@ -72,14 +75,14 @@ public class UserDataManager : MonoBehaviour
     Succeed case:
     return 1
     *************************************************************/
-    public int UpdatUserData(string name, int score, int coin, string knight)
+    public static int UpdatUserData(string name, int score, int coin, string knight)
     {
         string jsonForm = "{\"userName\":\"" + name + "\",\"score\":" + score + ",\"coin\":" + coin +
          ",\"knight\":\"" + knight + "\"}";
 
         int returnValue = 0;
 
-        RestClient.Post<Flag>(localURL + "update/user", jsonForm).Then(
+        RestClient.Post<Flag>(serverURL + "update/user", jsonForm).Then(
             response =>
             {
                 returnValue = response.flag;
@@ -99,11 +102,11 @@ public class UserDataManager : MonoBehaviour
     Note:
     1등부터 차례로 Name, Rank, Score가 담긴 List 반환
     *************************************************************/
-    public List<NameRank> GetSortedRank()
+    public static List<NameRank> GetSortedRank()
     {
         List<NameRank> returnValue = new List<NameRank>();
 
-        RestClient.GetArray<NameRank>(localURL + "sorted").Then(
+        RestClient.GetArray<NameRank>(serverURL + "sorted").Then(
             response =>
             {
                 returnValue = response.ToList();
@@ -124,14 +127,14 @@ public class UserDataManager : MonoBehaviour
     Succeed case:
     return NameRank obj
     *************************************************************/
-    public NameRank GetUserRank(string name)
+    public static NameRank GetUserRank(string name)
     {
         string jsonForm = "{\"userName\":\"" + name + "\",\"score\":" + 0 + ",\"coin\":" + 0 +
          ",\"knight\":\"" + "dummy" + "\"}";
 
         NameRank returnValue = new NameRank();
 
-        RestClient.Post<NameRank>(localURL + "getrankscore", jsonForm).Then(
+        RestClient.Post<NameRank>(serverURL + "getrankscore", jsonForm).Then(
             response =>
             {
                 returnValue = response;
