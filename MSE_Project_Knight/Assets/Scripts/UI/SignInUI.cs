@@ -10,15 +10,15 @@ public class SignInUI : UIWindow
     public Button[] buttons;
     public InputField[] inputFields;
 
-    private Dictionary<string, string> buttonsActionDict = new Dictionary<string, string>();
+    private Dictionary<Button, string> buttonsActionDict = new Dictionary<Button, string>();
 
     private void Start()
     {
         buttons.ForEach(button=> 
-            buttonsActionDict.Add(button.name, "OnClick"+button.name)
+            buttonsActionDict.Add(button, "OnClick"+button.name)
         );
 
-        buttonsActionDict.ForEach(keyValue => SendMessage(keyValue.Value));
+        buttonsActionDict.ForEach(keyValue => keyValue.Key.onClick.AddListener(()=> SendMessage(keyValue.Value)));
     }
 
     private string findFieldText(string fieldName)
@@ -41,7 +41,7 @@ public class SignInUI : UIWindow
 
         LoginData data = LoginDataManager.SignInUser(emailText, pwText);
 
-        if (data != null)
+        if (data.userName != null)
         {
             UserData userData = UserDataManager.GetUserDataByName(data.userName);
 
@@ -50,14 +50,27 @@ public class SignInUI : UIWindow
             ClientUserData.knight = userData.knight;
             ClientUserData.email = data.email;
             ClientUserData.score = userData.score;
+
+            print(ClientUserData.name);
+            print(ClientUserData.coin);
+            print(ClientUserData.knight);
+            print(ClientUserData.email);
+            print(ClientUserData.score);
+
+            GameManager.Instance.gameState = GameManager.GameState.main;
+        }
+
+        else 
+        {
+            //Notify "Sign up!"
         }
     }
 
     public void OnClickSignUp()
     {
-        string emailText = findFieldText("EmialField");
-        string pwText = findFieldText("OasswirdFuekd");
-        string userName = findFieldText("userName");
+        string emailText = findFieldText("EmailField");
+        string pwText = findFieldText("PasswirdFuekd");
+        string userName = findFieldText("UserNameField");
 
         LoginDataManager.SignUpUser(emailText, userName, pwText);
     }

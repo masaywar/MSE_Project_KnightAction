@@ -37,7 +37,8 @@ public class Menu : MonoBehaviour
     public void GameStart() {
         // Turning to ingame Scene.
         Debug.Log("In game start!");
-        SceneManager.LoadScene("InGame");
+
+        GameManager.Instance.gameState = GameManager.GameState.loadIngame;
     }
 
     // Start is called before the first frame update

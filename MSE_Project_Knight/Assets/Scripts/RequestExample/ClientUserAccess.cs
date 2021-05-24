@@ -187,8 +187,6 @@ public class ClientUserAccess : MonoBehaviour
                     player.knight = p.knight;
                     player.coin = p.coin;
 
-                    SceneManager.LoadScene("Menu");
-
                     returnValue = response;
                 }
             }).Catch(error =>

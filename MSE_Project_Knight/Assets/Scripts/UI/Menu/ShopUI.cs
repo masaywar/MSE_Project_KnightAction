@@ -13,6 +13,13 @@ public class ShopUI : UIWindow
         Close();
     }
 
+    private void BuyItem(int price)
+    {
+        //Not Implemented.
+        ClientUserData.coin -= price;
+        UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight);
+    }
+
     public override void Open()
     {
         base.Open();

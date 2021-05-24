@@ -49,7 +49,11 @@ public class ScoreUI : UIWindow
 
     public void OnClickToMain()
     {
+        ObjectManager.Instance.DespawnAllWithName<EnemyObject>("DestroyableEnemy");
+        ObjectManager.Instance.DespawnAllWithName<EnemyObject>("UnDestroyableEnemy");
+        SoundManager.Instance.StopAll();
+
+        Close();
         GameManager.Instance.gameState = GameManager.GameState.main;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 }

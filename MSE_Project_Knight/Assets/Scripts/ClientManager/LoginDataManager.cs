@@ -73,6 +73,7 @@ public static class LoginDataManager
             }).Catch(error =>
         {
             Debug.Log(error);
+            returnValue = null;
         });
 
         return returnValue;

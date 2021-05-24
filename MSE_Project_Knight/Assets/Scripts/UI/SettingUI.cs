@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SettingUI : UIWindow
 {
-    public Button exit;
+    public Button ToMain;
 
     public Transform Buttons;
     public Transform Sliders;
@@ -49,14 +49,13 @@ public class SettingUI : UIWindow
 
     public void OnClickToMain() 
     {
-        GameManager.Instance.gameState = GameManager.GameState.main;
-
         ObjectManager.Instance.DespawnAllWithName<EnemyObject>("DestroyableEnemy");
         ObjectManager.Instance.DespawnAllWithName<EnemyObject>("UnDestroyableEnemy");
         SoundManager.Instance.StopAll();
 
         Close();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        GameManager.Instance.gameState = GameManager.GameState.main;
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     public override void Open()
@@ -69,5 +68,14 @@ public class SettingUI : UIWindow
     {
         base.Close();
         GameManager.Instance.Play();
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.Instance.gameState == GameManager.GameState.ingame)
+            ToMain.gameObject.SetActive(true);
+
+        else
+            ToMain.gameObject.SetActive(false);
     }
 }

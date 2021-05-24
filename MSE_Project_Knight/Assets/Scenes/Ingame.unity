@@ -602,7 +602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6543871554941942415, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
       propertyPath: feverRate
-      value: 2
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6543871554941942415, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
       propertyPath: feverTime

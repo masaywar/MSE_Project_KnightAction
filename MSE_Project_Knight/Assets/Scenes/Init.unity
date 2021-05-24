@@ -2852,7 +2852,7 @@ MonoBehaviour:
   rigidbody: {fileID: 0}
   collider: {fileID: 0}
   canvasGroup: {fileID: 0}
-  exit: {fileID: 417937097}
+  ToMain: {fileID: 1607226000}
   Buttons: {fileID: 2147284225}
   Sliders: {fileID: 227299417}
   effectSlider: {fileID: 1158306933}

@@ -34,7 +34,7 @@ public class GameManager : Singleton<GameManager>
 
     public enum GameState
     {
-        start, loadMain, main, loadIngame, ingame, idle
+        start, signin ,loadMain, main, loadIngame, ingame, idle
     };
 
     public enum LoadState
@@ -54,7 +54,6 @@ public class GameManager : Singleton<GameManager>
         cachedTimeScale = 1;
         DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);
 
-        gameState = GameState.loadMain;
         LoadManager();
         StartCoroutine(UpdateState());
         DontDestroyOnLoad(this);
@@ -81,13 +80,12 @@ public class GameManager : Singleton<GameManager>
                 case LoadState.init:
                     
                     loadState = LoadState.onLoad;
-                    gameState = GameState.loadMain;
                     break;
 
                 case LoadState.onLoad:
                     if (operation == null)
                     {
-                        operation = SceneManager.LoadSceneAsync("Menu");
+                        operation = SceneManager.LoadSceneAsync("SignIn");
                         operation.allowSceneActivation = false;
                     }
                     else
@@ -99,7 +97,7 @@ public class GameManager : Singleton<GameManager>
                             if (Input.GetMouseButtonDown(0))
                             {
                                 operation.allowSceneActivation = true;
-                                gameState = GameState.main;
+                                gameState = GameState.signin;
                                 loadState = LoadState.done;
                                 operation = null;
                             }
@@ -108,7 +106,7 @@ public class GameManager : Singleton<GameManager>
                             if (Input.touchCount > 0)
                             {
                                 operation.allowSceneActivation = true;
-                                gameState = GameState.main;
+                                gameState = GameState.signin;
                                 loadState = LoadState.done;
                                 operation = null;
                             }
@@ -125,8 +123,19 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
+        print(gameState);
+
         switch (gameState)
         {
+            case GameState.signin:
+                gameState = GameState.idle;
+                break;
+
+            case GameState.main:
+                SceneManager.LoadScene("Menu");
+                gameState = GameState.idle;
+                break;
+
             case GameState.loadIngame:
                 SceneManager.LoadScene("Ingame");
                 gameState = GameState.ingame;
