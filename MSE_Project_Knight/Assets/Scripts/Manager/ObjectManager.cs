@@ -69,6 +69,7 @@ public class ObjectManager : Singleton<ObjectManager>
             new PoolPrefab("Prefab/Enemy/DestroyableEnemy", 500), 
             new PoolPrefab("Prefab/Enemy/UnDestroyableEnemy", 50)};
 
+        DontDestroyOnLoad(this);
         StartCoroutine(LoadPrefabs());
     }
 
