@@ -63,5 +63,6 @@ public class UIWindow : ScriptObject
     private void OnDestroy()
     {
         cachedUIManager.openedWindowList.Remove(this);
+        cachedUIManager.uiWindowDict.Remove(name);
     }
 }

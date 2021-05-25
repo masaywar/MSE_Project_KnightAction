@@ -54,6 +54,7 @@ public class ScoreUI : UIWindow
         SoundManager.Instance.StopAll();
 
         Close();
+        GameManager.Instance.Play();
         GameManager.Instance.gameState = GameManager.GameState.main;
     }
 }

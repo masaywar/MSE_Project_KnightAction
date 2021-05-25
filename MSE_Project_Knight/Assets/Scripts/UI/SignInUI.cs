@@ -36,12 +36,21 @@ public class SignInUI : UIWindow
 
     public void OnClickSignIn()
     {
+#if TEST
+        GameManager.Instance.gameState = GameManager.GameState.main;
+#else
+
+
         string emailText = findFieldText("EmailField");
         string pwText = findFieldText("PasswordField");
 
         LoginData data = LoginDataManager.SignInUser(emailText, pwText);
 
-        if (data.userName != null)
+        print(data.email);
+        print(data.id);
+        print(data.userName);
+
+        if (data.email != null)
         {
             UserData userData = UserDataManager.GetUserDataByName(data.userName);
 
@@ -64,6 +73,7 @@ public class SignInUI : UIWindow
         {
             //Notify "Sign up!"
         }
+#endif
     }
 
     public void OnClickSignUp()

@@ -27,4 +27,9 @@ public class WholeUI : UIWindow
     {
         GameManager.Instance.gameState = GameManager.GameState.loadIngame;
     }
+
+    private void Update()
+    {
+        UIUpdate();
+    }
 }

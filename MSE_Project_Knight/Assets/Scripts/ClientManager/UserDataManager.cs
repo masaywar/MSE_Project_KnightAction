@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Net;
+using System.IO;
 
-using Proyecto26;
+using Newtonsoft.Json;
 
 public static class UserDataManager
 {
-#if TEST
-    public static string serverURL = "http://localhost:9090/sak/";
-#else
-     public static string serverURL = "http://localhost:9090/sak/";
-#endif
-
+    private static string serverURL = URL.url;
 
     /************************************************************
     GetUserDataByName Method
@@ -27,19 +24,24 @@ public static class UserDataManager
     {
         string jsonForm = "{\"userName\":\"" + name + "\",\"rank\":" + 0 + ",\"score\":" + 0 + "}";
 
-        UserData returnValue = new UserData();
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        RestClient.Post<UserData>(serverURL + "get/user", jsonForm).Then(
-            response =>
-            {
-                returnValue = response;
-            }).Catch(error =>
-            {
-                // If the request fails
-                Debug.Log(error);
-            });
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "get/user");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
 
-        return returnValue;        
+        using(var stream = request.GetRequestStream())
+        {
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        return JsonUtility.FromJson<UserData>(json);       
     }
 
 
@@ -48,19 +50,12 @@ public static class UserDataManager
     *************************************************************/
     public static List<UserData> GetAllUserData()
     {
-        List<UserData> returnValue = new List<UserData>();
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "getall/user");
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
 
-        RestClient.GetArray<UserData>(serverURL + "getall/user").Then(
-            response =>
-            {
-                returnValue = response.ToList();
-            }).Catch(error =>
-            {
-                // If the request fails
-                Debug.Log(error);
-            });
-
-        return returnValue;
+        return JsonConvert.DeserializeObject<List<UserData>>(json);
     }
 
 
@@ -80,19 +75,26 @@ public static class UserDataManager
         string jsonForm = "{\"userName\":\"" + name + "\",\"score\":" + score + ",\"coin\":" + coin +
          ",\"knight\":\"" + knight + "\"}";
 
-        int returnValue = 0;
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        RestClient.Post<Flag>(serverURL + "update/user", jsonForm).Then(
-            response =>
-            {
-                returnValue = response.flag;
-            }).Catch(error =>
-            {
-                // If the request fails
-                Debug.Log(error);
-            });
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "update/user");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
 
-        return returnValue;          
+        using(var stream = request.GetRequestStream())
+        {
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        Flag receivedFlag = JsonUtility.FromJson<Flag>(json);
+
+        return receivedFlag.flag;          
 
     }
 
@@ -104,18 +106,13 @@ public static class UserDataManager
     *************************************************************/
     public static List<NameRank> GetSortedRank()
     {
-        List<NameRank> returnValue = new List<NameRank>();
 
-        RestClient.GetArray<NameRank>(serverURL + "sorted").Then(
-            response =>
-            {
-                returnValue = response.ToList();
-            }).Catch(error =>
-            {
-                // If the request fails
-                Debug.Log(error);
-            });
-        return returnValue;
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "sorted");
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+
+        return JsonConvert.DeserializeObject<List<NameRank>>(json);
     }
 
     /************************************************************
@@ -130,20 +127,24 @@ public static class UserDataManager
     public static NameRank GetUserRank(string name)
     {
         string jsonForm = "{\"userName\":\"" + name + "\",\"score\":" + 0 + ",\"coin\":" + 0 +
-         ",\"knight\":\"" + "dummy" + "\"}";
+        ",\"knight\":\"" + "dummy" + "\"}";
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        NameRank returnValue = new NameRank();
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "getrankscore");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
 
-        RestClient.Post<NameRank>(serverURL + "getrankscore", jsonForm).Then(
-            response =>
-            {
-                returnValue = response;
-            }).Catch(error =>
-            {
-                // If the request fails
-                Debug.Log(error);
-            });
-
-        return returnValue;        
+        using(var stream = request.GetRequestStream())
+        {
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        return JsonUtility.FromJson<NameRank>(json);
     }
 }

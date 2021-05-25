@@ -3,18 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Net;
+using System.IO;
 
-using Proyecto26;
+using Newtonsoft.Json;
 
 public static class LoginDataManager
 {
-#if TEST
-    public static string serverURL = "http://localhost:9090/sak/";
-#else
-     public static string serverURL = "http://localhost:9090/sak/";
-#endif
 
-
+    public static string serverURL = URL.url;
+ 
     /************************************************************
     Sign up Process Method
 
@@ -33,19 +31,25 @@ public static class LoginDataManager
     {
         string jsonForm = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "1.0" + "\"}";
+        
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        LoginData returnValue = new LoginData();
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "signupuser");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
 
-        RestClient.Post<LoginData>(serverURL + "signupuser", jsonForm).Then(
-            response =>
-            {
-                Debug.Log("From LoginDataManager: Received sign up request");
-                returnValue = response;
-            }).Catch(error =>
+        using(var stream = request.GetRequestStream())
         {
-            Debug.Log(error);
-        });
-        return returnValue;
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        return JsonUtility.FromJson<LoginData>(json);       
     }
     
 
@@ -63,42 +67,39 @@ public static class LoginDataManager
     {
         string jsonForm = "{\"email\":\"" + email + "\",\"password\":\"" + password + "\"}";
 
-        LoginData returnValue = new LoginData();
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        RestClient.Post<LoginData>(serverURL + "signinuser", jsonForm).Then(
-            response =>
-            {
-                Debug.Log("From LoginDataManager: Received sign in request");
-                returnValue = response;
-            }).Catch(error =>
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "signinuser");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
+
+        using(var stream = request.GetRequestStream())
         {
-            Debug.Log(error);
-            returnValue = null;
-        });
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
 
-        return returnValue;
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        return JsonUtility.FromJson<LoginData>(json);
     }
 
 
     /************************************************************
-    GetAllLoginData Method
+    GetAllLoginData Method  
     *************************************************************/
     public static List<LoginData> GetAllLoginData()
     {   
-        List<LoginData> returnValue = new List<LoginData>();
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "getall/logindata");
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
 
-        RestClient.GetArray<LoginData>(serverURL + "getall/logindata").Then(
-            response =>
-            {
-                Debug.Log("From LoginDataManager: Received GetAllLoginData request");
-                returnValue = response.ToList();
-
-            }).Catch(error =>
-        {
-            Debug.Log(error);
-        });
-
-        return returnValue;
+        return JsonConvert.DeserializeObject<List<LoginData>>(json);
     }
 
 
@@ -115,19 +116,24 @@ public static class LoginDataManager
     {
         string jsonForm = "{\"email\":\"" + email + "\",\"password\":\"" + "dummyPassword" + "\"}";
 
-        LoginData returnValue = new LoginData();
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        RestClient.Post<LoginData>(serverURL + "get/logindata", jsonForm).Then(
-            response =>
-            {
-                Debug.Log("From LoginDataManager: Received GetLoginDataByEmail request");
-                returnValue = response;
-            }).Catch(error =>
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "get/logindata");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
+
+        using(var stream = request.GetRequestStream())
         {
-            Debug.Log(error);
-        });
-
-        return returnValue;
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        return JsonUtility.FromJson<LoginData>(json);
 
     }
 
@@ -148,19 +154,26 @@ public static class LoginDataManager
         string jsonForm = "{\"userName\":\"" + "dummy" + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + userVersion + "\"}";
 
-        int returnValue = 0;
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        RestClient.Post<Flag>(serverURL + "update/logindata", jsonForm).Then(
-            response =>
-            {
-                Debug.Log("From LoginDataManager: Received updateLoginData request");
-                returnValue = response.flag;
-            }).Catch(error =>
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "update/logindata");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
+
+        using(var stream = request.GetRequestStream())
         {
-            Debug.Log(error);
-        });
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        Flag receivedFlag = JsonUtility.FromJson<Flag>(json);
 
-        return returnValue;
+        return receivedFlag.flag;
     }
 
 
@@ -179,18 +192,24 @@ public static class LoginDataManager
         string jsonForm = "{\"userName\":\"" + username + "\",\"email\":\"" + email + "\",\"password\":\"" + password +
          "\",\"userVersion\":\"" + "dummy" + "\"}";
 
-        int returnValue = 0;
+        var bytes = System.Text.Encoding.UTF8.GetBytes(jsonForm);
 
-        RestClient.Post<Flag>(serverURL + "delete", jsonForm).Then(
-            response =>
-            {
-                Debug.Log("From LoginDataManager: Received user deletion request");
-                returnValue = response.flag;
-            }).Catch(error =>
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(serverURL + "delete");
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.ContentLength = bytes.Length;
+
+        using(var stream = request.GetRequestStream())
         {
-            Debug.Log(error);
-        });
-
-        return returnValue;
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
+            stream.Close();
+        }
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader reader = new StreamReader(response.GetResponseStream());
+        string json = reader.ReadToEnd();
+        
+        Flag receivedFlag = JsonUtility.FromJson<Flag>(json);
+        return receivedFlag.flag;
     }
 }

@@ -13,9 +13,13 @@ public class ShopUI : UIWindow
         Close();
     }
 
-    private void BuyItem(int price)
+    public void BuyItem(ItemBox itemBox)
     {
         //Not Implemented.
+        int price = itemBox.price;
+
+        print(price);
+
         ClientUserData.coin -= price;
         UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight);
     }

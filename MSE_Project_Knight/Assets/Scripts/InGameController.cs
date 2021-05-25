@@ -87,6 +87,9 @@ public class IngameController : MonoBehaviour
         TransPattern();
 
         SoundManager.Instance.PlayMusic("Fable", true);
+
+        GameManager.Instance.cachedTimeScale = 1;
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -304,6 +307,8 @@ public class IngameController : MonoBehaviour
 
     public void Miss()
     {
+        if (isOver) return;
+
         OnPlayerMiss();
         hp -= damage;
         combo = 0;

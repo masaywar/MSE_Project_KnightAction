@@ -684,6 +684,34 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6543871555721429185}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickToMain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ScoreUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543871555287097574, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6543871555287097576, guid: 6db3ee8b454dba846b1bf4c23fd9dc8c, type: 3}
       propertyPath: m_Name
       value: ToMain
