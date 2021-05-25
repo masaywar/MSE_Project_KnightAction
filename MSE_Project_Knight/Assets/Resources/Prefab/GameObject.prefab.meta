@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:MSE_Project_Knight/Assets/Resources/Prefab/GameObject.prefab.meta
 guid: 6db3ee8b454dba846b1bf4c23fd9dc8c
+=======
+guid: 49eb5cf5260599a49bbe850590cab7ae
+>>>>>>> pr/7:MSE_Project_Knight/Assets/Resources/Prefab/InGameController.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:MSE_Project_Knight/Assets/Scenes/Init.unity.meta
 guid: 43698b4c3f71ffe4fad1b2eee44e3c2f
+=======
+guid: 01ae3e2961a4b1741aad9e6460f59f94
+>>>>>>> pr/7:MSE_Project_Knight/Assets/Scenes/Ingame.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

@@ -25,7 +25,7 @@ public class GamePlayUI : UIWindow
 
     private void Start()
     {
-        ingameController = ingameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>(); ;
+        ingameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>(); ;
         ingameController.OnFullUltGage += ActivateButton;
         ingameController.UIUpdatePlayerInfo += InfoUpdate;
 
