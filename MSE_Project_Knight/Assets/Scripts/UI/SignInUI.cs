@@ -11,7 +11,6 @@ public class SignInUI : UIWindow
     public Button[] buttons;
     public TMP_InputField[] inputFields;
 
-
     private Dictionary<Button, string> buttonsActionDict = new Dictionary<Button, string>();
 
     private void Start()
@@ -46,10 +45,6 @@ public class SignInUI : UIWindow
 
         LoginData data = LoginDataManager.SignInUser(emailText, pwText);
 
-        print(data.email);
-        print(data.id);
-        print(data.userName);
-
         if (data.email != null)
         {
             UserData userData = UserDataManager.GetUserDataByName(data.userName);
@@ -59,12 +54,6 @@ public class SignInUI : UIWindow
             ClientUserData.knight = userData.knight;
             ClientUserData.email = data.email;
             ClientUserData.score = userData.score;
-
-            print(ClientUserData.name);
-            print(ClientUserData.coin);
-            print(ClientUserData.knight);
-            print(ClientUserData.email);
-            print(ClientUserData.score);
 
             GameManager.Instance.gameState = GameManager.GameState.main;
         }

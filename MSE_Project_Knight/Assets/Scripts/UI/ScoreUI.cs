@@ -25,7 +25,8 @@ public class ScoreUI : UIWindow
         int maxScore = Mathf.Max(score, ClientUserData.score);
         int coin = ingameController.totalScore / 100;
 
-        UserDataManager.UpdatUserData(ClientUserData.name, maxScore, ClientUserData.coin + coin, ClientUserData.knight);
+        UserDataManager.UpdatUserData(ClientUserData.name, maxScore, ClientUserData.coin, ClientUserData.knight);
+        ClientUserData.coin += coin;
 
         var allRank = UserDataManager.GetSortedRank();
         var userRank = UserDataManager.GetUserRank(ClientUserData.name);
@@ -33,10 +34,12 @@ public class ScoreUI : UIWindow
         foreach (var rank in allRank)
         {
             string format = string.Format("{0}. {1} : {2}", rank.rank, rank.userName, rank.score);
-            MakePanel(format);
+
+            Debug.Log(format);
+            //MakePanel(format);
         }
 
-        userscore.text = score.ToString();
+        //userscore.text = score.ToString();
     }
 
     private void MakePanel(string format)

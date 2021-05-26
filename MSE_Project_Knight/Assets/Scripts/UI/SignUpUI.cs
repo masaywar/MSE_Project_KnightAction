@@ -21,17 +21,15 @@ public class SignUpUI : UIWindow
 
     public void SignUpUserButton()
     {
-        ToastMessenger.ShowToast("TEST");
-
         string message;
         if (passwordText.text != confirmPasswordText.text)
         {
             message = "Passwords are different!";
             ToastMessenger.ShowToast(message);
+            return;
         }
 
         var user = LoginDataManager.SignUpUser(emailText.text, usernameText.text, passwordText.text);
-
 
         if (user.email.Equals("error"))
         {

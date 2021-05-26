@@ -930,7 +930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Log In
+  m_text: Sign In
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 33c3eac3cfc8c5048bc112d2691abec8, type: 2}
   m_sharedMaterial: {fileID: -2806164030524825832, guid: 33c3eac3cfc8c5048bc112d2691abec8, type: 2}
@@ -4200,7 +4200,7 @@ GameObject:
   - component: {fileID: 1585195208}
   - component: {fileID: 1585195207}
   m_Layer: 5
-  m_Name: EmailIField
+  m_Name: EmailField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
