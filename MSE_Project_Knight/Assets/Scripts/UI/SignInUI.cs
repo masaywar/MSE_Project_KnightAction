@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Text;
+using TMPro;
 
 public class SignInUI : UIWindow
 {
     public Button[] buttons;
-    public InputField[] inputFields;
+    public TMP_InputField[] inputFields;
+
 
     private Dictionary<Button, string> buttonsActionDict = new Dictionary<Button, string>();
 
@@ -39,8 +41,6 @@ public class SignInUI : UIWindow
 #if TEST
         GameManager.Instance.gameState = GameManager.GameState.main;
 #else
-
-
         string emailText = findFieldText("EmailField");
         string pwText = findFieldText("PasswordField");
 
@@ -71,19 +71,20 @@ public class SignInUI : UIWindow
 
         else 
         {
-            //Notify "Sign up!"
+            ToastMessenger.ShowToast("Cannot find email!, if you don't have account, please sign up.");
         }
 #endif
     }
 
     public void OnClickSignUp()
     {
-        string emailText = findFieldText("EmailField");
-        string pwText = findFieldText("PasswirdFuekd");
-        string userName = findFieldText("UserNameField");
-
-        LoginDataManager.SignUpUser(emailText, userName, pwText);
+        UIManager.Instance.GetWindow<SignUpUI>("SignUpUI").Open();
     }
 
+    public void OnClickQuit()
+    {
+        var window = UIManager.Instance.GetWindow<QuitUI>("QuitUI");
+        window.Open();
+    }
 
 }

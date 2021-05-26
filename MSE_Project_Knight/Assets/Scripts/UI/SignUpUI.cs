@@ -1,50 +1,59 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.UI;
-//using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
-//public class SignUpUI : MonoBehaviour
-//{
-//    public Text example;
-//    public InputField emailText;
-//    public InputField usernameText;
-//    public InputField passwordText;
-//    public InputField confirmPasswordText;
-//    public string password1;
-//    public string password2;
+public class SignUpUI : UIWindow
+{
+    public TMP_InputField emailText;
+    public TMP_InputField usernameText;
+    public TMP_InputField passwordText;
+    public TMP_InputField confirmPasswordText;
 
-//    public LoginData user = new LoginData();
-//    private LoginDataManager ld_mgr = new LoginDataManager();
+    public Button SignUp;
 
-//    public void SignUpUserButton()
-//    {
-//        example.text = "";
+    private void Start()
+    {
+        Close();
+    }
 
-//        user = ld_mgr.SignUpUser(emailText.text, usernameText.text, passwordText.text);
+    public void SignUpUserButton()
+    {
+        ToastMessenger.ShowToast("TEST");
 
-//        if (user.email.Equals("error"))
-//        {
-//            example.text = "Invalid Email!";
-//        }
-//        else if (user.userName.Equals("error"))
-//        {
-//            example.text = "Duplicated User Name!";
-//        }
-//        else if (passwordText.text!=confirmPasswordText.text)
-//        {
-//            example.text = "Passwords are different!";
-//        }
-//        else
-//        {
-//            example.text = user.userName + "sign up succeed!";
-//            SceneManager.LoadScene("Login");
-//        }
-//    }
+        string message;
+        if (passwordText.text != confirmPasswordText.text)
+        {
+            message = "Passwords are different!";
+            ToastMessenger.ShowToast(message);
+        }
 
-//    public void BackButton()
-//    {
-//        SceneManager.LoadScene("Login");
-//    }
+        var user = LoginDataManager.SignUpUser(emailText.text, usernameText.text, passwordText.text);
 
-//}
+
+        if (user.email.Equals("error"))
+        {
+            message = "Invalid Email!";
+            ToastMessenger.ShowToast(message);
+        }
+        else if (user.userName.Equals("error"))
+        {
+            message = "Duplicated User Name!";
+            ToastMessenger.ShowToast(message);
+        }
+      
+        else
+        {
+            message = "sign up succeed! Please sign in again.";
+            ToastMessenger.ShowToast(message);
+            Close();
+        }
+    }
+
+    public void OnClickBack()
+    {
+        Close();
+    }
+}

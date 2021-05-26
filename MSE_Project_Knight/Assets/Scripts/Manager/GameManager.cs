@@ -56,6 +56,9 @@ public class GameManager : Singleton<GameManager>
 
         LoadManager();
         StartCoroutine(UpdateState());
+
+        ToastMessenger.Init();
+
         DontDestroyOnLoad(this);
     }
 
