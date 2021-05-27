@@ -36,10 +36,10 @@ public class ScoreUI : UIWindow
             string format = string.Format("{0}. {1} : {2}", rank.rank, rank.userName, rank.score);
 
             Debug.Log(format);
-            //MakePanel(format);
+            MakePanel(format);
         }
 
-        //userscore.text = score.ToString();
+        userscore.text = score.ToString();
     }
 
     private void MakePanel(string format)

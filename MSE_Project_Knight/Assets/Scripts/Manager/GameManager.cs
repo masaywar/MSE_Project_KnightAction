@@ -58,7 +58,10 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(UpdateState());
 
         DontDestroyOnLoad(this);
+
+#if !TEST
         ToastMessenger.Init();
+#endif
     }
 
     private AsyncOperation operation = null;
