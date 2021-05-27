@@ -11,7 +11,6 @@ public class SignInUI : UIWindow
     public Button[] buttons;
     public TMP_InputField[] inputFields;
 
-
     private Dictionary<Button, string> buttonsActionDict = new Dictionary<Button, string>();
 
     private void Start()
@@ -46,12 +45,19 @@ public class SignInUI : UIWindow
 
         LoginData data = LoginDataManager.SignInUser(emailText, pwText);
 
-        print(data.email);
-        print(data.id);
-        print(data.userName);
-
-        if (data.email != null)
+        if (data == null)
         {
+            // Email doesn't exist in DB
+            ToastMessenger.ShowToast("Cannot find email!, if you don't have account, please sign up.");
+        }
+        else if (data.password.Equals("error"))
+        {
+            // Email is in DB, but password is wrong
+            ToastMessenger.ShowToast("Wrong Password!");
+        }
+        else
+        {
+            // Valid
             UserData userData = UserDataManager.GetUserDataByName(data.userName);
 
             ClientUserData.name = userData.userName;
@@ -60,18 +66,7 @@ public class SignInUI : UIWindow
             ClientUserData.email = data.email;
             ClientUserData.score = userData.score;
 
-            print(ClientUserData.name);
-            print(ClientUserData.coin);
-            print(ClientUserData.knight);
-            print(ClientUserData.email);
-            print(ClientUserData.score);
-
             GameManager.Instance.gameState = GameManager.GameState.main;
-        }
-
-        else 
-        {
-            ToastMessenger.ShowToast("Cannot find email!, if you don't have account, please sign up.");
         }
 #endif
     }

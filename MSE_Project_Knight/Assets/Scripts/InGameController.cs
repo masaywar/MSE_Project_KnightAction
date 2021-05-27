@@ -134,7 +134,9 @@ public class IngameController : MonoBehaviour
             StartCoroutine(ExtensionMethod.DoWaitForSeconds(1f, ()=> {
                 GameManager.Instance.Pause();
                 //UIManager.Instance.BlockAllOpenWindow();
-                UIManager.Instance.GetWindow<ScoreUI>("ScoreUI").Open();
+                var window = UIManager.Instance.GetWindow<ScoreUI>("ScoreUI");
+                window.Open();
+                window.UpdateBoard();
             }));
         }
     }

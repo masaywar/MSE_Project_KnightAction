@@ -57,9 +57,11 @@ public class GameManager : Singleton<GameManager>
         LoadManager();
         StartCoroutine(UpdateState());
 
-        ToastMessenger.Init();
-
         DontDestroyOnLoad(this);
+
+#if !TEST
+        ToastMessenger.Init();
+#endif
     }
 
     private AsyncOperation operation = null;
@@ -126,8 +128,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        print(gameState);
-
         switch (gameState)
         {
             case GameState.signin:
