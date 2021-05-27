@@ -15,12 +15,15 @@ public class ShopUI : UIWindow
 
     public void BuyItem(ItemBox itemBox)
     {
-        //Not Implemented.
         int price = itemBox.price;
+        var coin = ClientUserData.coin;
 
-        print(price);
+        if (coin < price)
+        {
+            ToastMessenger.ShowToast("Lack of money");
+            return;
+        }
 
-        ClientUserData.coin -= price;
         UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight);
     }
 
