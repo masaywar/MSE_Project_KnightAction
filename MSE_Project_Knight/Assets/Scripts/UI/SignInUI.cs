@@ -45,8 +45,19 @@ public class SignInUI : UIWindow
 
         LoginData data = LoginDataManager.SignInUser(emailText, pwText);
 
-        if (data.email != null)
+        if (data == null)
         {
+            // Email doesn't exist in DB
+            ToastMessenger.ShowToast("Cannot find email!, if you don't have account, please sign up.");
+        }
+        else if (data.password.Equals("error"))
+        {
+            // Email is in DB, but password is wrong
+            ToastMessenger.ShowToast("Wrong Password!");
+        }
+        else
+        {
+            // Valid
             UserData userData = UserDataManager.GetUserDataByName(data.userName);
 
             ClientUserData.name = userData.userName;
@@ -56,11 +67,6 @@ public class SignInUI : UIWindow
             ClientUserData.score = userData.score;
 
             GameManager.Instance.gameState = GameManager.GameState.main;
-        }
-
-        else 
-        {
-            ToastMessenger.ShowToast("Cannot find email!, if you don't have account, please sign up.");
         }
 #endif
     }
