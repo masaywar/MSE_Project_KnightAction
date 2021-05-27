@@ -7,6 +7,6 @@ public static class URL
 #if TEST
     public static string url = "";
 #else
-    public static string url= "http://8238ddde0b06.ngrok.io/sak/";
+    public static string url= "http://676ee1c14432.ngrok.io/sak/";
 #endif
 }
