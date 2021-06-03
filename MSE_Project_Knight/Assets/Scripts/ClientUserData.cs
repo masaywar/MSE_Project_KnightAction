@@ -38,4 +38,10 @@ public static class ClientUserData
         get => _score;
         set => _score = value;
     }
+
+    private static List<string> _companions = new List<string>();
+    public static List<string> companions
+    {
+        get => _companions;
+    }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Destroyable
   - Undestroyable
+  - PlayerMove
   layers:
   - Default
   - TransparentFX

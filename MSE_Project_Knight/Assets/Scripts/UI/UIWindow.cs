@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class UIWindow : ScriptObject
+public class UIWindow : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
 

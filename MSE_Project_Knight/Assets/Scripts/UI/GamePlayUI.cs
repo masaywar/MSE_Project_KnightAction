@@ -10,9 +10,6 @@ public class GamePlayUI : UIWindow
 {
     private IngameController ingameController;
 
-    [SerializeField]
-    private float cachedTimeScale;
-
     public CanvasGroup Buttons;
     public CanvasGroup UpBar;
 

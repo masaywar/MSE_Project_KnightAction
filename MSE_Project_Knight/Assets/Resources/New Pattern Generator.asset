@@ -12,5 +12,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a776f0fdeebf444fb8e96fe50d9ecd9, type: 3}
   m_Name: New Pattern Generator
   m_EditorClassIdentifier: 
-  path: 
-  patternContainer: []
+  path: Patterns
+  patternContainer:
+  - attributes:
+    - position: U
+      type: B
+      wait: 0.15
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.15
+    - position: U
+      type: B
+      wait: 0.15
+    - position: U
+      type: B
+      wait: 0.15
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.15
+    - position: D
+      type: U
+      wait: 0.3
+    - position: U
+      type: B
+      wait: 0.3
+  - attributes:
+    - position: D
+      type: B
+      wait: 0.15
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.15
+    - position: D
+      type: B
+      wait: 0.15
+    - position: D
+      type: B
+      wait: 0.15
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.15
+    - position: D
+      type: U
+      wait: 0.3
+    - position: D
+      type: B
+      wait: 0.3

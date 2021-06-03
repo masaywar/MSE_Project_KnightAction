@@ -9,6 +9,7 @@ using TMPro;
 public class IngameController : MonoBehaviour
 {
     private ObjectManager cachedObjectManager;
+    private Player player;
 
     [SerializeField]
     private bool isSpawning = false;
@@ -76,14 +77,21 @@ public class IngameController : MonoBehaviour
     public delegate void dUIUpdatePlayerInfo(int combo, int score, float hp);
     public event dUIUpdatePlayerInfo UIUpdatePlayerInfo;
 
-
     private bool isFever = false;
     private bool canUlt = false;
     private List<List<Tuple<Vector2, string, float>>> transedPatterns = new List<List<Tuple<Vector2, string, float>>>();
 
-    private void Start()
+    private void Awake()
     {
         cachedObjectManager = ObjectManager.Instance;
+
+        player = ObjectManager.Instance.Spawn<Player>("knight", new Vector2(-12, -1.3f));
+        //Object Manager Spawn Player at (-800, -390) by ClientUserData.knight;
+        //player's parent is ingame (GameObject);
+
+        player.playerController = this;
+        player.PlayerInitialize();
+        player.Subscribe();
         TransPattern();
 
         SoundManager.Instance.PlayMusic("Fable", true);
@@ -108,9 +116,7 @@ public class IngameController : MonoBehaviour
             OnFullUltGage("Ult", true);
         }
 
-
-        SpawnEnemy();
-
+        SpawnEnemy(0);
         UIUpdatePlayerInfo(combo, totalScore, hp);
     }
 
@@ -144,8 +150,10 @@ public class IngameController : MonoBehaviour
     private bool CheckPlayerDead()
     {
         if (hp <= 0)
+        {
             isOver = true;
-
+        }
+            
         return isOver;
     }
 
@@ -158,6 +166,7 @@ public class IngameController : MonoBehaviour
             hp -= damage;
             return;
         }
+
         foreach (var hit in hits)
         {
             DestroyEnemy(hit, isFever || force);
@@ -195,7 +204,7 @@ public class IngameController : MonoBehaviour
         OnFullUltGage("Ult", false);
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemy(int index)
     {
         if (isSpawning) return;
 
@@ -256,7 +265,10 @@ public class IngameController : MonoBehaviour
     private Tuple<Vector2, string, float> TransPatternAttr(bool isGround, bool isDestroyable, float wait)
     {
         var up = spawnPlace.GetChild(0).position;
-        var down = spawnPlace.GetChild(1).position;
+        up.x = up.x / 3;
+        var down = spawnPlace.GetChild(1).position / 3;
+
+        print(up + " " + down);
 
         Vector2 position = isGround ? up : down;
         string tag = isDestroyable ? "DestroyableEnemy" : "UnDestroyableEnemy";

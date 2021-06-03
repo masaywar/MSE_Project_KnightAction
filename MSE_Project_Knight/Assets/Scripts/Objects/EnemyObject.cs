@@ -11,7 +11,6 @@ public class EnemyObject : ScriptObject
 
     [SerializeField]
     private IngameController inGameController;
-    private bool isDead = false;
 
     #region
     private void Initialze()
@@ -90,11 +89,6 @@ public class EnemyObject : ScriptObject
         ObjectManager.Instance.Despawn<ScriptObject>(this);
     }
 
-    private void OnDisable()
-    {
-        Initialize();
-        isDead = false;
-    }
     #endregion
 
     private void OnTriggerEnter2D(Collider2D collider)

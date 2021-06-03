@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class ObjectManager : Singleton<ObjectManager>
 {
+    [SerializeField]
+    private List<ScriptObject> spawnedTestList = new List<ScriptObject>();
+    [SerializeField]
+    private List<ScriptObject> despawnedTestList = new List<ScriptObject>();
+
     [System.Serializable]
     private class PoolPrefab
     {
@@ -66,6 +71,9 @@ public class ObjectManager : Singleton<ObjectManager>
     public void Initialize()
     {
         prefabPath = new List<PoolPrefab> {
+            new PoolPrefab("Prefab/Player/knight", 1),
+            new PoolPrefab("Prefab/Player/archer", 1),
+            new PoolPrefab("Prefab/Player/mage", 1),
             new PoolPrefab("Prefab/Enemy/DestroyableEnemy", 500), 
             new PoolPrefab("Prefab/Enemy/UnDestroyableEnemy", 50)};
 
@@ -99,6 +107,10 @@ public class ObjectManager : Singleton<ObjectManager>
             yield return null;
         }
 
+        if (spawnedObjDict.ContainsKey("archer"))
+            spawnedTestList = spawnedObjDict["archer"];
+        if (despawnedObjDict.ContainsKey("archer"))
+            despawnedTestList = despawnedObjDict["archer"];
         isLoaded = true;
         yield return null;
     }
@@ -226,6 +238,23 @@ public class ObjectManager : Singleton<ObjectManager>
 
             despawnList.ForEach(obj => Despawn<ScriptObject>(obj));
         }
+    }
 
+    public void DespawnAll()
+    {
+        foreach (var key in spawnedObjDict.Keys) 
+        {
+            if (spawnedObjDict.TryGetValue(key, out var value))
+            {
+                List<ScriptObject> despawnList = new List<ScriptObject>();
+
+                value.ForEach(obj =>
+                {
+                    despawnList.Add(obj);
+                });
+
+                despawnList.ForEach(obj => Despawn<ScriptObject>(obj));
+            }
+        }
     }
 }

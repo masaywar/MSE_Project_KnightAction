@@ -49,13 +49,14 @@ public class SettingUI : UIWindow
 
     public void OnClickToMain() 
     {
-        ObjectManager.Instance.DespawnAllWithName<EnemyObject>("DestroyableEnemy");
-        ObjectManager.Instance.DespawnAllWithName<EnemyObject>("UnDestroyableEnemy");
+        ObjectManager.Instance.DespawnAll();
+
+        //ObjectManager.Instance.DespawnAllWithName<EnemyObject>("DestroyableEnemy");
+        //ObjectManager.Instance.DespawnAllWithName<EnemyObject>("UnDestroyableEnemy");
         SoundManager.Instance.StopAll();
 
-        Close();
+        Close();    
         GameManager.Instance.gameState = GameManager.GameState.main;
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     public override void Open()

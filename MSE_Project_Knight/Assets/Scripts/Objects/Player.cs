@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Player : ScriptObject
 {
-    public SPUM_Prefabs prefab;
+    public ICompanion character;
 
-    private IngameController playerController;
+    public IngameController playerController;
     
     //Variables for raycasting
     private RaycastHit2D[] hits;
@@ -17,28 +17,27 @@ public class Player : ScriptObject
     private bool isFever;
 
     // Cached Transform for raycasting and moving player object.
-    public RectTransform upTransform;
-    public RectTransform downTransform;
-    public RectTransform feverTransform;
-
-    private AudioSource audioSource;
+    private RectTransform upTransform;
+    private RectTransform downTransform;
+    private RectTransform feverTransform;
 
     //Observer
-    private void Start()
+    public void PlayerInitialize()
     {
-        playerController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>();
+        character = GetComponent<ICompanion>();
+        character.SetPrefab(GetComponent<SPUM_Prefabs>());
+        var rect = GameObject.FindGameObjectWithTag("PlayerMove");
 
-        prefab = GetComponent<SPUM_Prefabs>();
-        audioSource = GetComponent<AudioSource>();
-
-        Subscribe();
-        prefab.PlayAnimation(1);
+        upTransform = rect.transform.GetChild(0).GetComponent<RectTransform>();
+        downTransform = rect.transform.GetChild(1).GetComponent<RectTransform>();
+        feverTransform = rect.transform.GetChild(2).GetComponent<RectTransform>();
+        character.RunMotion();
     }
 
     // Reference of IngameController's Attack event. 
     // Ingame Controller have reference of this method to make it loose coupled between 
     // enemies and player.
-
+    
     // In attackMode 0 : Attack on ground 
     //               1 : Attack on sky
     //               2 : Attack in player fever mode
@@ -48,7 +47,8 @@ public class Player : ScriptObject
             attackMode = 2;
 
         SetPosition(attackMode);
-        prefab.PlayAnimation(4);
+        character.AttackMotion();
+
 
         return Attack(attackMode);
     }
@@ -159,8 +159,8 @@ public class Player : ScriptObject
 
     private void OnPlayerDead()
     {
-        StartCoroutine(DieAnimation());
         Unsubscribe();
+        StartCoroutine(DieAnimation());
     }
 
     private void OnPlayerMiss()
@@ -174,6 +174,8 @@ public class Player : ScriptObject
     private RaycastHit2D[] OnPlayerUlt()
     {
         var tempList = new List<RaycastHit2D>();
+
+        character.UltMotion();
 
         tempList.AddRange(
             Physics2D.BoxCastAll(
@@ -196,7 +198,7 @@ public class Player : ScriptObject
 
 
     // Add event to ingame controller
-    private void Subscribe()
+    public void Subscribe()
     {
         playerController.OnPlayerDead += OnPlayerDead;
         playerController.OnPlayerAttack += OnPlayerAttack;
@@ -207,7 +209,7 @@ public class Player : ScriptObject
     }
 
     // Delete event from ingame controller
-    private void Unsubscribe()
+    public void Unsubscribe()
     {
         playerController.OnPlayerDead -= OnPlayerDead;
         playerController.OnPlayerAttack -= OnPlayerAttack;
@@ -221,25 +223,27 @@ public class Player : ScriptObject
 
     private IEnumerator DieAnimation()
     {
-        prefab.PlayAnimation(2);
+        character.DeadMotion();
         yield return new WaitForSeconds(.5f);
     }
 
     private IEnumerator StunAnimation()
     {
-        prefab.PlayAnimation(3);
+        character.StunMotion();
         yield return new WaitForSeconds(0.5f);
-        prefab.PlayAnimation(1);
+        character.RunMotion();
     }
 
     private void OnDisable()
     {
-        Unsubscribe();
+        if (playerController != null)
+            Unsubscribe();
     }
 
     private void OnEnable()
     {
-        Subscribe();
-    }
+        if (playerController != null)
+            Subscribe();
+    }   
 }
 

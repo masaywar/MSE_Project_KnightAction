@@ -10,6 +10,7 @@ public class ScriptObject : MonoBehaviour
     public RectTransform rectTransform;
     public Rigidbody2D rigidbody;
     public Collider2D collider;
+    public bool isDead;
 
     public Dictionary<string, List<ScriptObject>> m_cachedAllObjectDict;
 
@@ -26,7 +27,7 @@ public class ScriptObject : MonoBehaviour
             value.Add(this);
         }
 
-        else 
+        else
         {
             m_cachedAllObjectDict[prefabName] = new List<ScriptObject> { this };
         }
@@ -39,5 +40,16 @@ public class ScriptObject : MonoBehaviour
 
         this.transform.position = Vector3.zero;
         this.transform.rotation = Quaternion.identity;
+    }
+    private void OnDisable()
+    {
+        Initialize();
+        if (ObjectManager.Instance.spawnedObjDict.ContainsKey(prefabName))
+        {
+            if (ObjectManager.Instance.spawnedObjDict[prefabName].Contains(this))
+                ObjectManager.Instance.Despawn<ScriptObject>(this);
+        }
+       
+        isDead = false;
     }
 }

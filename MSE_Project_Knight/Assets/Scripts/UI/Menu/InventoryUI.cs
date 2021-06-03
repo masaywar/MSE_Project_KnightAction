@@ -13,6 +13,14 @@ public class InventoryUI : UIWindow
         Close();
     }
 
+    private void SetupItems()
+    {
+        var companions = ClientUserData.companions;
+
+        
+    }
+
+
     public override void Open()
     {
         base.Open();
