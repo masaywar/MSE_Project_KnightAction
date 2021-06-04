@@ -16,8 +16,6 @@ public class InventoryUI : UIWindow
     private void SetupItems()
     {
         var companions = ClientUserData.companions;
-
-        
     }
 
 

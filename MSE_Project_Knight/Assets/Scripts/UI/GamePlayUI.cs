@@ -20,17 +20,29 @@ public class GamePlayUI : UIWindow
     public TextMeshProUGUI combo;
     public Image HpBar;
 
+    private float hpFilled;
+    private float curHp;
+
     private void Start()
     {
         ingameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<IngameController>(); ;
         ingameController.OnFullUltGage += ActivateButton;
         ingameController.UIUpdatePlayerInfo += InfoUpdate;
 
+        hpFilled = ingameController.hp;
+        curHp = hpFilled;
+
         for (int k = 0; k < Buttons.transform.childCount; k++)
         {
             var button = Buttons.transform.GetChild(k);
             interactableDict.Add(button.name, button.GetComponent<Button>());
         }
+    }
+
+    private void Update()
+    {
+        curHp = ingameController.hp;
+        HpBar.fillAmount = curHp / hpFilled;
     }
 
     private void ActivateButton(string name, bool activate)

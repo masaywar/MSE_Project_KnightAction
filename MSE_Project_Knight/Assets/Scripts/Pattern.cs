@@ -36,7 +36,7 @@ public class Pattern
             Attribute attribute = new Attribute();
             attribute.position = temp[0];
             attribute.type = temp[1];
-            //attribute.wait = ParseUtiltiy.SafeFloatParse(temp[2].Replace($"f", ""));
+            attribute.wait = ParseUtiltiy.SafeFloatParse(temp[2]);
 
             attributes.Add(attribute);
         }) ;
