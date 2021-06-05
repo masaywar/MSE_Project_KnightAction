@@ -20,10 +20,13 @@ public class ShopUI : UIWindow
 
         if (coin < price)
         {
+#if !UNITY_EDITOR
             ToastMessenger.ShowToast("Lack of money");
+#endif
             return;
         }
 
+        ClientUserData.coin -= price;
         UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight);
     }
 

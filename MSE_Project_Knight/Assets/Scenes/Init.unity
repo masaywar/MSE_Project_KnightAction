@@ -351,11 +351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a321d6d124ee24481b4106298d5729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabName: 
-  speed: 0
-  rectTransform: {fileID: 0}
-  rigidbody: {fileID: 0}
-  collider: {fileID: 0}
   canvasGroup: {fileID: 0}
   loadingText: {fileID: 1746829527}
   loadingButton: {fileID: 0}
@@ -1936,11 +1931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069bf0269d3e64a4ea86cbc31f7290a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabName: 
-  speed: 0
-  rectTransform: {fileID: 0}
-  rigidbody: {fileID: 0}
-  collider: {fileID: 0}
   canvasGroup: {fileID: 0}
   quit: {fileID: 820487196}
   back: {fileID: 273129450}
@@ -2846,11 +2836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 417a7c97a75d53246b71c523dc862af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabName: 
-  speed: 0
-  rectTransform: {fileID: 0}
-  rigidbody: {fileID: 0}
-  collider: {fileID: 0}
   canvasGroup: {fileID: 0}
   ToMain: {fileID: 1607226000}
   Buttons: {fileID: 2147284225}

@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class ObjectManager : Singleton<ObjectManager>
 {
-    [SerializeField]
-    private List<ScriptObject> spawnedTestList = new List<ScriptObject>();
-    [SerializeField]
-    private List<ScriptObject> despawnedTestList = new List<ScriptObject>();
+    public List<Transform> childrenTransform = new List<Transform>();
 
     [System.Serializable]
     private class PoolPrefab
@@ -71,9 +68,15 @@ public class ObjectManager : Singleton<ObjectManager>
     public void Initialize()
     {
         prefabPath = new List<PoolPrefab> {
+            new PoolPrefab("Prefab/PlayerSprite/knight", 1),
+            new PoolPrefab("Prefab/PlayerSprite/archer", 1),
+            new PoolPrefab("Prefab/PlayerSprite/mage", 1),
             new PoolPrefab("Prefab/Player/knight", 1),
             new PoolPrefab("Prefab/Player/archer", 1),
             new PoolPrefab("Prefab/Player/mage", 1),
+            new PoolPrefab("Prefab/PlayerIcon/knightIcon", 1),
+            new PoolPrefab("Prefab/PlayerIcon/archerIcon", 1),
+            new PoolPrefab("Prefab/PlayerIcon/mageIcon", 1),
             new PoolPrefab("Prefab/Enemy/DestroyableEnemy", 500), 
             new PoolPrefab("Prefab/Enemy/UnDestroyableEnemy", 50)};
 
@@ -103,14 +106,11 @@ public class ObjectManager : Singleton<ObjectManager>
             }
 
             parentGo.transform.SetParent(transform);
+            childrenTransform.Add(parentGo.transform);
 
             yield return null;
         }
 
-        if (spawnedObjDict.ContainsKey("archer"))
-            spawnedTestList = spawnedObjDict["archer"];
-        if (despawnedObjDict.ContainsKey("archer"))
-            despawnedTestList = despawnedObjDict["archer"];
         isLoaded = true;
         yield return null;
     }

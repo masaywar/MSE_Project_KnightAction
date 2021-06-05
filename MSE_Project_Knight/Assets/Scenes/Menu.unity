@@ -1450,6 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 0}
+  content: {fileID: 1905955251}
   menuController: {fileID: 1088707389}
 --- !u!225 &768218871
 CanvasGroup:

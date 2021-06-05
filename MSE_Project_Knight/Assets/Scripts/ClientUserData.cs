@@ -39,9 +39,12 @@ public static class ClientUserData
         set => _score = value;
     }
 
-    private static List<string> _companions = new List<string>();
-    public static List<string> companions
+    private static List<CompData> _companions = new List<CompData>();
+    public static List<CompData> companions
     {
-        get => _companions;
+        get
+        {
+            return _companions;
+        }
     }
 }

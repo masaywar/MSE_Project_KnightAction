@@ -11,10 +11,16 @@ public class WholeUI : UIWindow
     public TextMeshProUGUI username;
     public TextMeshProUGUI coin;
 
+    public RectTransform playerPanel;
+
+    private UnitSprite unit;
+
     private void Start()
     {
         username.text = ClientUserData.name;
         coin.text = ClientUserData.coin.ToString();
+
+        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight, playerPanel.position);
     }
 
     public void UIUpdate()
@@ -31,5 +37,14 @@ public class WholeUI : UIWindow
     private void Update()
     {
         UIUpdate();
+    }
+
+    public void PlayerPanelUpdate()
+    {
+        if (unit == null)
+            return;
+
+        ObjectManager.Instance.Despawn<UnitSprite>(unit);
+        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight, playerPanel.position);
     }
 }

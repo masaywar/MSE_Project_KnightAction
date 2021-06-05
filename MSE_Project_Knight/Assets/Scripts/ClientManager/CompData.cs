@@ -5,7 +5,6 @@ using UnityEngine;
 public class CompData
 {
     public string userName;
-    public bool knight;
-    public bool archer;
-    public bool mage;
+    public string companion;
+    public int level;
 }

@@ -59,7 +59,7 @@ public class GameManager : Singleton<GameManager>
 
         DontDestroyOnLoad(this);
 
-#if !TEST
+#if !UNITY_EDITOR 
         ToastMessenger.Init();
 #endif
     }

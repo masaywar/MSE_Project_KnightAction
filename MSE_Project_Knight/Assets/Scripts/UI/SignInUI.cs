@@ -65,6 +65,9 @@ public class SignInUI : UIWindow
             ClientUserData.knight = userData.knight;
             ClientUserData.email = data.email;
             ClientUserData.score = userData.score;
+            CompDataManager.GetCompByUserName(ClientUserData.name).ForEach(
+                    companion => ClientUserData.companions.Add(companion)
+                );
 
             GameManager.Instance.gameState = GameManager.GameState.main;
         }

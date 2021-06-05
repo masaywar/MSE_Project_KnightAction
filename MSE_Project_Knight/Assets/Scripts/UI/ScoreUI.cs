@@ -38,14 +38,12 @@ public class ScoreUI : UIWindow
                 break;
             string format = string.Format("{0}. {1} : {2}", rank.rank, rank.userName, rank.score);
 
-            Debug.Log(format);
             MakePanel(format);
             num++;
         }
 
-        string format2 = string.Format("{0}. {1} : {2}", userRank.rank, userRank.userName, userRank.score);
+        string format2 = string.Format("{0}'s Best Score : {1}, rank :{2}", userRank.userName, userRank.score, userRank.rank);
 
-        Debug.Log(format2);
         MakePanel(format2);
         userscore.text = score.ToString();
     }

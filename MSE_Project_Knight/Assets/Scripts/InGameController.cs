@@ -85,10 +85,12 @@ public class IngameController : MonoBehaviour
     {
         cachedObjectManager = ObjectManager.Instance;
 
+#if TEST
         player = ObjectManager.Instance.Spawn<Player>("knight", new Vector2(-12, -1.3f));
-        //Object Manager Spawn Player at (-800, -390) by ClientUserData.knight;
-        //player's parent is ingame (GameObject);
-
+#else
+        player = ObjectManager.Instance.Spawn<Player>(ClientUserData.knight, new Vector2(-12, -1.3f));
+#endif
+        
         player.playerController = this;
         player.PlayerInitialize();
         player.Subscribe();
@@ -139,7 +141,6 @@ public class IngameController : MonoBehaviour
             OnPlayerDead();
             StartCoroutine(ExtensionMethod.DoWaitForSeconds(1f, ()=> {
                 GameManager.Instance.Pause();
-                //UIManager.Instance.BlockAllOpenWindow();
                 var window = UIManager.Instance.GetWindow<ScoreUI>("ScoreUI");
                 window.Open();
                 window.UpdateBoard();
