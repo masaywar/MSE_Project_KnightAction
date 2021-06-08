@@ -11,4 +11,10 @@ public class UnitSprite : ScriptObject
         prefab = GetComponent<SPUM_Prefabs>();
         prefab.PlayAnimation(0);
     }
+
+    public void DespawnSprite()
+    {
+        transform.SetParent(ObjectManager.Instance.childrenTransform.Find(child => child.name == this.prefabName));
+        ObjectManager.Instance.Despawn<UnitSprite>(this);
+    }
 }

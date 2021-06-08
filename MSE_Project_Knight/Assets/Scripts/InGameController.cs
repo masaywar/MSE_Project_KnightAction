@@ -77,9 +77,15 @@ public class IngameController : MonoBehaviour
     public delegate void dUIUpdatePlayerInfo(int combo, int score, float hp);
     public event dUIUpdatePlayerInfo UIUpdatePlayerInfo;
 
+    private int spawnIndex = 0;
+
+    [SerializeField]
+    private int targetIndex = 7;
+
     private bool isFever = false;
     private bool canUlt = false;
     private List<List<Tuple<Vector2, string, float>>> transedPatterns = new List<List<Tuple<Vector2, string, float>>>();
+
 
     private void Awake()
     {
@@ -118,7 +124,10 @@ public class IngameController : MonoBehaviour
             OnFullUltGage("Ult", true);
         }
 
-        SpawnEnemy(0);
+        if (spawnIndex >= transedPatterns.Count)
+            spawnIndex = targetIndex;
+
+        SpawnEnemy(spawnIndex++);
         UIUpdatePlayerInfo(combo, totalScore, hp);
     }
 
@@ -210,7 +219,7 @@ public class IngameController : MonoBehaviour
         if (isSpawning) return;
 
         isSpawning = true;
-        var objectAttributes = transedPatterns[0];
+        var objectAttributes = transedPatterns[index];
 
         StartCoroutine(SpawnRoutine(objectAttributes));
     }

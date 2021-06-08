@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class InventoryUI : UIWindow
 {
     private Transform UpBar;
+
+    [SerializeField]
     private List<ScriptObject> iconList = new List<ScriptObject>();
 
     public RectTransform content;
@@ -15,9 +17,9 @@ public class InventoryUI : UIWindow
 
     private void Start()
     {
-        Close();
         SetupItems();
         SetupItemActivity();
+        Close();
     }
 
     private void SetupItems()
@@ -49,14 +51,17 @@ public class InventoryUI : UIWindow
 
     private void ChangeCompanionAsMain(Button button, string name)
     {
+        var mainWindow = UIManager.Instance.GetActiveWindow<WholeUI>("WholeUI");
+
         ClientUserData.knight = name;
         button.interactable = false;
 
         UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight);
 
+        mainWindow.PlayerPanelUpdate();
+
         iconList.ForEach(icon => {
             var temp = icon.GetComponent<Button>();
-
             if (temp != button)
                 temp.interactable = true;
         });
@@ -65,11 +70,14 @@ public class InventoryUI : UIWindow
     public override void Open()
     {
         base.Open();
+
+        print("inventory open");
+
         menuController.TransferUpbar(this);
 
         iconList.ForEach(icon => {
             icon.gameObject.SetActive(true);
-
+            icon.transform.SetParent(content);
             if (icon.prefabName.Replace("Icon", "") == ClientUserData.knight)
                 icon.GetComponent<Button>().interactable = false;
         });
@@ -79,7 +87,9 @@ public class InventoryUI : UIWindow
     {
         var wholeUI = UIManager.Instance.GetActiveWindow<WholeUI>("WholeUI");
 
-        iconList.ForEach(icon => {
+        print("inventory close");
+
+        iconList.ForEach(icon => {  
             icon.transform.SetParent(
                 ObjectManager.Instance.childrenTransform.
                 Find(child => 

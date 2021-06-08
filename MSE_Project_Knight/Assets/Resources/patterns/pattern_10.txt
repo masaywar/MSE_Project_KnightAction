@@ -1,0 +1,17 @@
+Pos	Type	Wait
+U	B	0.15
+D	B	0.3
+D	U	0.3
+U	B	0.15
+U	B	0.3
+D	B	0.3
+D	B	0.3
+U	B	0.3
+D	B	0.3
+D	U	0.3
+U	B	0.15
+D	B	0.3
+U	B	0.3
+D	B	0.15
+D	B	0.3
+U	B	0.3

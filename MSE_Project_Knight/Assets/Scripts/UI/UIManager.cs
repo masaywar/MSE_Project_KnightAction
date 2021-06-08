@@ -29,7 +29,6 @@ public class UIManager : Singleton<UIManager>
             return _openedWindowList;
         }
     }
-    public UIWindow cachedWindow;
 
     public void Initialize()
     {

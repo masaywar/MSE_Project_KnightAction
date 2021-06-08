@@ -10,17 +10,28 @@ public class WholeUI : UIWindow
 
     public TextMeshProUGUI username;
     public TextMeshProUGUI coin;
+    public TextMeshProUGUI knightName;
 
-    public RectTransform playerPanel;
-
+    [SerializeField]
+    private RectTransform playerPanel;
     private UnitSprite unit;
+
+    private string spriteString = "Sprite";
 
     private void Start()
     {
+#if TEST
+        unit.transform.SetParent(playerPanel);
+        unit.transform.localPosition = Vector3.zero;
+#else
         username.text = ClientUserData.name;
         coin.text = ClientUserData.coin.ToString();
 
-        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight, playerPanel.position);
+        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight + spriteString, playerPanel);
+        unit.transform.localPosition = Vector3.zero;
+
+        knightName.text = ClientUserData.knight;
+#endif
     }
 
     public void UIUpdate()
@@ -31,6 +42,7 @@ public class WholeUI : UIWindow
 
     public void OnClickStartGame()
     {
+        unit.DespawnSprite();
         GameManager.Instance.gameState = GameManager.GameState.loadIngame;
     }
 
@@ -44,7 +56,9 @@ public class WholeUI : UIWindow
         if (unit == null)
             return;
 
-        ObjectManager.Instance.Despawn<UnitSprite>(unit);
-        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight, playerPanel.position);
+        unit.DespawnSprite();
+        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight + spriteString, playerPanel);
+        unit.transform.localPosition = Vector3.zero;
+        knightName.text = ClientUserData.knight;
     }
 }

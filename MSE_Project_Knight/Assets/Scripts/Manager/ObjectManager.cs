@@ -68,9 +68,9 @@ public class ObjectManager : Singleton<ObjectManager>
     public void Initialize()
     {
         prefabPath = new List<PoolPrefab> {
-            new PoolPrefab("Prefab/PlayerSprite/knight", 1),
-            new PoolPrefab("Prefab/PlayerSprite/archer", 1),
-            new PoolPrefab("Prefab/PlayerSprite/mage", 1),
+            new PoolPrefab("Prefab/PlayerSprite/knightSprite", 1),
+            new PoolPrefab("Prefab/PlayerSprite/archerSprite", 1),
+            new PoolPrefab("Prefab/PlayerSprite/mageSprite", 1),
             new PoolPrefab("Prefab/Player/knight", 1),
             new PoolPrefab("Prefab/Player/archer", 1),
             new PoolPrefab("Prefab/Player/mage", 1),
