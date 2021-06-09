@@ -28,6 +28,7 @@ public class ScoreUI : UIWindow
 
         UserDataManager.UpdatUserData(ClientUserData.name, maxScore, ClientUserData.coin, ClientUserData.knight);
         ClientUserData.coin += coin;
+        ClientUserData.score = maxScore;
 
         var allRank = UserDataManager.GetSortedRank();
         var userRank = UserDataManager.GetUserRank(ClientUserData.name);
@@ -59,8 +60,6 @@ public class ScoreUI : UIWindow
     public void OnClickToMain()
     {
         ObjectManager.Instance.DespawnAll();
-        //ObjectManager.Instance.DespawnAllWithName<EnemyObject>("DestroyableEnemy");
-        //ObjectManager.Instance.DespawnAllWithName<EnemyObject>("UnDestroyableEnemy");
         SoundManager.Instance.StopAll();
 
         Close();
