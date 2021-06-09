@@ -142,8 +142,11 @@ public class IngameController : MonoBehaviour
     {
         if (!CheckPlayerDead())
         {
-            hp -= declination * GameManager.Instance.deltaTime;
-            declination += GameManager.Instance.deltaTime;
+            if (Time.timeScale > 0)
+            {
+                hp -= declination * GameManager.Instance.deltaTime / Time.timeScale;
+                declination += GameManager.Instance.deltaTime / Time.timeScale;
+            }
         }
         else 
         {
@@ -173,7 +176,9 @@ public class IngameController : MonoBehaviour
         {
             combo = 0;
             SoundManager.Instance.PlayOneShot("Swing");
-            hp -= damage;
+
+            if (!isFever)
+                hp -= damage;
             return;
         }
 
@@ -333,8 +338,8 @@ public class IngameController : MonoBehaviour
     {
         if (isOver) return;
 
-        OnPlayerMiss();
-        hp -= damage;
+        //OnPlayerMiss();
+        //hp -= damage;
         combo = 0;
         score = staticScore;
     }

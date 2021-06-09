@@ -11,10 +11,12 @@ public class WholeUI : UIWindow
     public TextMeshProUGUI username;
     public TextMeshProUGUI coin;
     public TextMeshProUGUI knightName;
+    public TextMeshProUGUI highscore;
 
     [SerializeField]
     private RectTransform playerPanel;
     private UnitSprite unit;
+
 
     private string spriteString = "Sprite";
 
@@ -27,10 +29,8 @@ public class WholeUI : UIWindow
         username.text = ClientUserData.name;
         coin.text = ClientUserData.coin.ToString();
 
-        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight + spriteString, playerPanel);
-        unit.transform.localPosition = Vector3.zero;
-
-        knightName.text = ClientUserData.knight;
+        SetUpCompanion(ClientUserData.knight + spriteString);
+        highscore.text = ClientUserData.score.ToString();
 #endif
     }
 
@@ -51,14 +51,19 @@ public class WholeUI : UIWindow
         UIUpdate();
     }
 
+    private void SetUpCompanion(string name)
+    {
+        unit = ObjectManager.Instance.Spawn<UnitSprite>(name, playerPanel);
+        unit.transform.localPosition = Vector3.down * 100;
+        knightName.text = ClientUserData.knight;
+    }
+
     public void PlayerPanelUpdate()
     {
         if (unit == null)
             return;
 
         unit.DespawnSprite();
-        unit = ObjectManager.Instance.Spawn<UnitSprite>(ClientUserData.knight + spriteString, playerPanel);
-        unit.transform.localPosition = Vector3.zero;
-        knightName.text = ClientUserData.knight;
+        SetUpCompanion(ClientUserData.knight + spriteString);
     }
 }
