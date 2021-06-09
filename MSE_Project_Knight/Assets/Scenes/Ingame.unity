@@ -7686,7 +7686,7 @@ MonoBehaviour:
   ultGage: 0
   feverGage: 0
   ultRate: 2
-  feverRate: 10
+  feverRate: 5
   combo: 0
   staticScore: 30
   score: 30

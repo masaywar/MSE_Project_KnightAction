@@ -7,6 +7,7 @@ public class ShopUI : UIWindow
     public MenuController menuController;
     private Transform UpBar;
 
+    public ItemBox[] items;
 
     private void Start()
     {
@@ -26,13 +27,25 @@ public class ShopUI : UIWindow
             return;
         }
 
+        CompData compData = new CompData();
+        compData.companion = itemBox.companion;
+        compData.userName = ClientUserData.name;
+        compData.level = 1;
+
+        var data = CompDataManager.InsertComp(compData);
+            
         ClientUserData.coin -= price;
-        UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight);
+        if (UserDataManager.UpdatUserData(ClientUserData.name, ClientUserData.score, ClientUserData.coin, ClientUserData.knight) == 0)
+            return;
+
+        ClientUserData.companions.Add(compData);
+        itemBox.OnActivate();
     }
 
     public override void Open()
     {
         base.Open();
+        items.ForEach(item => item.OnActivate());
         menuController.TransferUpbar(this);
     }
 

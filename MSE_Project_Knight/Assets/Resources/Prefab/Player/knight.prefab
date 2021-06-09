@@ -957,7 +957,7 @@ MonoBehaviour:
   collider: {fileID: 0}
   isDead: 0
   playerController: {fileID: 0}
-  rayDist: 5
+  rayDist: 3
   isFever: 0
 --- !u!114 &1945502942548273114
 MonoBehaviour:

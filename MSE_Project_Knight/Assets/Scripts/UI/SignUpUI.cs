@@ -45,7 +45,9 @@ public class SignUpUI : UIWindow
         else
         {
             message = "sign up succeed! Please sign in again.";
+#if !UNITY_EDITOR
             ToastMessenger.ShowToast(message);
+#endif
             Close();
         }
     }

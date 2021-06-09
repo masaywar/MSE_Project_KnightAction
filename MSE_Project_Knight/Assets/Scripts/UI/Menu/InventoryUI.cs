@@ -17,14 +17,13 @@ public class InventoryUI : UIWindow
 
     private void Start()
     {
-        SetupItems();
-        SetupItemActivity();
         Close();
     }
 
     private void SetupItems()
     {
         var companions = ClientUserData.companions;
+        iconList.Clear();
 
         /// Spawn companion icon
         /// icon is button that can switch the main charater when it's clicked.
@@ -33,7 +32,6 @@ public class InventoryUI : UIWindow
 
         companions.ForEach(companion =>{
             var spawnedObj = ObjectManager.Instance.Spawn<ScriptObject>(companion.companion + "Icon", content);
-
             iconList.Add(spawnedObj);
             spawnedObj.transform.localScale = Vector3.one;
         });
@@ -43,6 +41,7 @@ public class InventoryUI : UIWindow
     {
         iconList.ForEach(icon => {
             var button = icon.GetComponent<Button>();
+            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(delegate {
                 ChangeCompanionAsMain(button, icon.prefabName.Replace("Icon", ""));
             });
@@ -71,12 +70,10 @@ public class InventoryUI : UIWindow
     {
         base.Open();
 
-        print("inventory open");
-
         menuController.TransferUpbar(this);
-
+        SetupItems();
+        SetupItemActivity();
         iconList.ForEach(icon => {
-            icon.gameObject.SetActive(true);
             icon.transform.SetParent(content);
             if (icon.prefabName.Replace("Icon", "") == ClientUserData.knight)
                 icon.GetComponent<Button>().interactable = false;
@@ -86,8 +83,6 @@ public class InventoryUI : UIWindow
     public override void Close()
     {
         var wholeUI = UIManager.Instance.GetActiveWindow<WholeUI>("WholeUI");
-
-        print("inventory close");
 
         iconList.ForEach(icon => {  
             icon.transform.SetParent(
