@@ -149,6 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 15928312}
   - component: {fileID: 15928313}
+  - component: {fileID: 15928314}
   m_Layer: 6
   m_Name: tileset-sliced_2 (6)
   m_TagString: Untagged
@@ -221,6 +222,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &15928314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15928311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &19888529
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 19888530}
   - component: {fileID: 19888531}
+  - component: {fileID: 19888532}
   m_Layer: 6
   m_Name: tileset-sliced_1
   m_TagString: Untagged
@@ -303,6 +321,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &19888532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19888529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &62946772
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 72934247}
   - component: {fileID: 72934248}
+  - component: {fileID: 72934249}
   m_Layer: 6
   m_Name: tileset-sliced_1 (1)
   m_TagString: Untagged
@@ -488,6 +523,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &72934249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72934246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!210 &77546998
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -529,6 +580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 84473263}
   - component: {fileID: 84473264}
+  - component: {fileID: 84473265}
   m_Layer: 6
   m_Name: tileset-sliced_0 (1)
   m_TagString: Untagged
@@ -601,6 +653,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &84473265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84473262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &111817238
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +680,7 @@ GameObject:
   - component: {fileID: 111817239}
   - component: {fileID: 111817241}
   - component: {fileID: 111817240}
+  - component: {fileID: 111817242}
   m_Layer: 6
   m_Name: house (2)
   m_TagString: Untagged
@@ -709,6 +778,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &111817242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111817238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &145054368
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,6 +804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 145054369}
   - component: {fileID: 145054370}
+  - component: {fileID: 145054371}
   m_Layer: 6
   m_Name: tileset-sliced_2 (2)
   m_TagString: Untagged
@@ -791,6 +877,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &145054371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145054368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &162328641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,6 +1190,7 @@ GameObject:
   - component: {fileID: 221416220}
   - component: {fileID: 221416222}
   - component: {fileID: 221416221}
+  - component: {fileID: 221416223}
   m_Layer: 6
   m_Name: tree (8)
   m_TagString: Untagged
@@ -1185,6 +1288,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &221416223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221416219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &229887931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1419,7 @@ GameObject:
   - component: {fileID: 290613597}
   - component: {fileID: 290613598}
   - component: {fileID: 290613599}
+  - component: {fileID: 290613600}
   m_Layer: 6
   m_Name: house
   m_TagString: Untagged
@@ -1397,6 +1517,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &290613600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290613596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &336448731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,6 +1544,7 @@ GameObject:
   - component: {fileID: 336448732}
   - component: {fileID: 336448734}
   - component: {fileID: 336448733}
+  - component: {fileID: 336448735}
   m_Layer: 6
   m_Name: bush (4)
   m_TagString: Untagged
@@ -1505,6 +1642,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &336448735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336448731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &371643441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,6 +1668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 371643442}
   - component: {fileID: 371643443}
+  - component: {fileID: 371643444}
   m_Layer: 6
   m_Name: tileset-sliced_2 (5)
   m_TagString: Untagged
@@ -1587,6 +1741,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &371643444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371643441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &377468827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,6 +1767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 377468828}
   - component: {fileID: 377468829}
+  - component: {fileID: 377468830}
   m_Layer: 6
   m_Name: tileset-sliced_1 (2)
   m_TagString: Untagged
@@ -1669,6 +1840,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &377468830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377468827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &417543088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,6 +1866,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417543089}
   - component: {fileID: 417543090}
+  - component: {fileID: 417543091}
   m_Layer: 6
   m_Name: tileset-sliced_2 (1)
   m_TagString: Untagged
@@ -1751,6 +1939,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &417543091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417543088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &434771790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,6 +2165,7 @@ GameObject:
   - component: {fileID: 439771259}
   - component: {fileID: 439771260}
   - component: {fileID: 439771261}
+  - component: {fileID: 439771262}
   m_Layer: 6
   m_Name: tree (3)
   m_TagString: Untagged
@@ -2058,6 +2263,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &439771262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439771258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &445398724
 GameObject:
   m_ObjectHideFlags: 0
@@ -2068,6 +2289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445398725}
   - component: {fileID: 445398726}
+  - component: {fileID: 445398727}
   m_Layer: 6
   m_Name: tileset-sliced_2 (5)
   m_TagString: Untagged
@@ -2140,6 +2362,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &445398727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 445398724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &456098156
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,6 +2389,7 @@ GameObject:
   - component: {fileID: 456098157}
   - component: {fileID: 456098158}
   - component: {fileID: 456098159}
+  - component: {fileID: 456098160}
   m_Layer: 6
   m_Name: tree (1)
   m_TagString: Untagged
@@ -2248,6 +2487,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &456098160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456098156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &473903399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,6 +2514,7 @@ GameObject:
   - component: {fileID: 473903400}
   - component: {fileID: 473903402}
   - component: {fileID: 473903401}
+  - component: {fileID: 473903403}
   m_Layer: 6
   m_Name: house (1)
   m_TagString: Untagged
@@ -2356,6 +2612,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &473903403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473903399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &497976254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2557,6 +2829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 672459309}
   - component: {fileID: 672459310}
+  - component: {fileID: 672459311}
   m_Layer: 6
   m_Name: tileset-sliced_0
   m_TagString: Untagged
@@ -2629,6 +2902,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &672459311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672459308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &674427270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2640,6 +2929,7 @@ GameObject:
   - component: {fileID: 674427271}
   - component: {fileID: 674427272}
   - component: {fileID: 674427273}
+  - component: {fileID: 674427274}
   m_Layer: 6
   m_Name: tree (4)
   m_TagString: Untagged
@@ -2737,6 +3027,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &674427274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674427270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &710845933
 GameObject:
   m_ObjectHideFlags: 0
@@ -2747,6 +3053,7 @@ GameObject:
   m_Component:
   - component: {fileID: 710845934}
   - component: {fileID: 710845935}
+  - component: {fileID: 710845936}
   m_Layer: 6
   m_Name: tileset-sliced_2 (4)
   m_TagString: Untagged
@@ -2819,6 +3126,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &710845936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710845933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &719030510
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,6 +3153,7 @@ GameObject:
   - component: {fileID: 719030511}
   - component: {fileID: 719030513}
   - component: {fileID: 719030512}
+  - component: {fileID: 719030514}
   m_Layer: 6
   m_Name: tree (10)
   m_TagString: Untagged
@@ -2927,6 +3251,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &719030514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719030510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &731514372
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,6 +3277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 731514373}
   - component: {fileID: 731514374}
+  - component: {fileID: 731514375}
   m_Layer: 6
   m_Name: tileset-sliced_1 (1)
   m_TagString: Untagged
@@ -3009,6 +3350,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &731514375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731514372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &762512660
 GameObject:
   m_ObjectHideFlags: 0
@@ -3020,6 +3377,7 @@ GameObject:
   - component: {fileID: 762512661}
   - component: {fileID: 762512662}
   - component: {fileID: 762512663}
+  - component: {fileID: 762512664}
   m_Layer: 6
   m_Name: tree (6)
   m_TagString: Untagged
@@ -3117,6 +3475,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &762512664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762512660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &773975576
 GameObject:
   m_ObjectHideFlags: 0
@@ -3127,6 +3501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 773975577}
   - component: {fileID: 773975578}
+  - component: {fileID: 773975579}
   m_Layer: 6
   m_Name: tileset-sliced_2 (6)
   m_TagString: Untagged
@@ -3199,6 +3574,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &773975579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773975576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &782365927
 GameObject:
   m_ObjectHideFlags: 0
@@ -3280,6 +3671,7 @@ GameObject:
   - component: {fileID: 790471871}
   - component: {fileID: 790471873}
   - component: {fileID: 790471872}
+  - component: {fileID: 790471874}
   m_Layer: 6
   m_Name: bush (5)
   m_TagString: Untagged
@@ -3377,6 +3769,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &790471874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790471870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &814650261
 GameObject:
   m_ObjectHideFlags: 0
@@ -3387,6 +3795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 814650262}
   - component: {fileID: 814650263}
+  - component: {fileID: 814650264}
   m_Layer: 6
   m_Name: tileset-sliced_2 (3)
   m_TagString: Untagged
@@ -3459,6 +3868,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &814650264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814650261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &821383247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3521,6 +3946,7 @@ GameObject:
   - component: {fileID: 840422343}
   - component: {fileID: 840422344}
   - component: {fileID: 840422345}
+  - component: {fileID: 840422346}
   m_Layer: 6
   m_Name: tree
   m_TagString: Untagged
@@ -3618,6 +4044,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &840422346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840422342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &845589671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3628,6 +4070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 845589672}
   - component: {fileID: 845589673}
+  - component: {fileID: 845589674}
   m_Layer: 6
   m_Name: tileset-sliced_0 (1)
   m_TagString: Untagged
@@ -3700,6 +4143,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &845589674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845589671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &884931697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3781,6 +4240,7 @@ GameObject:
   - component: {fileID: 1017959190}
   - component: {fileID: 1017959192}
   - component: {fileID: 1017959191}
+  - component: {fileID: 1017959193}
   m_Layer: 6
   m_Name: bush (3)
   m_TagString: Untagged
@@ -3878,6 +4338,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1017959193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017959189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1030683027
 GameObject:
   m_ObjectHideFlags: 0
@@ -4061,6 +4537,7 @@ GameObject:
   - component: {fileID: 1043389311}
   - component: {fileID: 1043389312}
   - component: {fileID: 1043389313}
+  - component: {fileID: 1043389314}
   m_Layer: 6
   m_Name: tree (5)
   m_TagString: Untagged
@@ -4158,6 +4635,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &1043389314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043389310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1055547569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4169,6 +4662,7 @@ GameObject:
   - component: {fileID: 1055547570}
   - component: {fileID: 1055547572}
   - component: {fileID: 1055547571}
+  - component: {fileID: 1055547573}
   m_Layer: 6
   m_Name: tree (9)
   m_TagString: Untagged
@@ -4266,6 +4760,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1055547573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055547569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1072580415
 GameObject:
   m_ObjectHideFlags: 0
@@ -4313,6 +4823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1114930456}
   - component: {fileID: 1114930457}
+  - component: {fileID: 1114930458}
   m_Layer: 6
   m_Name: tileset-sliced_2
   m_TagString: Untagged
@@ -4385,6 +4896,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1114930458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114930455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1116261193
 GameObject:
   m_ObjectHideFlags: 0
@@ -4395,6 +4922,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1116261194}
   - component: {fileID: 1116261195}
+  - component: {fileID: 1116261196}
   m_Layer: 6
   m_Name: tileset-sliced_1 (2)
   m_TagString: Untagged
@@ -4467,6 +4995,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1116261196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116261193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1119792857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4477,6 +5021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1119792858}
   - component: {fileID: 1119792859}
+  - component: {fileID: 1119792860}
   m_Layer: 6
   m_Name: tileset-sliced_2 (4)
   m_TagString: Untagged
@@ -4549,6 +5094,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1119792860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119792857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1121628309
 GameObject:
   m_ObjectHideFlags: 0
@@ -4750,6 +5311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1170288496}
   - component: {fileID: 1170288497}
+  - component: {fileID: 1170288498}
   m_Layer: 6
   m_Name: tileset-sliced_2 (4)
   m_TagString: Untagged
@@ -4822,6 +5384,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1170288498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170288495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1180974968
 GameObject:
   m_ObjectHideFlags: 0
@@ -4965,6 +5543,7 @@ GameObject:
   - component: {fileID: 1186630655}
   - component: {fileID: 1186630657}
   - component: {fileID: 1186630656}
+  - component: {fileID: 1186630658}
   m_Layer: 6
   m_Name: bush (1)
   m_TagString: Untagged
@@ -5062,6 +5641,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1186630658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186630654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1187603161
 GameObject:
   m_ObjectHideFlags: 0
@@ -5072,6 +5667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1187603162}
   - component: {fileID: 1187603163}
+  - component: {fileID: 1187603164}
   m_Layer: 6
   m_Name: tileset-sliced_2 (5)
   m_TagString: Untagged
@@ -5144,6 +5740,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1187603164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187603161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1203095722
 GameObject:
   m_ObjectHideFlags: 0
@@ -5441,6 +6053,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1409320930}
   - component: {fileID: 1409320931}
+  - component: {fileID: 1409320932}
   m_Layer: 6
   m_Name: tileset-sliced_2 (1)
   m_TagString: Untagged
@@ -5513,6 +6126,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1409320932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409320929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1423464435
 GameObject:
   m_ObjectHideFlags: 0
@@ -5524,6 +6153,7 @@ GameObject:
   - component: {fileID: 1423464436}
   - component: {fileID: 1423464437}
   - component: {fileID: 1423464438}
+  - component: {fileID: 1423464439}
   m_Layer: 6
   m_Name: tree (2)
   m_TagString: Untagged
@@ -5621,6 +6251,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &1423464439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423464435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1424104085
 GameObject:
   m_ObjectHideFlags: 0
@@ -5666,6 +6312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1434792940}
   - component: {fileID: 1434792941}
+  - component: {fileID: 1434792942}
   m_Layer: 6
   m_Name: tileset-sliced_2 (3)
   m_TagString: Untagged
@@ -5738,6 +6385,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1434792942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434792939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1477718808
 GameObject:
   m_ObjectHideFlags: 0
@@ -5874,6 +6537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1484037634}
   - component: {fileID: 1484037635}
+  - component: {fileID: 1484037636}
   m_Layer: 6
   m_Name: tileset-sliced_2 (3)
   m_TagString: Untagged
@@ -5946,6 +6610,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1484037636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484037633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1491569472
 GameObject:
   m_ObjectHideFlags: 0
@@ -5957,6 +6637,7 @@ GameObject:
   - component: {fileID: 1491569473}
   - component: {fileID: 1491569474}
   - component: {fileID: 1491569475}
+  - component: {fileID: 1491569476}
   m_Layer: 6
   m_Name: bush
   m_TagString: Untagged
@@ -6054,6 +6735,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &1491569476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491569472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1544699790
 GameObject:
   m_ObjectHideFlags: 0
@@ -6064,6 +6761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1544699791}
   - component: {fileID: 1544699792}
+  - component: {fileID: 1544699793}
   m_Layer: 6
   m_Name: tileset-sliced_2 (2)
   m_TagString: Untagged
@@ -6136,6 +6834,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1544699793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544699790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1548355326
 GameObject:
   m_ObjectHideFlags: 0
@@ -6503,6 +7217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1752080371}
   - component: {fileID: 1752080372}
+  - component: {fileID: 1752080373}
   m_Layer: 6
   m_Name: tileset-sliced_0 (2)
   m_TagString: Untagged
@@ -6575,6 +7290,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1752080373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752080370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1781960347
 GameObject:
   m_ObjectHideFlags: 0
@@ -6585,6 +7316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1781960348}
   - component: {fileID: 1781960349}
+  - component: {fileID: 1781960350}
   m_Layer: 6
   m_Name: sky
   m_TagString: Untagged
@@ -6657,6 +7389,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1781960350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781960347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.9450981, g: 0.18823531, b: 0, a: 1}
+  renderer: {fileID: 0}
 --- !u!224 &1792928704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6702,6 +7450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834943219}
   - component: {fileID: 1834943220}
+  - component: {fileID: 1834943221}
   m_Layer: 6
   m_Name: tileset-sliced_0 (2)
   m_TagString: Untagged
@@ -6774,6 +7523,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1834943221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834943218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1851874737
 GameObject:
   m_ObjectHideFlags: 0
@@ -6928,9 +7693,9 @@ MonoBehaviour:
   _totalScore: 0
   feverTime: 5
   declination: 0
-  hp: 1000
+  hp: 6000
   isOver: 0
-  damage: 30
+  damage: 100
   patternGenerator: {fileID: 11400000, guid: 5957ec59ee9dc164ca9e25337f115068, type: 2}
   targetIndex: 7
 --- !u!1 &1868018232
@@ -6943,6 +7708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868018233}
   - component: {fileID: 1868018234}
+  - component: {fileID: 1868018235}
   m_Layer: 6
   m_Name: tileset-sliced_1
   m_TagString: Untagged
@@ -7015,6 +7781,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1868018235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1868018232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1868254938
 GameObject:
   m_ObjectHideFlags: 0
@@ -7373,6 +8155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1903762662}
   - component: {fileID: 1903762663}
+  - component: {fileID: 1903762664}
   m_Layer: 6
   m_Name: tileset-sliced_2 (6)
   m_TagString: Untagged
@@ -7445,6 +8228,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1903762664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903762661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1986908793
 GameObject:
   m_ObjectHideFlags: 0
@@ -7455,6 +8254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986908794}
   - component: {fileID: 1986908795}
+  - component: {fileID: 1986908796}
   m_Layer: 6
   m_Name: tileset-sliced_0
   m_TagString: Untagged
@@ -7527,6 +8327,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1986908796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986908793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!224 &2015003454
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7856,6 +8672,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2118342793}
   - component: {fileID: 2118342794}
+  - component: {fileID: 2118342795}
   m_Layer: 6
   m_Name: tileset-sliced_2
   m_TagString: Untagged
@@ -7928,6 +8745,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2118342795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118342792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &2118676929
 GameObject:
   m_ObjectHideFlags: 0
@@ -7939,6 +8772,7 @@ GameObject:
   - component: {fileID: 2118676930}
   - component: {fileID: 2118676931}
   - component: {fileID: 2118676932}
+  - component: {fileID: 2118676933}
   m_Layer: 6
   m_Name: tree (7)
   m_TagString: Untagged
@@ -8036,6 +8870,22 @@ MonoBehaviour:
   isDead: 0
   respawnPlace: {fileID: 1121628310}
   despawnPlace: {fileID: 782365928}
+--- !u!114 &2118676933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118676929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.42352945, g: 0.42352945, b: 0.42352945, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086596520874404
 Transform:
   m_ObjectHideFlags: 0
@@ -8111,6 +8961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086596520874404}
   - component: {fileID: 1122086596520874405}
+  - component: {fileID: 1122086596520874407}
   m_Layer: 6
   m_Name: tileset-sliced_1
   m_TagString: Untagged
@@ -8118,6 +8969,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086596520874407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086596520874406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086597049329896
 Transform:
   m_ObjectHideFlags: 0
@@ -8193,6 +9060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597049329896}
   - component: {fileID: 1122086597049329897}
+  - component: {fileID: 1122086597049329899}
   m_Layer: 6
   m_Name: tileset-sliced_2 (2)
   m_TagString: Untagged
@@ -8200,6 +9068,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597049329899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597049329898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086597196662141
 Transform:
   m_ObjectHideFlags: 0
@@ -8275,6 +9159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597196662141}
   - component: {fileID: 1122086597196662142}
+  - component: {fileID: 1122086597196662144}
   m_Layer: 6
   m_Name: tileset-sliced_0 (2)
   m_TagString: Untagged
@@ -8282,6 +9167,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597196662144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597196662143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!1 &1122086597261916952
 GameObject:
   m_ObjectHideFlags: 0
@@ -8292,6 +9193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597261916966}
   - component: {fileID: 1122086597261916967}
+  - component: {fileID: 1122086597261916953}
   m_Layer: 6
   m_Name: tileset-sliced_0
   m_TagString: Untagged
@@ -8299,6 +9201,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597261916953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597261916952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086597261916966
 Transform:
   m_ObjectHideFlags: 0
@@ -8474,6 +9392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597543028975}
   - component: {fileID: 1122086597543028960}
+  - component: {fileID: 1122086597543028962}
   m_Layer: 6
   m_Name: tileset-sliced_1 (2)
   m_TagString: Untagged
@@ -8481,6 +9400,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597543028962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597543028961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086597543028975
 Transform:
   m_ObjectHideFlags: 0
@@ -8556,6 +9491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597755711567}
   - component: {fileID: 1122086597755711552}
+  - component: {fileID: 1122086597755711554}
   m_Layer: 6
   m_Name: tileset-sliced_1 (1)
   m_TagString: Untagged
@@ -8563,6 +9499,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597755711554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597755711553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086597755711567
 Transform:
   m_ObjectHideFlags: 0
@@ -8652,6 +9604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597862383691}
   - component: {fileID: 1122086597862383692}
+  - component: {fileID: 1122086597862383694}
   m_Layer: 6
   m_Name: tileset-sliced_2 (1)
   m_TagString: Untagged
@@ -8659,6 +9612,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597862383694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597862383693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086597946953164
 Transform:
   m_ObjectHideFlags: 0
@@ -8734,6 +9703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086597946953164}
   - component: {fileID: 1122086597946953165}
+  - component: {fileID: 1122086597946953167}
   m_Layer: 6
   m_Name: tileset-sliced_2
   m_TagString: Untagged
@@ -8741,6 +9711,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086597946953167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086597946953166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!4 &1122086598448460272
 Transform:
   m_ObjectHideFlags: 0
@@ -8816,6 +9802,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122086598448460272}
   - component: {fileID: 1122086598448460273}
+  - component: {fileID: 1122086598448460275}
   m_Layer: 6
   m_Name: tileset-sliced_0 (1)
   m_TagString: Untagged
@@ -8823,6 +9810,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1122086598448460275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122086598448460274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 0}
+  finalColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  renderer: {fileID: 0}
 --- !u!114 &2464207447474576112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9004,6 +10007,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8225930074119772643}
   - component: {fileID: 2464207448152526038}
+  - component: {fileID: 2464207448152526037}
   m_Layer: 6
   m_Name: mountain01
   m_TagString: Untagged
@@ -9011,6 +10015,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2464207448152526037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464207448152526036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.36862746, g: 0.24313727, b: 0.24313727, a: 1}
+  renderer: {fileID: 0}
 --- !u!212 &2464207448152526038
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9123,6 +10143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8225930074562549632}
   - component: {fileID: 2464207448800264885}
+  - component: {fileID: 2464207448800264888}
   m_Layer: 6
   m_Name: mountain01
   m_TagString: Untagged
@@ -9130,6 +10151,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2464207448800264888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464207448800264887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.36862746, g: 0.24313727, b: 0.24313727, a: 1}
+  renderer: {fileID: 0}
 --- !u!212 &2464207448833161233
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9191,6 +10228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8225930074529869092}
   - component: {fileID: 2464207448833161233}
+  - component: {fileID: 2464207448833161236}
   m_Layer: 6
   m_Name: mountain01
   m_TagString: Untagged
@@ -9198,6 +10236,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2464207448833161236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464207448833161235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5067dd8f81432f040a33f59469d9ed08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothness: 0.02
+  currentColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.36862746, g: 0.24313727, b: 0.24313727, a: 1}
+  renderer: {fileID: 0}
 --- !u!114 &6543871554959123474
 MonoBehaviour:
   m_ObjectHideFlags: 0

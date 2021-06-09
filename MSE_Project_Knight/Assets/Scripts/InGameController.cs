@@ -146,6 +146,7 @@ public class IngameController : MonoBehaviour
             {
                 hp -= declination * GameManager.Instance.deltaTime / Time.timeScale;
                 declination += GameManager.Instance.deltaTime / Time.timeScale;
+                totalScore += 2;
             }
         }
         else 
@@ -285,7 +286,7 @@ public class IngameController : MonoBehaviour
 
         print(up + " " + down);
 
-        Vector2 position = isGround ? up : down;
+        Vector2 position = isGround ? down : up;
         string tag = isDestroyable ? "DestroyableEnemy" : "UnDestroyableEnemy";
 
         return new Tuple<Vector2, string, float>(position, tag, wait);

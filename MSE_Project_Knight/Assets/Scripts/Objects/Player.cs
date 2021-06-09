@@ -248,7 +248,7 @@ public class Player : ScriptObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Destroyable") || collision.CompareTag("Undestroyable"))
+        if (collision.CompareTag("Destroyable") || collision.CompareTag("Undestroyable") && !isFever)
         {
             OnPlayerMiss();
             playerController.hp -= playerController.damage;
