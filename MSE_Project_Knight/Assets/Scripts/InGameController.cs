@@ -84,7 +84,7 @@ public class IngameController : MonoBehaviour
 
     private bool isFever = false;
     private bool canUlt = false;
-    private List<List<Tuple<Vector2, string, float>>> transedPatterns = new List<List<Tuple<Vector2, string, float>>>();
+    private List<List<Tuple<Vector2, string, float, bool>>> transedPatterns = new List<List<Tuple<Vector2, string, float, bool>>>();
 
 
     private void Awake()
@@ -230,16 +230,20 @@ public class IngameController : MonoBehaviour
         StartCoroutine(SpawnRoutine(objectAttributes));
     }
 
-    private IEnumerator SpawnRoutine(List<Tuple<Vector2, string, float>> objectAttributes)
+    private IEnumerator SpawnRoutine(List<Tuple<Vector2, string, float, bool>> objectAttributes)
     {
         foreach (var obj in objectAttributes)
         {
             var position = obj.Item1;
             var tag = obj.Item2;
             var wait = obj.Item3;
+            var isGround = obj.Item4;
+            string name = tag;
 
-            var spawned = cachedObjectManager.Spawn<EnemyObject>(tag, position);
+            if (tag != "UnDestroyableEnemy")
+                name = isGround ? "Down" + tag : "Up" + tag;
 
+            var spawned = cachedObjectManager.Spawn<EnemyObject>(name, position);
             if (tag != "UnDestroyableEnemy")
                 yield return new WaitForSeconds(wait);
             else
@@ -258,7 +262,7 @@ public class IngameController : MonoBehaviour
             if (pattern == null)
                 continue;
 
-            List<Tuple<Vector2, string, float>> objectAttributes = new List<Tuple<Vector2, string, float>>();
+            List<Tuple<Vector2, string, float, bool>> objectAttributes = new List<Tuple<Vector2, string, float, bool>>();
 
             var patternAttributes = pattern.GetAttributes();
             patternAttributes.ForEach(attr =>
@@ -278,7 +282,7 @@ public class IngameController : MonoBehaviour
         }
     }
 
-    private Tuple<Vector2, string, float> TransPatternAttr(bool isGround, bool isDestroyable, float wait)
+    private Tuple<Vector2, string, float, bool> TransPatternAttr(bool isGround, bool isDestroyable, float wait)
     {
         var up = spawnPlace.GetChild(0).position;
         up.x = up.x / 3;
@@ -289,7 +293,7 @@ public class IngameController : MonoBehaviour
         Vector2 position = isGround ? down : up;
         string tag = isDestroyable ? "DestroyableEnemy" : "UnDestroyableEnemy";
 
-        return new Tuple<Vector2, string, float>(position, tag, wait);
+        return new Tuple<Vector2, string, float, bool>(position, tag, wait, isGround);
     }   
 
     private void DestroyEnemy(RaycastHit2D hit, bool force=false)

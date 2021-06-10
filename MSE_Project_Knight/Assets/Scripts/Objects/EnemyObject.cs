@@ -8,9 +8,17 @@ public class EnemyObject : ScriptObject
     public bool isUp = false;
 
     public Rigidbody2D despawnPlace;
-
+    public SpriteRenderer spriteRenderer;
+    public Animator animator;
+    
     [SerializeField]
     private IngameController inGameController;
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
 
     #region
     private void Initialze()

@@ -77,7 +77,8 @@ public class ObjectManager : Singleton<ObjectManager>
             new PoolPrefab("Prefab/PlayerIcon/knightIcon", 1),
             new PoolPrefab("Prefab/PlayerIcon/archerIcon", 1),
             new PoolPrefab("Prefab/PlayerIcon/mageIcon", 1),
-            new PoolPrefab("Prefab/Enemy/DestroyableEnemy", 500), 
+            new PoolPrefab("Prefab/Enemy/UpDestroyableEnemy", 250),
+            new PoolPrefab("Prefab/Enemy/DownDestroyableEnemy", 250),
             new PoolPrefab("Prefab/Enemy/UnDestroyableEnemy", 50)};
 
         DontDestroyOnLoad(this);

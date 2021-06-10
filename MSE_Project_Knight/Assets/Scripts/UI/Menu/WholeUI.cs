@@ -42,7 +42,9 @@ public class WholeUI : UIWindow
 
     public void OnClickStartGame()
     {
+#if !TEST   
         unit.DespawnSprite();
+#endif
         GameManager.Instance.gameState = GameManager.GameState.loadIngame;
     }
 

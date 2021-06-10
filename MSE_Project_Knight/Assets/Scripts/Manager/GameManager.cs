@@ -71,6 +71,7 @@ public class GameManager : Singleton<GameManager>
         ObjectManager.Instance.Initialize();
         SoundManager.Instance.Initialize();
         UIManager.Instance.Initialize();
+        SpriteManager.Instance.Initialize();
 
         progressMessage = "Loading...";
     }
